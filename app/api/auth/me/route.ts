@@ -2,11 +2,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-export const dynamic = "force-dynamic";
-
 export async function GET() {
+  const supabase = await createClient();
+
   try {
-    const supabase = await createClient();
 
     // Memverifikasi identitas berdasarkan JWT
     const { data: claimsData, error: claimsError } =
