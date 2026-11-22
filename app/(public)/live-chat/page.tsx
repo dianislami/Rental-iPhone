@@ -596,18 +596,17 @@ function LiveChatContent() {
               <div className="inline-flex items-center gap-2 rounded-full bg-white border border-[#D2D2D7]/80 px-3.5 py-1 shadow-2xs">
                 <span className="h-2 w-2 rounded-full bg-[#0071E3]"></span>
                 <span className="text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3]">
-                  APPLE CONCIERGE LIVE CHAT • ANONIM &amp; TANPA LOGIN
+                  LIVE CHAT
                 </span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1D1D1F]">
-                Survei Singkat Sebelum Live Chat.
+                Ada yang Ingin Kamu Tanyakan?
               </h1>
 
-              <p className="mx-auto max-w-xl text-[14px] text-[#6E6E73]">
-                Anda tidak perlu membuat akun atau login. Cukup lengkapi survei
-                singkat di bawah ini untuk membuka akses Live Chat langsung
-                dengan Admin iRent.
+              <p className="mx-auto max-w-2xl text-[14px] text-[#6E6E73]">
+                Sebelum memulai percakapan, isi survei singkat berikut terlebih dahulu.
+                Kamu tidak perlu membuat akun atau login. Setelah selesai, kamu bisa langsung menghubungi admin iRent melalui fitur Live Chat.
               </p>
             </div>
 
@@ -660,10 +659,7 @@ function LiveChatContent() {
               </svg>
             </div>
             <p className="text-[15px] font-bold text-[#1D1D1F]">
-              Menyiapkan Sesi Anonim Terenkripsi...
-            </p>
-            <p className="text-[12.5px] text-[#6E6E73]">
-              Menghubungkan ke server Supabase tanpa memerlukan login akun.
+              Menyiapkan Survey...
             </p>
           </div>
         ) : nonAnonConflict ? (
@@ -696,8 +692,7 @@ function LiveChatContent() {
             </h2>
             <p className="text-[13px] text-[#6E6E73]">
               Sesi percakapan Anda sebelumnya telah diselesaikan atau dibatasi
-              oleh Admin. Anda tetap dapat menghubungi kami melalui WhatsApp
-              Concierge.
+              oleh Admin. Anda tetap dapat menghubungi kami melalui WhatsApp.
             </p>
             <a
               href="https://wa.me/6281168908888"
@@ -744,13 +739,6 @@ function LiveChatContent() {
                 <h2 className="text-xl font-bold text-[#1D1D1F]">
                   Data Profil Singkat Pengunjung
                 </h2>
-                <p className="text-[12.5px] text-[#6E6E73] mt-0.5">
-                  Identitas Anda tetap anonim (ID Sesi:{" "}
-                  <code className="text-[#0071E3]">
-                    {visitorId ? `${visitorId.slice(0, 8)}...` : "Anonim"}
-                  </code>
-                  )
-                </p>
               </div>
               <div className="inline-flex items-center gap-2 rounded-full bg-[#F5F5F7] px-3.5 py-1.5 text-[12px] font-semibold text-[#1D1D1F]">
                 <span className="text-[#0071E3]">{completedCount}/6</span>{" "}
@@ -858,7 +846,7 @@ function LiveChatContent() {
                             : "bg-[#F5F5F7]/70 text-[#1D1D1F] border-transparent hover:border-[#0071E3]/30 hover:bg-[#E8F2FF]"
                         }`}
                       >
-                        📍 {opt}
+                        {opt}
                       </button>
                     );
                   })}
@@ -937,7 +925,7 @@ function LiveChatContent() {
               {/* Submit Button */}
               <div className="pt-3 border-t border-[#F5F5F7] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-[11.5px] text-[#86868B]">
-                  🔒 Survei ini hanya diisi 1 kali untuk membuka sesi Live Chat
+                  Survei ini hanya diisi 1 kali untuk membuka sesi Live Chat
                   Anda.
                 </p>
 
@@ -976,10 +964,7 @@ function LiveChatContent() {
                 </div>
                 <div>
                   <p className="text-[14px] font-bold text-[#1D1D1F]">
-                    Concierge Desk iRent Aceh
-                  </p>
-                  <p className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-600">
-                    Online • Respon Cepat Real-Time
+                    Admin iRent
                   </p>
                 </div>
               </div>
@@ -1003,7 +988,7 @@ function LiveChatContent() {
                 </div>
                 <div className="max-w-[82%] rounded-2xl rounded-tl-xs bg-[#F5F5F7] px-4 py-3 text-[13px] leading-relaxed text-[#1D1D1F]">
                   <p className="font-semibold text-[#0071E3] text-[11px] mb-1">
-                    Concierge iRent Aceh
+                    Admin iRent
                   </p>
                   <p>
                     Halo! Sesi Live Chat Anda sudah aktif. Silakan tulis
@@ -1025,7 +1010,7 @@ function LiveChatContent() {
                     }`}
                   >
                     <div
-                      className={`max-w-[85%] sm:max-w-[76%] rounded-2xl px-4 py-3 text-[13.5px] leading-relaxed ${
+                      className={`max-w-[85%] sm:max-w-[65%] rounded-2xl px-4 py-3 text-[13.5px] leading-relaxed ${
                         isVisitor
                           ? "rounded-br-xs bg-[#0071E3] text-white shadow-xs"
                           : "rounded-bl-xs bg-[#F5F5F7] text-[#1D1D1F] border border-[#D2D2D7]/50"
@@ -1033,16 +1018,16 @@ function LiveChatContent() {
                     >
                       {!isVisitor && (
                         <p className="text-[10.5px] font-bold text-[#0071E3] mb-1">
-                          Admin Concierge
+                          Admin iRent
                         </p>
                       )}
 
-                      {/* Shopee-Style Attached Product Catalog Card */}
+                      {/* Attached Product Catalog Card */}
                       {catalog && (
                         <div className="mb-2.5 rounded-xl bg-white text-[#1D1D1F] p-3 shadow-xs border border-black/5">
                           <div className="flex items-center justify-between gap-2 pb-2 mb-2.5 border-b border-[#F5F5F7]">
                             <span className="inline-flex items-center gap-1 text-[9.5px] font-bold uppercase tracking-wider text-[#0071E3]">
-                              <span>📱</span> KATALOG PRODUK PILIHAN
+                              KATALOG PRODUK PILIHAN
                             </span>
                             {catalog.unitId && (
                               <Link
@@ -1100,10 +1085,10 @@ function LiveChatContent() {
                           {(catalog.cabang || catalog.jadwal) && (
                             <div className="mt-2.5 pt-2 border-t border-[#F5F5F7] flex flex-wrap items-center justify-between gap-2 text-[10.5px] text-[#6E6E73]">
                               {catalog.cabang && (
-                                <span>📍 {catalog.cabang}</span>
+                                <span>{catalog.cabang}</span>
                               )}
                               {catalog.jadwal && (
-                                <span>🗓️ {catalog.jadwal}</span>
+                                <span>{catalog.jadwal}</span>
                               )}
                             </div>
                           )}
@@ -1161,7 +1146,7 @@ function LiveChatContent() {
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Ketik pesan ke Concierge iRent..."
+                  placeholder="Ketik pesan ke Admin iRent..."
                   maxLength={5000}
                   className="flex-1 rounded-full bg-white px-4.5 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-[#D2D2D7]/80 focus:border-[#0071E3] focus:outline-none focus:ring-2 focus:ring-[#0071E3]/15 transition-all"
                 />

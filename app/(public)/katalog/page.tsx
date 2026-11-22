@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
@@ -30,6 +30,21 @@ function CatalogContent() {
   const [selectedFilter, setSelectedFilter] = useState<string>(initialModel);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("popular");
+  const [sortDropdownOpen, setSortDropdownOpen] = useState<boolean>(false);
+  const sortDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        sortDropdownRef.current &&
+        !sortDropdownRef.current.contains(e.target as Node)
+      ) {
+        setSortDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const kotaParam = searchParams.get("kota");
@@ -88,30 +103,17 @@ function CatalogContent() {
     };
   }, []);
 
-  // Derive dynamic series / model filters from real database units
-  const filterTabs = useMemo(() => {
-    const seriesSet = new Set<string>();
-    units.forEach((u) => {
-      const match = (u.tipe || u.nama_unit).match(/iPhone\s+\d+/i);
-      if (match) {
-        seriesSet.add(`${match[0]} Series`);
-      } else if (u.tipe) {
-        seriesSet.add(u.tipe);
-      }
-    });
+  const sortOptions = [
+    { value: "popular", label: "Urutkan: Terpopuler" },
+    { value: "price_asc", label: "Harga: Terendah" },
+    { value: "price_desc", label: "Harga: Tertinggi" },
+    { value: "battery", label: "Battery Health Tertinggi" },
+  ];
 
-    const dynamicSeries =
-      seriesSet.size > 0
-        ? Array.from(seriesSet)
-        : ["iPhone 16 Series", "iPhone 15 Series", "iPhone 14 Series"];
-
-    return [
-      { id: "Semua Model", label: "Semua Model", hasDot: false },
-      ...dynamicSeries.map((s) => ({ id: s, label: s, hasDot: false })),
-      { id: "Siap Hari Ini", label: "Siap Hari Ini", hasDot: true },
-      { id: "Promo Diskon", label: "% Promo Diskon", hasDot: false },
-    ];
-  }, [units]);
+  const filterTabs = [
+    { id: "Tersedia Hari Ini", label: "Tersedia Hari Ini" },
+    { id: "Promo Diskon", label: "Promo Diskon" },
+  ];
 
   const filteredUnits = useMemo(() => {
     return units
@@ -140,7 +142,10 @@ function CatalogContent() {
         }
 
         // Category filter
-        if (selectedFilter === "Siap Hari Ini") {
+        if (
+          selectedFilter === "Tersedia Hari Ini" ||
+          selectedFilter === "Siap Hari Ini"
+        ) {
           if (unit.status !== "aktif") return false;
         } else if (selectedFilter === "Promo Diskon") {
           const hasPromo =
@@ -215,29 +220,13 @@ function CatalogContent() {
                   setSelectedKota("Semua");
                   setSelectedBranchId("");
                 }}
-                className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all duration-200 ${
+                className={`inline-flex items-center rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all duration-200 ${
                   selectedKota === "Semua" && !selectedBranchId
                     ? "bg-[#0071E3] text-white shadow-xs"
                     : "text-[#6E6E73] hover:text-[#1D1D1F]"
                 }`}
               >
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${
-                    selectedKota === "Semua" && !selectedBranchId
-                      ? "bg-white"
-                      : "bg-[#0071E3]"
-                  }`}
-                />
                 Semua Cabang
-                <span
-                  className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                    selectedKota === "Semua" && !selectedBranchId
-                      ? "bg-white/20 text-white"
-                      : "bg-white text-[#6E6E73]"
-                  }`}
-                >
-                  {units.length} Unit
-                </span>
               </button>
 
               {branches.map((branch) => {
@@ -258,27 +247,13 @@ function CatalogContent() {
                         setSelectedBranchId(branch.id);
                       }
                     }}
-                    className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all duration-200 ${
+                    className={`inline-flex items-center rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all duration-200 ${
                       active
                         ? "bg-[#0071E3] text-white shadow-xs"
                         : "text-[#6E6E73] hover:text-[#1D1D1F]"
                     }`}
                   >
-                    <span
-                      className={`h-1.5 w-1.5 rounded-full ${
-                        active ? "bg-white" : "bg-emerald-500"
-                      }`}
-                    />
                     {branch.kota || branch.nama_cabang}
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                        active
-                          ? "bg-white/20 text-white"
-                          : "bg-white text-[#6E6E73]"
-                      }`}
-                    >
-                      {branch.unit_count ?? 0} Unit
-                    </span>
                   </button>
                 );
               })}
@@ -288,14 +263,13 @@ function CatalogContent() {
           {/* Title & Subtitle */}
           <div className="mx-auto max-w-2xl text-center space-y-3 mb-10">
             <span className="inline-flex items-center rounded-full bg-[#E8F2FF] px-3.5 py-1 text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3]">
-              ARMADA RESMI GRADE-A
+              KATALOG IPHONE
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-[#1D1D1F]">
-              Pilih iPhone Anda.
+              Temukan iPhone Pilihanmu.
             </h1>
             <p className="text-[14.5px] text-[#6E6E73]">
-              Baterai terkalibrasi, dan serah terima instan tanpa ribet di
-              seluruh hub Aceh.
+              Lihat berbagai pilihan iPhone yang tersedia dan pilih unit sesuai kebutuhan serta jadwal penyewaanmu.
             </p>
           </div>
 
@@ -332,19 +306,66 @@ function CatalogContent() {
                 )}
               </div>
 
-              {/* Sort Dropdown */}
-              <div className="sm:w-56">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
+              {/* Custom Styled Sort Dropdown */}
+              <div ref={sortDropdownRef} className="relative sm:w-64">
+                <button
+                  type="button"
+                  onClick={() => setSortDropdownOpen((prev) => !prev)}
                   aria-label="Urutkan katalog"
-                  className="w-full rounded-2xl bg-white px-4 py-3 text-[13px] font-medium text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none focus:ring-2 focus:ring-[#0071E3]/15 transition-all"
+                  className={`flex w-full items-center justify-between gap-2 rounded-2xl bg-white px-4 py-3 text-[13px] font-medium text-[#1D1D1F] border transition-all cursor-pointer ${
+                    sortDropdownOpen
+                      ? "border-[#0071E3] ring-2 ring-[#0071E3]/15"
+                      : "border-[#D2D2D7]/70 hover:border-[#0071E3]/50"
+                  }`}
                 >
-                  <option value="popular">Urutkan: Terpopuler</option>
-                  <option value="price_asc">Harga: Terendah</option>
-                  <option value="price_desc">Harga: Tertinggi</option>
-                  <option value="battery">Battery Health Tertinggi</option>
-                </select>
+                  <span className="truncate">
+                    {sortOptions.find((o) => o.value === sortBy)?.label ||
+                      "Urutkan: Terpopuler"}
+                  </span>
+                  <svg
+                    className={`h-4 w-4 shrink-0 text-[#86868B] transition-transform duration-200 ${
+                      sortDropdownOpen ? "rotate-180 text-[#0071E3]" : ""
+                    }`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                {sortDropdownOpen && (
+                  <div className="absolute right-0 z-30 mt-2 w-full rounded-2xl bg-white/95 backdrop-blur-xl p-1.5 shadow-[0_12px_36px_rgba(0,0,0,0.12)] border border-[#D2D2D7]/80 space-y-1">
+                    {sortOptions.map((option) => {
+                      const isSelected = sortBy === option.value;
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => {
+                            setSortBy(option.value);
+                            setSortDropdownOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-[12.5px] font-medium transition-colors cursor-pointer ${
+                            isSelected
+                              ? "bg-[#E8F2FF] font-semibold text-[#0071E3]"
+                              : "text-[#1D1D1F] hover:bg-[#F5F5F7]"
+                          }`}
+                        >
+                          <span>{option.label}</span>
+                          {isSelected && (
+                            <span className="text-[12px] font-bold text-[#0071E3]">
+                              ✓
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -356,20 +377,15 @@ function CatalogContent() {
                   <button
                     key={tab.id}
                     type="button"
-                    onClick={() => setSelectedFilter(tab.id)}
-                    className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all duration-200 ${
+                    onClick={() =>
+                      setSelectedFilter(active ? "Semua Model" : tab.id)
+                    }
+                    className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all duration-200 cursor-pointer ${
                       active
                         ? "bg-[#0071E3] text-white shadow-xs"
                         : "bg-white text-[#1D1D1F] hover:bg-[#E8F2FF] hover:text-[#0071E3] border border-[#D2D2D7]/60"
                     }`}
                   >
-                    {tab.hasDot && (
-                      <span
-                        className={`h-1.5 w-1.5 rounded-full ${
-                          active ? "bg-white" : "bg-emerald-500"
-                        }`}
-                      />
-                    )}
                     {tab.label}
                   </button>
                 );
@@ -460,10 +476,6 @@ function CatalogContent() {
                             </span>
                           )}
                         </div>
-
-                        <span className="text-[11px] font-medium text-[#86868B] shrink-0">
-                          Hub {hubCity}
-                        </span>
                       </div>
 
                       {/* Studio Image Container */}
@@ -499,7 +511,7 @@ function CatalogContent() {
                           {unit.storage}
                         </span>
                         <span className="rounded-md bg-[#F5F5F7] px-2.5 py-1 text-[11px] font-medium text-[#6E6E73]">
-                          🔋 Baterai {unit.battery_health}
+                          Baterai {unit.battery_health}
                         </span>
                         <span className="rounded-md bg-[#E8F2FF] px-2.5 py-1 text-[11px] font-medium text-[#0071E3]">
                           {unit.tipe}
@@ -554,7 +566,7 @@ function CatalogContent() {
             </div>
           )}
 
-          {/* APPLECARE+ SHIELD PROTECTION BANNER */}
+          {/* BUSINESS & PRODUCTION LEASE CARD */}
           <div className="mt-12 rounded-[28px] apple-deep-blue-banner p-7 sm:p-9 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-start gap-4 max-w-2xl">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-md text-white border border-white/20">
@@ -570,15 +582,14 @@ function CatalogContent() {
               </div>
               <div>
                 <p className="text-[10.5px] font-bold uppercase tracking-widest text-sky-300">
-                  PERLINDUNGAN MENYELURUH
+                  UNTUK BISNIS &amp; PRODUKSI
                 </p>
                 <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-white">
-                  Perlindungan iRent AppleCare+ Termasuk
+                  Butuh sewa jangka panjang (&gt;14 hari)?
                 </h3>
                 <p className="mt-1.5 text-[13px] leading-relaxed text-white/80">
-                  Bebas cemas dari lecet operasional, retak layar minor, dan
-                  kendala fungsi tanpa kewajiban penahanan uang deposit tunai
-                  yang memberatkan.
+                  Cocok untuk kebutuhan shooting, produksi konten, dokumentasi wedding, liputan acara, maupun kegiatan kantor.
+                  Durasi penyewaan dan harga dapat didiskusikan bersama tim kami sesuai kebutuhan.
                 </p>
               </div>
             </div>
@@ -587,47 +598,8 @@ function CatalogContent() {
               href="/tentang-kami#proteksi"
               className="shrink-0 inline-flex items-center justify-center rounded-full bg-white hover:bg-[#E8F2FF] px-5 py-3 text-[12.5px] font-semibold text-[#0071E3] transition-colors"
             >
-              Pelajari Syarat Proteksi
+              Konsultasikan Paket Khusus
             </Link>
-          </div>
-
-          {/* BUSINESS & PRODUCTION LEASE CARD */}
-          <div className="mt-6 rounded-[28px] bg-white border border-[#D2D2D7]/70 p-7 sm:p-9 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 shadow-2xs">
-            <div className="max-w-xl">
-              <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3] flex items-center gap-1.5">
-                <span>💼</span> BUSINESS &amp; PRODUCTION LEASE
-              </p>
-              <h3 className="mt-1.5 text-xl sm:text-2xl font-bold tracking-tight text-[#1D1D1F]">
-                Butuh sewa jangka panjang (&gt;14 hari)?
-              </h3>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-[#6E6E73]">
-                Ideal untuk kebutuhan shooting sinematik, dokumentasi wedding
-                organizer, liputan festival PON, atau event kantor. Nikmati
-                potongan tarif hingga 35% dan unit cadangan on-site.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center -space-x-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] border-2 border-white text-[10px] font-bold text-[#1D1D1F]">
-                  4K
-                </span>
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] border-2 border-white text-[10px] font-bold text-[#0071E3]">
-                  LOG
-                </span>
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] border-2 border-white text-[10px] font-bold text-[#6E6E73]">
-                  +14
-                </span>
-              </div>
-
-              <Link
-                href="/live-chat"
-                className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-6 py-3 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all"
-              >
-                <span>💬</span>
-                Konsultasikan Paket Khusus
-              </Link>
-            </div>
           </div>
         </div>
       </section>

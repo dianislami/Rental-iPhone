@@ -65,9 +65,9 @@ export default function HomePage() {
 
   const whyChooseItems = [
     {
-      title: "100% Original",
-      desc: "Unit resmi Apple (PA/A, ID/A, ZP/A). Bebas iCloud, layar True Tone aktif, dan sensor kamera terkalibrasi penuh.",
-      linkText: "Garansi tukar unit →",
+      title: "Unit iPhone Original",
+      desc: "Kami menyediakan berbagai pilihan iPhone original dengan kondisi dan fungsi yang baik.",
+      linkText: "Lihat katalog iPhone →",
       icon: (
         <svg
           className="h-5 w-5"
@@ -82,9 +82,9 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Battery Health Prima",
-      desc: "Setiap unit melewati inspeksi siklus baterai ketat agar tahan seharian untuk pembuatan konten 4K 60fps.",
-      linkText: "Termasuk Charger 20W →",
+      title: "Battery Health Terjaga",
+      desc: "Setiap unit memiliki informasi Battery Health sehingga kamu bisa memilih iPhone sesuai kebutuhan.",
+      linkText: "Lihat informasi unit →",
       icon: (
         <svg
           className="h-5 w-5"
@@ -98,9 +98,9 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Zero-Stress Care",
-      desc: "Perlindungan terhadap risiko goresan halus pemakaian wajar. Sewa dengan tenang tanpa biaya tersembunyi.",
-      linkText: "Tanpa deposit tunai →",
+      title: "Proses Sewa Mudah",
+      desc: "Proses penyewaan dibuat sederhana dengan informasi harga dan ketentuan yang jelas sejak awal.",
+      linkText: "Lihat cara penyewaan →",
       icon: (
         <svg
           className="h-5 w-5"
@@ -115,9 +115,9 @@ export default function HomePage() {
       ),
     },
     {
-      title: "Pickup Cepat 15M",
-      desc: "Cukup verifikasi KTP/KTM asli di gerai terdekat. Unit langsung siap pakai dalam kondisi bersih & steril.",
-      linkText: "Lihat lokasi gerai →",
+      title: "Tersedia di 4 Cabang",
+      desc: "Pilih lokasi penyewaan di sekitarmu, tersedia di Banda Aceh, Bireuen, Lhokseumawe, dan Meulaboh.",
+      linkText: "Lihat lokasi cabang →",
       icon: (
         <svg
           className="h-5 w-5"
@@ -171,7 +171,7 @@ export default function HomePage() {
     {
       num: "03",
       title: "Verifikasi Data",
-      desc: "Konfirmasi ketersediaan via Live Chat / Concierge cukup dengan KTP atau KTM mahasiswa aktif.",
+      desc: "Konfirmasi ketersediaan via Live Chat atau WhatsApp admin.",
       icon: (
         <svg
           className="h-4 w-4"
@@ -189,7 +189,7 @@ export default function HomePage() {
     {
       num: "04",
       title: "Pembayaran Aman",
-      desc: "Selesaikan pembayaran via QRIS, transfer bank, atau bayar langsung saat serah terima.",
+      desc: "Selesaikan pembayaran via QRIS, transfer, atau bayar langsung saat serah terima.",
       icon: (
         <svg
           className="h-4 w-4"
@@ -206,7 +206,7 @@ export default function HomePage() {
     {
       num: "05",
       title: "Ambil & Gunakan",
-      desc: "Cek fisik bersama staf kami selama 5 menit di gerai, dan iPhone siap mengabadikan momen Anda.",
+      desc: "Cek fisik unit bersama staf kami dan iPhone siap mengabadikan momen Anda.",
       icon: (
         <svg
           className="h-4 w-4"
@@ -267,11 +267,9 @@ export default function HomePage() {
               </h1>
 
               <p className="max-w-lg text-[15px] sm:text-[16px] leading-relaxed text-[#6E6E73]">
-                Sewa iPhone seri terbaru untuk konten, liburan, atau event.
-                Kondisi baterai terawat, perlindungan AppleCare+, dan serah
-                terima instan
+                Sewa iPhone untuk berbagai kebutuhan, mulai dari membuat konten, liburan, hingga acara spesial. Setiap unit dilengkapi informasi kondisi dan harga yang jelas, serta tersedia
                 {branches.length > 0
-                  ? ` di ${branches.length} cabang resmi.`
+                  ? ` di ${branches.length} cabang kami.`
                   : " di seluruh cabang resmi kami."}
               </p>
 
@@ -315,7 +313,7 @@ export default function HomePage() {
                   >
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                   </svg>
-                  Verifikasi 15 Menit
+                  Verifikasi Mudah & Cepat
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <svg
@@ -355,14 +353,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center space-y-2.5 mb-12">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-[#0071E3]">
-              STANDAR LAYANAN APPLE
+              KEUNGGULAN KAMI
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
-              Mengapa Memilih iRent
+              Mengapa Memilih iRent?
             </h2>
             <p className="text-[14px] text-[#6E6E73] leading-relaxed">
-              Kami menerapkan standar kualitas tertinggi layaknya membeli unit
-              baru di Apple Authorised Reseller.
+              Kami menyediakan berbagai pilihan iPhone dengan kondisi terawat, harga yang jelas, dan proses penyewaan yang mudah untuk berbagai kebutuhan.
             </p>
           </div>
 
@@ -397,13 +394,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. UNIT PALING DIMINATI (LANGSUNG DARI DATABASE) */}
+      {/* 3. UNIT PALING DIMINATI*/}
       <section className="bg-[#F5F5F7] py-16 sm:py-24 border-y border-[#D2D2D7]/50">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-[#0071E3] mb-1.5">
-                ARMADA UNGGULAN
+                PRODUK UNGGULAN
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
                 Unit Paling Diminati
@@ -413,7 +410,7 @@ export default function HomePage() {
               href="/katalog"
               className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#0071E3] hover:text-[#0077ED] transition-colors"
             >
-              Lihat Semua Armada
+              Lihat Semua Produk
               <span>→</span>
             </Link>
           </div>
@@ -537,12 +534,10 @@ export default function HomePage() {
           <div className="mt-8 rounded-2xl bg-white border border-[#D2D2D7]/70 p-5 sm:px-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
             <div>
               <h3 className="text-[14px] font-bold text-[#1D1D1F]">
-                Butuh sewa mingguan atau bulanan untuk produksi &amp; proyek
-                film?
+                Butuh sewa mingguan atau bulanan untuk produksi &amp; proyek film?
               </h3>
               <p className="text-[12.5px] text-[#6E6E73] mt-0.5">
-                Dapatkan potongan harga khusus dan akses prioritas unit cadangan
-                di seluruh cabang resmi kami.
+                Dapatkan potongan harga khusus dan akses prioritas unit cadangan di seluruh cabang resmi kami.
               </p>
             </div>
             <Link
@@ -560,13 +555,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center space-y-2 mb-12">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-[#0071E3]">
-              PROSES MUDAH &amp; CEPAT
+              PROSES MUDAH &amp; PRAKTIS
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
               Cara Sewa iPhone di iRent
             </h2>
             <p className="text-[14px] text-[#6E6E73]">
-              Proses transparan, tanpa deposit tunai, selesai dalam 15 menit.
+              Pilih iPhone yang kamu inginkan, tentukan jadwal penyewaan, konsultasi dengan admin, dan ikuti proses pemesanan hingga unit siap diambil.
             </p>
           </div>
 
@@ -599,7 +594,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. CABANG RESMI (LANGSUNG DARI DATABASE) */}
+      {/* 5. CABANG RESMI */}
       <section
         id="cabang"
         className="bg-[#F5F5F7] py-16 sm:py-24 border-y border-[#D2D2D7]/50 scroll-mt-14"
@@ -608,18 +603,12 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-[#0071E3] mb-1.5">
-                📍 JARINGAN GERAI
+                LOKASI KAMi
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
-                {branches.length > 0
-                  ? `${branches.length} Cabang Resmi Kami`
-                  : "Cabang Resmi Kami"}
+                Temukan Cabang iRent Terdekat
               </h2>
             </div>
-            <p className="max-w-md text-[13px] text-[#6E6E73] leading-relaxed">
-              Ambil dan kembalikan unit di cabang resmi kami dengan proses
-              verifikasi cepat dan transparan.
-            </p>
           </div>
 
           {loading ? (
@@ -694,10 +683,10 @@ export default function HomePage() {
               ULASAN PELANGGAN
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
-              Cerita Pelanggan iRent
+              Apa Kata Mereka tentang iRent?
             </h2>
             <p className="text-[14px] text-[#6E6E73]">
-              Pengalaman nyata dari mahasiswa, kreator konten, hingga wisatawan.
+              Simak pengalaman pelanggan yang telah menggunakan layanan penyewaan iPhone di iRent.
             </p>
           </div>
 
@@ -747,14 +736,13 @@ export default function HomePage() {
           <div className="rounded-[32px] bg-white border border-[#D2D2D7]/70 p-8 sm:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.04)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="max-w-xl space-y-2">
               <p className="text-[11px] font-semibold uppercase tracking-widest text-[#0071E3]">
-                RESERVASI INSTAN
+                ADA PERTANYAAN?
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
-                Siap Mengabadikan Momen Istimewa?
+                Temukan iPhone yang Kamu Butuhkan
               </h2>
               <p className="text-[13.5px] leading-relaxed text-[#6E6E73]">
-                Konsultasikan pilihan iPhone terbaik bersama tim Concierge kami
-                melalui Live Chat Anonim atau WhatsApp dalam hitungan menit.
+                Masih bingung memilih unit atau ingin mengetahui informasi penyewaan? Hubungi kami melalui Live Chat atau WhatsApp, kami siap membantu.
               </p>
             </div>
 

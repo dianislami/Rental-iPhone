@@ -70,7 +70,7 @@ export function Footer() {
                       href={`/katalog?branch_id=${encodeURIComponent(b.id)}`}
                       className="font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
                     >
-                      {b.nama_cabang} ({b.kota})
+                      {b.nama_cabang}
                     </Link>
                     {b.alamat && (
                       <p className="text-[#6E6E73] line-clamp-2">{b.alamat}</p>
@@ -84,7 +84,7 @@ export function Footer() {
           {/* Column 2: Device Fleet from Database */}
           <div>
             <h3 className="text-[13px] font-semibold tracking-tight text-[#1D1D1F] mb-4">
-              Device Fleet
+              Pilihan Unit
             </h3>
             {fleetUnits.length === 0 ? (
               <p className="text-[12px] text-[#86868B]">
@@ -117,7 +117,7 @@ export function Footer() {
           {/* Column 3: Terms & Protection */}
           <div>
             <h3 className="text-[13px] font-semibold tracking-tight text-[#1D1D1F] mb-4">
-              Terms &amp; Protection
+              Informasi Kami
             </h3>
             <ul className="space-y-2.5 text-[12px] text-[#6E6E73]">
               <li>
@@ -125,7 +125,7 @@ export function Footer() {
                   href="/tentang-kami#proteksi"
                   className="hover:text-[#0071E3] transition-colors"
                 >
-                  AppleCare+ Shield Coverage
+                  Tentang Kami
                 </Link>
               </li>
               <li>
@@ -133,7 +133,7 @@ export function Footer() {
                   href="/tentang-kami#faq"
                   className="hover:text-[#0071E3] transition-colors"
                 >
-                  KTP &amp; Identitas Syarat Sewa
+                  Cara Penyewaan
                 </Link>
               </li>
               <li>
@@ -141,23 +141,7 @@ export function Footer() {
                   href="/tentang-kami#faq"
                   className="hover:text-[#0071E3] transition-colors"
                 >
-                  Deposit &amp; Refund Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/live-chat"
-                  className="hover:text-[#0071E3] transition-colors"
-                >
-                  Corporate &amp; Event Leasing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tentang-kami#cabang"
-                  className="hover:text-[#0071E3] transition-colors"
-                >
-                  Delivery &amp; Self Pick-up
+                  Pertanyaan Umum (FAQ)
                 </Link>
               </li>
             </ul>
@@ -166,12 +150,12 @@ export function Footer() {
           {/* Column 4: Concierge & Support */}
           <div>
             <h3 className="text-[13px] font-semibold tracking-tight text-[#1D1D1F] mb-4">
-              Concierge &amp; Support
+              Hubungi Kami
             </h3>
             <div className="space-y-3 text-[12px]">
               <div>
                 <p className="font-semibold text-[#1D1D1F]">
-                  WhatsApp Concierge
+                  WhatsApp Admin iRent
                 </p>
                 <a
                   href="https://wa.me/6281168908888"
@@ -185,48 +169,18 @@ export function Footer() {
               <div>
                 <p className="font-semibold text-[#1D1D1F]">Jam Operasional</p>
                 <p className="text-[#6E6E73]">
-                  Senin – Minggu: 09:00 – 22:00 WIB
+                  Setiap Hari: 09:00 - 22:00 WIB
                 </p>
-              </div>
-              <div className="pt-1">
-                <Link
-                  href="/live-chat"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#E8F2FF] px-3 py-1 text-[11px] font-semibold text-[#0071E3] hover:bg-[#0071E3] hover:text-white transition-colors"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                  LAYANAN LIVE CHAT AKTIF
-                </Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Copyright Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#D2D2D7]/50 pt-6 text-[11px] text-[#86868B] sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-center gap-4 border-t border-[#D2D2D7]/50 pt-6 text-[11px] text-[#86868B] sm:flex-row">
           <p>
-            © 2026 iRent. Hak Cipta Dilindungi. Layanan rental iPhone resmi
-            &amp; bergaransi.
+            © 2026 iRent. Hak Cipta Dilindungi. Layanan rental iPhone resmi &amp; bergaransi.
           </p>
-          <div className="flex items-center gap-5">
-            <Link
-              href="/tentang-kami"
-              className="hover:text-[#0071E3] transition-colors"
-            >
-              Kebijakan Privasi
-            </Link>
-            <Link
-              href="/tentang-kami#faq"
-              className="hover:text-[#0071E3] transition-colors"
-            >
-              Syarat Layanan
-            </Link>
-            <Link
-              href="/tentang-kami#cabang"
-              className="hover:text-[#0071E3] transition-colors"
-            >
-              Peta Lokasi
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

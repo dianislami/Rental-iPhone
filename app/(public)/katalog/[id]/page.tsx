@@ -406,18 +406,6 @@ function DetailUnitContent() {
           <div className="lg:col-span-6 space-y-6">
             {/* 1. Product Studio Card */}
             <div className="apple-card rounded-[28px] bg-white p-6">
-              <div className="flex items-center justify-between gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F5F5F7] px-3 py-1 text-[10.5px] font-bold uppercase tracking-wider text-[#1D1D1F]">
-                  <span>⚙️</span>{" "}
-                  {unit.status === "aktif"
-                    ? "GRADE-A PRISTINE"
-                    : unit.status.toUpperCase()}
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F2FF] px-3 py-1 text-[10.5px] font-semibold text-[#0071E3]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#0071E3]"></span>
-                  Baterai {unit.battery_health} Health
-                </span>
-              </div>
 
               {/* Studio Display */}
               <div className="rounded-2xl bg-gradient-to-b from-[#F5F5F7] to-[#EBEBEF] p-6 h-64 sm:h-72 flex items-center justify-center">
@@ -470,18 +458,6 @@ function DetailUnitContent() {
                     );
                   })}
                 </div>
-
-                {/* Micro Protection Badges */}
-                <div className="mt-5 pt-4 border-t border-[#F5F5F7] w-full flex flex-wrap items-center justify-center gap-5 text-[11.5px] font-medium text-[#6E6E73]">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="text-[#0071E3]">🛡️</span> AppleCare+ Shield
-                  </span>
-                  <span>•</span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="text-[#0071E3]">🔄</span> Reset &amp; Logout
-                    iCloud
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -489,11 +465,8 @@ function DetailUnitContent() {
             <div>
               <div className="flex items-center justify-between mb-3 px-1">
                 <h2 className="text-[15px] font-bold text-[#1D1D1F]">
-                  Inspeksi Teknis &amp; Spesifikasi
+                  Spesifikasi Unit
                 </h2>
-                <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#0071E3]">
-                  100% LOLOS UJI 32 TITIK
-                </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -504,9 +477,6 @@ function DetailUnitContent() {
                   <p className="mt-1 text-[14px] font-bold text-[#1D1D1F]">
                     {unit.tipe}
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#6E6E73]">
-                    {unit.nama_unit}
-                  </p>
                 </div>
 
                 <div className="rounded-2xl bg-white p-4 border border-[#D2D2D7]/60">
@@ -516,20 +486,14 @@ function DetailUnitContent() {
                   <p className="mt-1 text-[14px] font-bold text-[#1D1D1F]">
                     {unit.storage}
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#6E6E73]">
-                    Kapasitas Internal NVMe
-                  </p>
                 </div>
 
                 <div className="rounded-2xl bg-white p-4 border border-[#D2D2D7]/60">
                   <p className="text-[9.5px] font-bold uppercase tracking-wider text-[#86868B]">
                     KONDISI BATERAI
                   </p>
-                  <p className="mt-1 text-[14px] font-bold text-[#0071E3]">
+                  <p className="mt-1 text-[14px] font-bold text-[#1D1D1F]">
                     {unit.battery_health} Peak
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-[#6E6E73]">
-                    Terkalibrasi Optimal
                   </p>
                 </div>
 
@@ -540,9 +504,6 @@ function DetailUnitContent() {
                   <p className="mt-1 text-[14px] font-bold text-[#1D1D1F]">
                     {unit.warna}
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#6E6E73]">
-                    Original Apple Finish
-                  </p>
                 </div>
 
                 <div className="rounded-2xl bg-white p-4 border border-[#D2D2D7]/60">
@@ -551,9 +512,6 @@ function DetailUnitContent() {
                   </p>
                   <p className="mt-1 text-[14px] font-bold text-[#1D1D1F] capitalize">
                     {unit.status === "aktif" ? "Siap Sewa" : unit.status}
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-[#6E6E73]">
-                    Clean &amp; Logout iCloud
                   </p>
                 </div>
 
@@ -564,38 +522,7 @@ function DetailUnitContent() {
                   <p className="mt-1 text-[14px] font-bold text-[#1D1D1F]">
                     {branchKota}
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#6E6E73] truncate">
-                    {branchName}
-                  </p>
                 </div>
-              </div>
-            </div>
-
-            {/* 3. Garansi Tukar Unit Langsung */}
-            <div className="rounded-2xl bg-white p-5 border border-[#D2D2D7]/60 flex items-start gap-3.5">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M21 2v6h-6" />
-                  <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
-                  <path d="M3 22v-6h6" />
-                  <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-[13.5px] font-bold text-[#1D1D1F]">
-                  Garansi Tukar Unit Langsung
-                </h3>
-                <p className="mt-1 text-[12px] leading-relaxed text-[#6E6E73]">
-                  Jika terjadi kendala sistem atau kamera sewaktu masa sewa,
-                  kami tukar langsung dengan unit setara di seluruh jaringan
-                  cabang iRent Aceh tanpa ribet.
-                </p>
               </div>
             </div>
 
@@ -613,9 +540,9 @@ function DetailUnitContent() {
                 </div>
                 <div className="text-right">
                   <p className="text-[9.5px] font-bold uppercase tracking-wider text-[#0071E3]">
-                    TANPA JAMINAN TUNAI
+                    HARGA TOTAL
                   </p>
-                  <p className="text-2xl sm:text-[26px] font-bold tracking-tight text-[#1D1D1F]">
+                  <p className="text-2xl font-bold tracking-tight text-[#1D1D1F]">
                     {effectivePrice
                       ? formatRupiah(effectivePrice)
                       : "Hubungi Kami"}
@@ -634,7 +561,7 @@ function DetailUnitContent() {
                 <div className="flex items-center justify-between">
                   <span className="text-[#6E6E73]">Cabang Pengambilan:</span>
                   <span className="font-semibold text-[#1D1D1F]">
-                    {branchName} ({branchKota})
+                    {branchName}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -659,7 +586,7 @@ function DetailUnitContent() {
                   >
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                   </svg>
-                  Sewa Sekarang via Live Chat Concierge
+                  Konsultasi via Live Chat
                 </Link>
 
                 <a
@@ -676,14 +603,45 @@ function DetailUnitContent() {
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] py-2.5 px-5 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
                 >
-                  Atau Pesan via WhatsApp Concierge ↗
+                  Pesan via WhatsApp ↗
                 </a>
               </div>
+            </div>
 
-              <p className="mt-3.5 text-center text-[11px] text-[#86868B]">
-                🔒 Data Anda aman &amp; terenkripsi. Konfirmasi reservasi instan
-                dalam 5 menit.
-              </p>
+            {/* 5. Cabang Pengambilan Card (Directly from database branch) */}
+            <div className="apple-card rounded-[28px] bg-white p-6">
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#0071E3] flex items-center gap-1">
+                    CABANG PENGAMBILAN
+                  </p>
+                  <h3 className="mt-1 text-[17px] font-bold text-[#1D1D1F]">
+                    {branchName}
+                  </h3>
+                </div>
+
+                <span className="shrink-0 rounded-full bg-[#F5F5F7] px-3 py-1 text-[10.5px] font-semibold text-[#6E6E73]">
+                  {branch?.unit_count ?? 1} Unit di Cabang
+                </span>
+              </div>
+
+              {/* Store Visual Card */}
+              <div className="relative rounded-2xl apple-deep-blue-banner h-36 p-4 flex items-end justify-end overflow-hidden">
+
+                <a
+                  href={
+                    branch?.google_maps_url ||
+                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${branchName} ${branchAlamat} ${branchKota}`
+                    )}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-10 inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1.5 text-[11.5px] font-semibold text-[#0071E3] hover:bg-[#E8F2FF] transition-colors shadow-xs"
+                >
+                  Buka di Google Maps ↗
+                </a>
+              </div>
             </div>
           </div>
 
@@ -691,9 +649,6 @@ function DetailUnitContent() {
           <div className="lg:col-span-6 space-y-6">
             {/* 1. Title & Overview from Database */}
             <div>
-              <span className="inline-flex items-center rounded-full bg-[#E8F2FF] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#0071E3]">
-                {unit.tipe.toUpperCase()} • {unit.storage}
-              </span>
               <h1 className="mt-2.5 text-3xl sm:text-4xl font-bold tracking-tight text-[#1D1D1F]">
                 {unit.nama_unit}
               </h1>
@@ -711,8 +666,8 @@ function DetailUnitContent() {
 
               {variants.length === 0 ? (
                 <div className="rounded-2xl bg-white p-5 border border-[#D2D2D7]/70 text-sm text-[#6E6E73]">
-                  Paket harga untuk unit ini belum ditambahkan di database.
-                  Silakan hubungi tim Concierge melalui tombol Live Chat untuk
+                  Paket harga untuk unit ini belum ditambahkan oleh Admin.
+                  Silakan hubungi Admin melalui tombol Live Chat untuk
                   informasi tarif sewa.
                 </div>
               ) : (
@@ -951,82 +906,6 @@ function DetailUnitContent() {
                 <span className="text-[#6E6E73]">Tanggal Terpilih:</span>
                 <span className="font-bold text-[#0071E3]">
                   {selectedDateLabel}
-                </span>
-              </div>
-            </div>
-
-            {/* 4. Cabang Pengambilan Card (Directly from database branch) */}
-            <div className="apple-card rounded-[28px] bg-white p-6">
-              <div className="flex items-start justify-between gap-3 mb-4">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#0071E3] flex items-center gap-1">
-                    <span>📍</span> CABANG PENGAMBILAN
-                  </p>
-                  <h3 className="mt-1 text-[17px] font-bold text-[#1D1D1F]">
-                    {branchName}
-                  </h3>
-                  <p className="mt-0.5 text-[12px] text-[#6E6E73]">
-                    {branchAlamat} • {branchKota}
-                  </p>
-                </div>
-
-                <span className="shrink-0 rounded-full bg-[#F5F5F7] px-3 py-1 text-[10.5px] font-semibold text-[#6E6E73]">
-                  {branch?.unit_count ?? 1} Unit di Cabang
-                </span>
-              </div>
-
-              {/* Store Visual Card */}
-              <div className="relative rounded-2xl apple-deep-blue-banner h-36 p-4 flex items-end justify-between overflow-hidden">
-                <div className="relative z-10 flex items-center gap-2 text-white">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
-                  <span className="text-[13px] font-semibold">
-                    iRent {branchName} ({branchKota})
-                  </span>
-                </div>
-
-                <a
-                  href={
-                    branch?.google_maps_url ||
-                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      `${branchName} ${branchAlamat} ${branchKota}`
-                    )}`
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-10 inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1.5 text-[11.5px] font-semibold text-[#0071E3] hover:bg-[#E8F2FF] transition-colors shadow-xs"
-                >
-                  Buka di Google Maps ↗
-                </a>
-              </div>
-
-              {/* Verification Checklist Row */}
-              <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-[#F5F5F7] p-3.5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[#0071E3] shadow-2xs">
-                    <svg
-                      className="h-4 w-4"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <rect x="3" y="4" width="18" height="16" rx="2" />
-                      <circle cx="9" cy="10" r="2" />
-                      <path d="M15 8h2M15 12h2M7 16h10" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-[12.5px] font-bold text-[#1D1D1F]">
-                      Serah Terima Cepat 15 Menit
-                    </p>
-                    <p className="text-[11px] text-[#6E6E73]">
-                      Cukup verifikasi KTP fisik atau KTM Mahasiswa di tempat
-                    </p>
-                  </div>
-                </div>
-
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
-                  ✓
                 </span>
               </div>
             </div>

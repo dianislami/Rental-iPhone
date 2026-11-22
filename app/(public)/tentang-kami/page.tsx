@@ -9,36 +9,38 @@ import {
   enrichBranchWithUnits,
 } from "@/lib/public-data";
 
+
 const FAQ_ITEMS = [
   {
-    q: "Apa saja syarat utama untuk menyewa iPhone di iRent?",
-    a: "Cukup menyiapkan KTP asli yang masih berlaku disertai salah satu identitas pendukung (KTM Mahasiswa aktif USK/UIN/Unimal/UTU, SIM A/C, Kartu Pegawai, atau Paspor). Kami tidak menerapkan penahanan uang deposit tunai yang memberatkan.",
+    q: "Apa saja syarat untuk menyewa iPhone di iRent?",
+    a: "Penyewa perlu menyiapkan KTP asli yang masih berlaku atau identitas lain seperti KTM mahasiswa aktif, SIM, kartu pegawai, maupun paspor. Untuk informasi lebih lanjut mengenai persyaratan penyewaan, kamu bisa menghubungi tim iRent.",
   },
   {
-    q: "Apakah unit iPhone dijamin 100% original dan bebas iCloud?",
-    a: "Ya, 100% seluruh armada iRent Aceh adalah unit resmi Apple (kode PA/A, ID/A, atau ZP/A) dengan layar Original True Tone aktif dan Battery Health di atas 90%. Setiap unit telah melalui prosedur Reset & Logout iCloud penuh sebelum diserahterimakan.",
+    q: "Apakah unit iPhone yang disewakan dalam kondisi baik?",
+    a: "Setiap unit diperiksa sebelum disewakan untuk memastikan fungsi perangkat berjalan dengan baik. Informasi mengenai spesifikasi, kondisi fisik, dan Battery Health juga dapat dilihat pada halaman detail masing-masing unit.",
   },
   {
-    q: "Bagaimana jika terjadi insiden gores atau retak selama masa sewa?",
-    a: "Setiap transaksi penyewaan sudah dilengkapi perlindungan iRent AppleCare+ Shield. Lecet halus pemakaian wajar ditanggung sepenuhnya. Untuk insiden berat pada layar atau bodi, Anda cukup menanggung biaya klaim ringan sesuai ketentuan tanpa perlu mengganti harga unit baru.",
+    q: "Bagaimana jika iPhone mengalami goresan atau kerusakan selama masa sewa?",
+    a: "Kondisi unit akan diperiksa saat dikembalikan. Jika terdapat goresan atau kerusakan, penanganannya akan disesuaikan dengan kondisi dan tingkat kerusakan. Untuk kerusakan yang cukup berat, penyewa dapat dikenakan biaya tambahan sesuai ketentuan yang berlaku.",
   },
   {
-    q: "Apakah bisa sewa di Banda Aceh lalu dikembalikan di Bireuen atau Lhokseumawe?",
-    a: "Bisa! Layanan Inter-Hub Return kami memungkinkan Anda mengambil unit di cabang Banda Aceh dan mengembalikannya di gerai Bireuen, Lhokseumawe, maupun Meulaboh. Cukup informasikan rencana cabang pengembalian kepada tim Concierge saat memesan.",
+    q: "Apakah iPhone bisa dikembalikan di cabang yang berbeda?",
+    a: "Pengembalian unit harus dilakukan di cabang yang sama dengan lokasi pengambilan. Jadi, jika kamu mengambil iPhone di cabang Banda Aceh, pengembaliannya juga dilakukan di cabang Banda Aceh.",
   },
   {
-    q: "Berapa lama proses pengambilan unit di gerai?",
-    a: "Rata-rata hanya 5 hingga 15 menit. Setelah Anda melakukan konfirmasi via Live Chat atau WhatsApp Concierge, unit langsung disiapkan dan disterilisasi sehingga siap diambil begitu Anda tiba di cabang.",
+    q: "Bagaimana jika terlambat mengembalikan iPhone?",
+    a: "Pengembalian yang melewati waktu sewa yang telah disepakati akan dikenakan biaya tambahan sesuai ketentuan keterlambatan yang berlaku. Karena itu, pastikan kamu mengembalikan unit sesuai jadwal yang telah ditentukan.",
   },
   {
-    q: "Apa saja kelengkapan aksesoris yang didapat dalam paket sewa?",
-    a: "Setiap paket sewa sudah termasuk unit iPhone pilihan Anda, kabel data USB-C Fast Charging original, kepala adaptor Apple 20W, Clear Case MagSafe pelindung benturan, serta pouch penyimpanan eksklusif iRent.",
+    q: "Apa saja aksesoris yang didapat saat menyewa iPhone?",
+    a: "Setiap penyewaan iPhone sudah termasuk casing dan charger yang dapat digunakan selama masa sewa. Pastikan seluruh perlengkapan dikembalikan bersama unit saat masa penyewaan berakhir.",
   },
   {
-    q: "Apakah melayani sewa mingguan atau bulanan untuk proyek event & korporasi?",
-    a: "Tentu. Kami menyediakan program Business & Production Lease untuk rumah produksi, wedding organizer, instansi pemerintah, dan kepanitiaan event dengan potongan tarif hingga 35% serta dukungan unit cadangan siaga.",
+    q: "Apakah bisa menyewa iPhone untuk jangka waktu mingguan atau bulanan?",
+    a: "Tentu. Untuk kebutuhan penyewaan jangka panjang, seperti produksi konten, dokumentasi acara, maupun keperluan pekerjaan, kamu bisa menghubungi tim iRent. Durasi penyewaan, pilihan unit, dan harga dapat didiskusikan sesuai kebutuhan.",
   },
 ];
+
 
 export default function TentangKamiPage() {
   const [branches, setBranches] = useState<Branch[]>([]);
@@ -95,7 +97,7 @@ export default function TentangKamiPage() {
   const stats = [
     {
       value: totalUnits > 0 ? `${totalUnits} Unit` : "100%",
-      title: totalUnits > 0 ? "Armada Aktif Siap Sewa" : "Armada Terkalibrasi",
+      title: totalUnits > 0 ? "Unit Aktif Siap Sewa" : "Armada Terkalibrasi",
       desc: "Unit iPhone resmi siap serah terima di seluruh cabang",
     },
     {
@@ -119,9 +121,8 @@ export default function TentangKamiPage() {
   const pillars = [
     {
       code: "PILAR 01",
-      badge: "32-Point Diagnostic",
-      title: "Hardware Pristine & Battery Health 90%+",
-      desc: "Setiap unit melalui inspeksi sensor kamera, True Tone, mikrofon, Face ID, kesehatan baterai, dan sanitasi bodi sebelum diserahterimakan. Bebas akun iCloud milik penyewa sebelumnya.",
+      title: "Unit yang Terawat",
+      desc: "Setiap iPhone diperiksa sebelum disewakan, mulai dari fungsi perangkat hingga kondisi fisiknya. Kami juga memperhatikan kondisi baterai agar pelanggan dapat memilih unit dengan informasi yang jelas.",
       icon: (
         <svg
           className="h-5 w-5"
@@ -138,9 +139,8 @@ export default function TentangKamiPage() {
     },
     {
       code: "PILAR 02",
-      badge: "Perlindungan Inklusif",
-      title: "Inklusi Perlindungan AppleCare+ Shield",
-      desc: "Berkarya leluasa di alam bebas Pucok Krueng hingga pantai Iboih Sabang. Setiap paket otomatis menyertakan proteksi kerusakan wajar dan bantuan unit pengganti siaga 24 jam jika terjadi kendala teknis.",
+      title: "Beragam Pilihan iPhone",
+      desc: "Kami menyediakan berbagai tipe iPhone dengan pilihan kapasitas penyimpanan yang beragam. Kamu bisa melihat spesifikasi setiap unit dan memilih sesuai kebutuhan, baik untuk aktivitas sehari-hari, membuat konten, maupun keperluan lainnya.",
       icon: (
         <svg
           className="h-5 w-5"
@@ -156,9 +156,8 @@ export default function TentangKamiPage() {
     },
     {
       code: "PILAR 03",
-      badge: "Tanpa Deposit Tunai",
-      title: "Verifikasi Cepat 5 – 15 Menit",
-      desc: "Cukup tunjukkan KTP/KTM asli sesuai yang terdaftar dalam sistem yang terenkripsi. Verifikasi instan via Live Chat atau WhatsApp dan langsung ambil di cabang terdekat.",
+      title: "Proses Penyewaan yang Mudah",
+      desc: "Kami berusaha membuat proses penyewaan lebih mudah dengan informasi harga, durasi, dan ketentuan yang jelas sejak awal. Jika masih ada yang ingin ditanyakan, kamu bisa menghubungi tim kami sebelum melakukan pemesanan.",
       icon: (
         <svg
           className="h-5 w-5"
@@ -180,20 +179,18 @@ export default function TentangKamiPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center space-y-4">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#D2D2D7]/80 px-4 py-1 text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3] shadow-2xs">
-              <span>✦</span> TENTANG IRENT ACEH • SEJAK 2021
+              <span>✦</span> TENTANG IRENT • SEJAK 2021
             </span>
 
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#1D1D1F] leading-[1.12]">
-              Pengalaman Apple Terbaik,
+              Pengalaman iPhone Terbaik,
               <br />
               Tanpa Harus <span className="text-[#0071E3]">Membeli.</span>
             </h1>
 
             <p className="mx-auto max-w-2xl text-[14.5px] sm:text-[15.5px] leading-relaxed text-[#6E6E73]">
-              iRent hadir sebagai pelopor rental iPhone premium di Tanah
-              Rencong. Memberikan akses instan ke ekosistem teknologi Apple
-              termutakhir dengan transparansi penuh serta layanan yang ramah
-              tanpa jaminan rumit.
+              iRent menyediakan layanan penyewaan iPhone untuk berbagai kebutuhan, mulai dari membuat konten, liburan, hingga acara.
+              Kami berupaya memberikan pengalaman penyewaan yang mudah dengan pilihan unit, informasi harga, dan ketentuan sewa yang jelas.
             </p>
           </div>
 
@@ -233,25 +230,21 @@ export default function TentangKamiPage() {
             {/* Left Story */}
             <div className="lg:col-span-5 space-y-5">
               <p className="text-[11px] font-bold uppercase tracking-widest text-[#0071E3]">
-                VISI &amp; STANDAR KUALITAS
+                TENTANG KAMI
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F] leading-snug">
-                Mendemokrasikan Akses Teknologi Premium di Nanggroe Aceh.
+                iRent Hadir untuk Berbagai Kebutuhan Media.
               </h2>
               <p className="text-[13.5px] leading-relaxed text-[#6E6E73]">
-                Berawal pada tahun 2021 di Banda Aceh,{" "}
-                <strong className="font-semibold text-[#1D1D1F]">iRent</strong>{" "}
-                didirikan untuk menjawab satu tantangan nyata: biaya kepemilikan
-                iPhone flagship yang semakin tinggi, sementara kebutuhan akan
-                rekaman video 4K ProRes untuk pernikahan, dokumentasi wisata
-                Sabang, dan tugas akhir mahasiswa terus meluas.
+                {" "}<strong className="font-semibold text-[#1D1D1F]">iRent</strong>{" "}
+                hadir sejak 2021 di Banda Aceh sebagai layanan penyewaan iPhone untuk berbagai kebutuhan.
+                Kami ingin memberikan pilihan bagi siapa saja yang ingin menggunakan iPhone tanpa harus membelinya,
+                baik untuk membuat konten, liburan, dokumentasi acara, maupun keperluan lainnya.
               </p>
               <p className="text-[13.5px] leading-relaxed text-[#6E6E73]">
-                Kami mengubah paradigma kepemilikan menjadi layanan fleksibel.
-                Dengan transparansi syarat, unit terawat tanpa cacat fungsi, dan
-                jaringan hub yang saling terhubung di kota-kota strategis Aceh,
-                menyewa iPhone di iRent semudah mengambil pesanan kopi favorit
-                Anda.
+                Seiring waktu, {" "}<strong className="font-semibold text-[#1D1D1F]">iRent</strong>{" "}
+                terus berkembang dan hadir di beberapa kota di Aceh. Kami berusaha menyediakan unit yang terawat,
+                pilihan iPhone yang beragam, serta proses penyewaan dengan informasi harga dan ketentuan yang jelas.
               </p>
 
               {/* Quote Box */}
@@ -261,11 +254,10 @@ export default function TentangKamiPage() {
                 </div>
                 <div>
                   <p className="text-[12.5px] font-medium italic leading-relaxed text-[#1D1D1F]">
-                    &ldquo;Teknologi terbaik seharusnya memberdayakan karya Anda
-                    hari ini, bukan membebani perencanaan finansial Anda.&rdquo;
+                    &ldquo;Kami ingin membuat pengalaman menyewa iPhone terasa lebih mudah dan prakis.&rdquo;
                   </p>
                   <p className="mt-1.5 text-[11px] font-semibold text-[#6E6E73]">
-                    — Tim Manajemen iRent Aceh
+                    - Tim iRent
                   </p>
                 </div>
               </div>
@@ -282,15 +274,7 @@ export default function TentangKamiPage() {
                     {p.icon}
                   </div>
                   <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#86868B]">
-                        {p.code}
-                      </span>
-                      <span className="rounded-full bg-[#E8F2FF] px-2.5 py-0.5 text-[10px] font-bold text-[#0071E3]">
-                        {p.badge}
-                      </span>
-                    </div>
-                    <h3 className="mt-1.5 text-[16px] font-bold text-[#1D1D1F]">
+                    <h3 className="mt-1 text-[20px] font-bold text-[#0071E3]">
                       {p.title}
                     </h3>
                     <p className="mt-1.5 text-[12.5px] leading-relaxed text-[#6E6E73]">
@@ -312,7 +296,7 @@ export default function TentangKamiPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10">
             <p className="text-[11px] font-bold uppercase tracking-widest text-[#0071E3]">
-              📍 JARINGAN GERAI TERINTEGRASI
+              JARINGAN GERAI TERINTEGRASI
             </p>
             <h2 className="mt-1.5 text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
               Temukan Kami di Seluruh Titik Utama Aceh.
@@ -357,25 +341,18 @@ export default function TentangKamiPage() {
                       <span className="rounded-full bg-[#E8F2FF] px-2.5 py-0.5 text-[10px] font-bold text-[#0071E3]">
                         Official Hub
                       </span>
-                      <span className="inline-flex items-center gap-1 text-[10.5px] font-semibold text-emerald-600">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                        Buka
-                      </span>
                     </div>
 
                     <h3 className="text-[17px] font-bold text-[#1D1D1F]">
                       {b.kota}
                     </h3>
-                    <p className="text-[11.5px] font-medium text-[#86868B]">
-                      {b.nama_cabang}
-                    </p>
 
-                    <p className="mt-3 text-[12px] leading-relaxed text-[#6E6E73]">
+                    <p className="text-[14px] leading-relaxed text-[#6E6E73]">
                       {b.alamat || `Gerai resmi iRent di ${b.kota}`}
                     </p>
                   </div>
 
-                  <div className="mt-5 pt-3.5 border-t border-[#F5F5F7] space-y-3">
+                  <div className="mt-3 pt-3.5 border-t border-[#F5F5F7] space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-[#6E6E73]">
                       <span>09:00 - 22:00 WIB</span>
                       <span className="font-semibold text-[#1D1D1F]">
@@ -384,54 +361,16 @@ export default function TentangKamiPage() {
                     </div>
 
                     <Link
-                      href={`/live-chat?cabang=${encodeURIComponent(
-                        b.nama_cabang
-                      )}`}
+                      href={`/katalog?branch_id=${encodeURIComponent(b.id)}`}
                       className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#F5F5F7] hover:bg-[#0071E3] py-2 text-[12px] font-semibold text-[#1D1D1F] hover:text-white transition-colors"
                     >
-                      <span>💬</span> Hubungi Cabang
+                      Lihat Katalog
                     </Link>
                   </div>
                 </div>
               ))}
             </div>
           )}
-
-          {/* Inter-Hub Return Bar */}
-          <div className="mt-6 rounded-2xl bg-white border border-[#D2D2D7]/70 p-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M17 1l4 4-4 4" />
-                  <path d="M3 11V9a4 4 0 0 1 4-4h14" />
-                  <path d="M7 23l-4-4 4-4" />
-                  <path d="M21 13v2a4 4 0 0 1-4 4H3" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-[13.5px] font-bold text-[#1D1D1F]">
-                  Layanan Antar-Cabang Se-Aceh (Inter-Hub Return)
-                </h3>
-                <p className="text-[12px] text-[#6E6E73]">
-                  Sewa di Banda Aceh untuk perjalanan wisata/dinas, kembalikan
-                  di Lhokseumawe atau Bireuen tanpa ribet.
-                </p>
-              </div>
-            </div>
-
-            <Link
-              href="/live-chat"
-              className="shrink-0 text-[12.5px] font-semibold text-[#0071E3] hover:underline"
-            >
-              Konfirmasi ke Concierge →
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -440,14 +379,13 @@ export default function TentangKamiPage() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-2.5 mb-12">
             <p className="text-[11px] font-bold uppercase tracking-widest text-[#0071E3]">
-              ❓ PUSAT BANTUAN &amp; FAQ
+              PUSAT BANTUAN &amp; FAQ
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D1D1F]">
               Pertanyaan yang Sering Diajukan
             </h2>
             <p className="text-[13.5px] text-[#6E6E73]">
-              Semua hal yang perlu Anda ketahui sebelum menyewa armada iPhone
-              kami. Bersih, transparan, tanpa biaya tersembunyi.
+              Punya pertanyaan sebelum menyewa iPhone? Temukan informasi seputar pilihan unit, harga, persyaratan, dan proses penyewaan di sini.
             </p>
           </div>
 
@@ -501,15 +439,14 @@ export default function TentangKamiPage() {
             <div className="max-w-xl space-y-3">
               <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-sky-300">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-                LAYANAN CONCIERGE 24 JAM
+                BUTUH BANTUAN
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Masih Punya Pertanyaan Lain?
               </h2>
               <p className="text-[13.5px] leading-relaxed text-white/80">
-                Tim iRent siap membantu konsultasi pemilihan tipe iPhone, cek
-                ketersediaan warna Titanium di cabang favorit Anda, hingga
-                estimasi biaya paket hemat dalam hitungan menit.
+                Tim iRent siap membantu jika kamu membutuhkan informasi lebih lanjut.
+                Mulai dari memilih tipe iPhone, mengecek ketersediaan unit, hingga mengetahui harga dan ketentuan penyewaan.
               </p>
             </div>
 
@@ -518,13 +455,13 @@ export default function TentangKamiPage() {
                 href="/live-chat"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] border border-white/20 px-6 py-3.5 text-[13px] font-semibold text-white shadow-md transition-all"
               >
-                <span>💬</span> Hubungi Live Chat Anonim
+                Hubungi Live Chat 
               </Link>
               <Link
                 href="/katalog"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white/12 hover:bg-white/20 border border-white/20 px-6 py-3 text-[13px] font-semibold text-white transition-all"
               >
-                Jelajahi Seri iPhone →
+                Jelajahi Katalog iPhone →
               </Link>
             </div>
           </div>
