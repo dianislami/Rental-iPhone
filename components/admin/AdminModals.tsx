@@ -2,6 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
+import { AdminDropdown } from "@/components/ui/AdminDropdown";
+import {
+  AlertTriangleIcon,
+  BuildingIcon,
+  CheckIcon,
+  CoffeeIcon,
+  PackageIcon,
+  ReceiptIcon,
+  ShieldCheckIcon,
+  SmartphoneIcon,
+  StoreIcon,
+  UserIcon,
+  WifiIcon,
+  WrenchIcon,
+} from "@/components/ui/Icons";
 import { formatRupiah, getColorHex } from "@/lib/public-data";
 import {
   Branch,
@@ -87,25 +102,19 @@ export function BranchModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="w-full max-w-xl rounded-[28px] bg-white p-6 sm:p-8 shadow-2xl border border-[#D2D2D7]/70 my-8">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4 pb-5 border-b border-[#F5F5F7]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-sm p-3 sm:p-5 overflow-hidden">
+      <form
+        onSubmit={handleSubmit}
+        className="relative w-full max-w-xl max-h-[88vh] flex flex-col rounded-[28px] bg-white shadow-[0_24px_64px_rgba(0,0,0,0.18)] border border-[#D2D2D7]/70 overflow-hidden"
+      >
+        {/* FIXED HEADER */}
+        <div className="shrink-0 px-6 sm:px-8 pt-5 sm:pt-6 pb-4 bg-white border-b border-[#F5F5F7] flex items-start justify-between gap-4 z-10">
           <div className="flex items-center gap-3.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
-              <svg
-                className="h-6 w-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
+              <StoreIcon className="h-6 w-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
                   {initialBranch ? "Edit Data Cabang" : "Tambah Cabang Baru"}
                 </h2>
@@ -123,22 +132,26 @@ export function BranchModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors"
+            aria-label="Tutup modal"
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors cursor-pointer"
           >
             ✕
           </button>
         </div>
 
-        {error && (
-          <div className="mt-4 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
-            ⚠️ {error}
-          </div>
-        )}
+        {/* SCROLLABLE BODY */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 sm:px-8 py-5 space-y-5">
+          {error && (
+            <div className="flex items-center gap-2 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
+              <AlertTriangleIcon className="h-4 w-4 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <div>
-            <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3] mb-3">
-              🏢 1. INFORMASI CABANG &amp; LOKASI (DATABASE BRANCHES)
+            <p className="inline-flex items-center gap-1.5 text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3] mb-3">
+              <BuildingIcon className="h-3.5 w-3.5" />
+              <span>1. INFORMASI CABANG &amp; LOKASI (DATABASE BRANCHES)</span>
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
@@ -153,7 +166,7 @@ export function BranchModal({
                   value={namaCabang}
                   onChange={(e) => setNamaCabang(e.target.value)}
                   placeholder="Contoh: Banda Aceh Flagship / Bireuen Central"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none transition-all"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -167,7 +180,7 @@ export function BranchModal({
                   value={kota}
                   onChange={(e) => setKota(e.target.value)}
                   placeholder="Contoh: Banda Aceh"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none transition-all"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -182,34 +195,36 @@ export function BranchModal({
               value={alamat}
               onChange={(e) => setAlamat(e.target.value)}
               placeholder="Nama jalan, nomor bangunan, gampong/kelurahan, dan patokan landmark terdekat..."
-              className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none transition-all"
+              className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] placeholder:text-[#86868B] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
             />
           </div>
+        </div>
 
-          {/* Footer Actions */}
-          <div className="pt-4 border-t border-[#F5F5F7] flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F] transition-colors"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all"
-            >
-              <span>✓</span>
+        {/* FIXED FOOTER */}
+        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-end gap-3 z-10">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F] transition-colors cursor-pointer"
+          >
+            Batal
+          </button>
+          <button
+            type="submit"
+            disabled={saving}
+            className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
+          >
+            <CheckIcon className="h-3.5 w-3.5" />
+            <span>
               {saving
                 ? "Menyimpan..."
                 : initialBranch
                 ? "Simpan Perubahan Cabang"
                 : "Simpan & Daftarkan Cabang"}
-            </button>
-          </div>
-        </form>
-      </div>
+            </span>
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
@@ -360,7 +375,11 @@ export function IphoneUnitModal({
 
   if (!open) return null;
 
-  function handleAutoLabel(nextTipe: string, nextStorage: string, nextWarna: string) {
+  function handleAutoLabel(
+    nextTipe: string,
+    nextStorage: string,
+    nextWarna: string
+  ) {
     if (!initialUnit) {
       setNamaUnit(`${nextTipe} ${nextStorage} ${nextWarna}`.trim());
     }
@@ -389,7 +408,6 @@ export function IphoneUnitModal({
 
     setError(null);
 
-    // If editing an existing unit, save directly to POST /api/price-variants
     if (initialUnit?.id) {
       try {
         const res = await fetch("/api/price-variants", {
@@ -434,7 +452,6 @@ export function IphoneUnitModal({
         return;
       }
     } else {
-      // Add to local draft list for new unit creation
       setUnitVariants((prev) => [
         ...prev,
         {
@@ -533,7 +550,6 @@ export function IphoneUnitModal({
 
       const savedIphoneId = json.data?.id || initialUnit?.id;
 
-      // If creating a new unit, also create all draft price variants
       if (!initialUnit && savedIphoneId && unitVariants.length > 0) {
         for (const v of unitVariants) {
           const h = Number(v.harga);
@@ -568,25 +584,19 @@ export function IphoneUnitModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="w-full max-w-3xl rounded-[28px] bg-white p-6 sm:p-8 shadow-2xl border border-[#D2D2D7]/70 my-8 max-h-[92vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4 pb-5 border-b border-[#F5F5F7]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-sm p-3 sm:p-5 overflow-hidden">
+      <form
+        onSubmit={handleSubmit}
+        className="relative w-full max-w-3xl max-h-[88vh] flex flex-col rounded-[28px] bg-white shadow-[0_24px_64px_rgba(0,0,0,0.18)] border border-[#D2D2D7]/70 overflow-hidden"
+      >
+        {/* FIXED HEADER */}
+        <div className="shrink-0 px-6 sm:px-8 pt-5 sm:pt-6 pb-4 bg-white border-b border-[#F5F5F7] flex items-start justify-between gap-4 z-10">
           <div className="flex items-center gap-3.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
-              <svg
-                className="h-6 w-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                <line x1="12" y1="18" x2="12.01" y2="18" />
-              </svg>
+              <SmartphoneIcon className="h-6 w-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
                   {initialUnit ? "Edit Unit iPhone" : "Tambah Unit iPhone Baru"}
                 </h2>
@@ -604,19 +614,22 @@ export function IphoneUnitModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors"
+            aria-label="Tutup modal"
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors cursor-pointer"
           >
             ✕
           </button>
         </div>
 
-        {error && (
-          <div className="mt-4 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
-            ⚠️ {error}
-          </div>
-        )}
+        {/* SCROLLABLE BODY */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 sm:px-8 py-5 space-y-6">
+          {error && (
+            <div className="flex items-center gap-2 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
+              <AlertTriangleIcon className="h-4 w-4 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-6">
           {/* SECTION 01: INFORMASI DASAR UNIT & HARDWARE */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -639,21 +652,17 @@ export function IphoneUnitModal({
                   Alokasi Cabang Showroom{" "}
                   <span className="text-[#0071E3]">*</span>
                 </label>
-                <select
+                <AdminDropdown
+                  variant="field"
                   value={branchId}
-                  onChange={(e) => setBranchId(e.target.value)}
-                  required
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] font-medium text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
-                >
-                  <option value="" disabled>
-                    Pilih Cabang...
-                  </option>
-                  {branches.map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.nama_cabang} ({b.kota})
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setBranchId(val)}
+                  placeholder="Pilih Cabang..."
+                  icon={<StoreIcon className="h-4 w-4" />}
+                  options={branches.map((b) => ({
+                    value: b.id,
+                    label: `${b.nama_cabang} (${b.kota})`,
+                  }))}
+                />
               </div>
 
               <div>
@@ -667,7 +676,7 @@ export function IphoneUnitModal({
                   value={namaUnit}
                   onChange={(e) => setNamaUnit(e.target.value)}
                   placeholder="iPhone 16 Pro 256GB Desert Titanium"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -688,7 +697,7 @@ export function IphoneUnitModal({
                         setTipe(m);
                         handleAutoLabel(m, storage, warna);
                       }}
-                      className={`rounded-xl py-2.5 px-3 text-[12px] font-semibold transition-all ${
+                      className={`rounded-xl py-2.5 px-3 text-[12px] font-semibold transition-all cursor-pointer ${
                         active
                           ? "bg-[#0071E3] text-white shadow-xs"
                           : "bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3]"
@@ -707,7 +716,7 @@ export function IphoneUnitModal({
                   handleAutoLabel(e.target.value, storage, warna);
                 }}
                 placeholder="Atau ketik model iPhone lainnya (contoh: iPhone 13 Pro)..."
-                className="w-full rounded-xl bg-[#F5F5F7] px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
+                className="w-full rounded-xl bg-[#F5F5F7] px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
               />
             </div>
 
@@ -735,7 +744,7 @@ export function IphoneUnitModal({
                         setStorage(st);
                         handleAutoLabel(tipe, st, warna);
                       }}
-                      className={`rounded-xl py-2.5 text-[12.5px] font-semibold transition-all border ${
+                      className={`rounded-xl py-2.5 text-[12.5px] font-semibold transition-all border cursor-pointer ${
                         active
                           ? "border-[#0071E3] bg-[#E8F2FF]/60 text-[#0071E3]"
                           : "border-transparent bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF]/40"
@@ -765,7 +774,7 @@ export function IphoneUnitModal({
                         setWarna(c.name);
                         handleAutoLabel(tipe, storage, c.name);
                       }}
-                      className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-[12px] font-semibold transition-all border ${
+                      className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-[12px] font-semibold transition-all border cursor-pointer ${
                         active
                           ? "border-[#0071E3] bg-white text-[#1D1D1F] shadow-2xs"
                           : "border-transparent bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF]/40"
@@ -788,7 +797,7 @@ export function IphoneUnitModal({
                   handleAutoLabel(tipe, storage, e.target.value);
                 }}
                 placeholder="Atau ketik warna lainnya..."
-                className="w-full rounded-xl bg-[#F5F5F7] px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
+                className="w-full rounded-xl bg-[#F5F5F7] px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
               />
             </div>
 
@@ -809,7 +818,7 @@ export function IphoneUnitModal({
                   value={batteryHealth}
                   onChange={(e) => setBatteryHealth(e.target.value)}
                   placeholder="100%"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-semibold text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] font-semibold text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -817,19 +826,18 @@ export function IphoneUnitModal({
                 <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
                   Status Operasional Unit
                 </label>
-                <select
+                <AdminDropdown
+                  variant="field"
                   value={status}
-                  onChange={(e) =>
-                    setStatus(
-                      e.target.value as "aktif" | "perawatan" | "nonaktif"
-                    )
+                  onChange={(val) =>
+                    setStatus(val as "aktif" | "perawatan" | "nonaktif")
                   }
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-semibold text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
-                >
-                  <option value="aktif">Aktif (Tersedia)</option>
-                  <option value="perawatan">Perawatan (Maintenance)</option>
-                  <option value="nonaktif">Nonaktif (Arsip)</option>
-                </select>
+                  options={[
+                    { value: "aktif", label: "Aktif (Tersedia)" },
+                    { value: "perawatan", label: "Perawatan (Maintenance)" },
+                    { value: "nonaktif", label: "Nonaktif (Arsip)" },
+                  ]}
+                />
               </div>
 
               <div>
@@ -843,7 +851,7 @@ export function IphoneUnitModal({
                   onChange={(e) =>
                     setDisplayOrder(Math.max(0, parseInt(e.target.value) || 0))
                   }
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-semibold text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] font-semibold text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -870,7 +878,7 @@ export function IphoneUnitModal({
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://... (URL gambar PNG/JPG/WebP)"
-                  className="w-full rounded-xl bg-white px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
+                  className="w-full rounded-xl bg-white px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -884,7 +892,7 @@ export function IphoneUnitModal({
                 value={deskripsi}
                 onChange={(e) => setDeskripsi(e.target.value)}
                 placeholder="Deskripsi kondisi unit, kelengkapan kamera, atau catatan khusus..."
-                className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
+                className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -905,7 +913,6 @@ export function IphoneUnitModal({
               </span>
             </div>
 
-            {/* Existing / Added Variants List */}
             {unitVariants.length > 0 && (
               <div className="space-y-2">
                 {unitVariants.map((v, idx) => (
@@ -935,7 +942,7 @@ export function IphoneUnitModal({
                     <button
                       type="button"
                       onClick={() => handleRemoveVariant(idx)}
-                      className="text-[11.5px] font-semibold text-red-600 hover:underline"
+                      className="text-[11.5px] font-semibold text-red-600 hover:underline cursor-pointer"
                     >
                       Hapus
                     </button>
@@ -959,7 +966,7 @@ export function IphoneUnitModal({
                     value={newVarName}
                     onChange={(e) => setNewVarName(e.target.value)}
                     placeholder="Contoh: 1 Hari / 3 Hari"
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -971,7 +978,7 @@ export function IphoneUnitModal({
                     value={newVarHarga}
                     onChange={(e) => setNewVarHarga(e.target.value)}
                     placeholder="210000"
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -983,7 +990,7 @@ export function IphoneUnitModal({
                     value={newVarBadge}
                     onChange={(e) => setNewVarBadge(e.target.value)}
                     placeholder="Best Seller / Diskon 15%"
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
               </div>
@@ -998,7 +1005,7 @@ export function IphoneUnitModal({
                     value={newVarPromo}
                     onChange={(e) => setNewVarPromo(e.target.value)}
                     placeholder="Kosongkan jika normal"
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -1009,7 +1016,7 @@ export function IphoneUnitModal({
                     type="date"
                     value={newVarStart}
                     onChange={(e) => setNewVarStart(e.target.value)}
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -1020,7 +1027,7 @@ export function IphoneUnitModal({
                     type="date"
                     value={newVarEnd}
                     onChange={(e) => setNewVarEnd(e.target.value)}
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[12.5px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
               </div>
@@ -1031,43 +1038,45 @@ export function IphoneUnitModal({
                   value={newVarDesc}
                   onChange={(e) => setNewVarDesc(e.target.value)}
                   placeholder="Deskripsi singkat paket (contoh: Paket Liburan Sabang)..."
-                  className="flex-1 rounded-xl bg-white px-3 py-2 text-[12px] border border-[#D2D2D7]/70"
+                  className="flex-1 rounded-xl bg-white px-3 py-2 text-[12px] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={handleAddVariantDraft}
-                  className="shrink-0 rounded-xl bg-[#E8F2FF] hover:bg-[#0071E3] text-[#0071E3] hover:text-white px-4 py-2 text-[12px] font-semibold transition-colors"
+                  className="shrink-0 rounded-xl bg-[#E8F2FF] hover:bg-[#0071E3] text-[#0071E3] hover:text-white px-4 py-2 text-[12px] font-semibold transition-colors cursor-pointer"
                 >
                   + Tambahkan Varian
                 </button>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Footer Submit */}
-          <div className="pt-4 border-t border-[#F5F5F7] flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F]"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25"
-            >
-              <span>✓</span>
+        {/* FIXED FOOTER */}
+        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-end gap-3 z-10">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F] transition-colors cursor-pointer"
+          >
+            Batal
+          </button>
+          <button
+            type="submit"
+            disabled={saving}
+            className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
+          >
+            <CheckIcon className="h-3.5 w-3.5" />
+            <span>
               {saving
                 ? "Menyimpan..."
                 : initialUnit
                 ? "Simpan Perubahan Unit"
                 : "Simpan Unit & Varian"}
-            </button>
-          </div>
-        </form>
-      </div>
+            </span>
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
@@ -1098,6 +1107,7 @@ export function RentalModal({
   onClose,
   onSaved,
 }: RentalModalProps) {
+  const [selectedCustomerId, setSelectedCustomerId] = useState("");
   const [namaPelanggan, setNamaPelanggan] = useState("");
   const [noWhatsapp, setNoWhatsapp] = useState("");
   const [jaminan, setJaminan] = useState("");
@@ -1125,6 +1135,7 @@ export function RentalModal({
   useEffect(() => {
     if (!open) return;
     setError(null);
+    setSelectedCustomerId("");
 
     const today = new Date();
     const tomorrow = new Date(today);
@@ -1266,7 +1277,6 @@ export function RentalModal({
 
     try {
       if (initialRental) {
-        // PATCH /api/rentals/[id]
         const res = await fetch(`/api/rentals/${initialRental.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -1292,7 +1302,6 @@ export function RentalModal({
           return;
         }
       } else {
-        // POST /api/rentals
         if (!namaPelanggan.trim() || !noWhatsapp.trim()) {
           setError("Nama lengkap dan nomor WhatsApp pelanggan wajib diisi.");
           return;
@@ -1341,13 +1350,16 @@ export function RentalModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="w-full max-w-2xl rounded-[28px] bg-white p-6 sm:p-8 shadow-2xl border border-[#D2D2D7]/70 my-8 max-h-[92vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between gap-4 pb-5 border-b border-[#F5F5F7]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-sm p-3 sm:p-5 overflow-hidden">
+      <form
+        onSubmit={handleSubmit}
+        className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-[28px] bg-white shadow-[0_24px_64px_rgba(0,0,0,0.18)] border border-[#D2D2D7]/70 overflow-hidden"
+      >
+        {/* FIXED HEADER */}
+        <div className="shrink-0 px-6 sm:px-8 pt-5 sm:pt-6 pb-4 bg-white border-b border-[#F5F5F7] flex items-center justify-between gap-4 z-10">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0071E3] text-white font-bold">
-              ✓
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0071E3] text-white">
+              <CheckIcon className="h-5 w-5" />
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
@@ -1366,46 +1378,49 @@ export function RentalModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3]"
+            aria-label="Tutup modal"
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors cursor-pointer"
           >
             ✕
           </button>
         </div>
 
-        {error && (
-          <div className="mt-4 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
-            ⚠️ {error}
-          </div>
-        )}
+        {/* SCROLLABLE BODY */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 sm:px-8 py-5 space-y-6">
+          {error && (
+            <div className="flex items-center gap-2 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
+              <AlertTriangleIcon className="h-4 w-4 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-6">
           {/* 1. IDENTITAS & CUSTOMER INFORMATION */}
           <div>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
               <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B]">
                 1. IDENTITAS &amp; CUSTOMER INFORMATION
               </p>
               {!initialRental && customers.length > 0 && (
-                <select
-                  onChange={(e) => {
-                    const found = customers.find((c) => c.id === e.target.value);
+                <AdminDropdown
+                  variant="compact"
+                  align="right"
+                  value={selectedCustomerId}
+                  placeholder="Pilih Pelanggan Terdaftar..."
+                  icon={<UserIcon className="h-3.5 w-3.5" />}
+                  onChange={(val) => {
+                    setSelectedCustomerId(val);
+                    const found = customers.find((c) => c.id === val);
                     if (found) {
                       setNamaPelanggan(found.nama);
                       setNoWhatsapp(found.no_whatsapp);
                     }
                   }}
-                  defaultValue=""
-                  className="rounded-lg bg-[#E8F2FF] px-2.5 py-1 text-[11px] font-semibold text-[#0071E3] focus:outline-none"
-                >
-                  <option value="" disabled>
-                    Pilih Pelanggan Terdaftar...
-                  </option>
-                  {customers.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.nama} ({c.no_whatsapp})
-                    </option>
-                  ))}
-                </select>
+                  options={customers.map((c) => ({
+                    value: c.id,
+                    label: c.nama,
+                    sublabel: c.no_whatsapp,
+                  }))}
+                />
               )}
             </div>
 
@@ -1421,7 +1436,7 @@ export function RentalModal({
                   value={namaPelanggan}
                   onChange={(e) => setNamaPelanggan(e.target.value)}
                   placeholder="Teuku Raihan Syahputra"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-medium text-[#1D1D1F] disabled:opacity-70"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-medium text-[#1D1D1F] disabled:opacity-70 border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -1436,7 +1451,7 @@ export function RentalModal({
                   value={noWhatsapp}
                   onChange={(e) => setNoWhatsapp(e.target.value)}
                   placeholder="+62 812-6901-9921"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-medium text-[#1D1D1F] disabled:opacity-70"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-medium text-[#1D1D1F] disabled:opacity-70 border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -1449,7 +1464,7 @@ export function RentalModal({
                   value={jaminan}
                   onChange={(e) => setJaminan(e.target.value)}
                   placeholder="KTP Asli - Brankas Cabang Loker #04"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] text-[#1D1D1F]"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -1462,7 +1477,7 @@ export function RentalModal({
                   value={lokasiPenggunaan}
                   onChange={(e) => setLokasiPenggunaan(e.target.value)}
                   placeholder="Banda Aceh / Wisata Sabang"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] text-[#1D1D1F]"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -1479,42 +1494,35 @@ export function RentalModal({
                 <label className="block text-[11.5px] font-semibold text-[#1D1D1F] mb-1">
                   Cabang Transaksi <span className="text-[#0071E3]">*</span>
                 </label>
-                <select
+                <AdminDropdown
+                  variant="field"
                   value={branchId}
-                  onChange={(e) => handleBranchChange(e.target.value)}
-                  required
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-medium text-[#1D1D1F]"
-                >
-                  <option value="" disabled>
-                    Pilih Cabang...
-                  </option>
-                  {branches.map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.nama_cabang} ({b.kota})
-                    </option>
-                  ))}
-                </select>
+                  onChange={handleBranchChange}
+                  placeholder="Pilih Cabang..."
+                  icon={<StoreIcon className="h-4 w-4" />}
+                  options={branches.map((b) => ({
+                    value: b.id,
+                    label: `${b.nama_cabang} (${b.kota})`,
+                  }))}
+                />
               </div>
 
               <div>
                 <label className="block text-[11.5px] font-semibold text-[#1D1D1F] mb-1">
                   Pilih Unit iPhone <span className="text-[#0071E3]">*</span>
                 </label>
-                <select
+                <AdminDropdown
+                  variant="field"
                   value={iphoneId}
-                  onChange={(e) => handleUnitChange(e.target.value)}
-                  required
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[13px] font-medium text-[#1D1D1F]"
-                >
-                  <option value="" disabled>
-                    Pilih Unit iPhone...
-                  </option>
-                  {availableUnitsForBranch.map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.nama_unit} ({u.storage} - {u.warna})
-                    </option>
-                  ))}
-                </select>
+                  onChange={handleUnitChange}
+                  placeholder="Pilih Unit iPhone..."
+                  icon={<SmartphoneIcon className="h-4 w-4" />}
+                  options={availableUnitsForBranch.map((u) => ({
+                    value: u.id,
+                    label: u.nama_unit,
+                    sublabel: `${u.storage} • ${u.warna}`,
+                  }))}
+                />
               </div>
             </div>
 
@@ -1537,7 +1545,7 @@ export function RentalModal({
                           key={v.id}
                           type="button"
                           onClick={() => handleVariantSelect(v)}
-                          className={`rounded-xl px-3.5 py-2 text-[12px] font-semibold transition-all ${
+                          className={`rounded-xl px-3.5 py-2 text-[12px] font-semibold transition-all cursor-pointer ${
                             active
                               ? "bg-[#0071E3] text-white shadow-xs"
                               : "bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8F2FF]"
@@ -1563,14 +1571,14 @@ export function RentalModal({
                       required
                       value={tanggalPengambilan}
                       onChange={(e) => setTanggalPengambilan(e.target.value)}
-                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-2 text-[12px] font-medium"
+                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-2 text-[12px] font-medium border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
                     />
                     <input
                       type="time"
                       required
                       value={jamPengambilan}
                       onChange={(e) => setJamPengambilan(e.target.value)}
-                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-1.5 text-[12px]"
+                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-1.5 text-[12px] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
                     />
                   </div>
                   <div className="space-y-1">
@@ -1579,14 +1587,14 @@ export function RentalModal({
                       required
                       value={tanggalPengembalian}
                       onChange={(e) => setTanggalPengembalian(e.target.value)}
-                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-2 text-[12px] font-medium"
+                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-2 text-[12px] font-medium border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
                     />
                     <input
                       type="time"
                       required
                       value={jamPengembalian}
                       onChange={(e) => setJamPengembalian(e.target.value)}
-                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-1.5 text-[12px]"
+                      className="w-full rounded-xl bg-[#F5F5F7] px-3 py-1.5 text-[12px] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none"
                     />
                   </div>
                 </div>
@@ -1621,7 +1629,7 @@ export function RentalModal({
                     required
                     value={totalBayar}
                     onChange={(e) => setTotalBayar(e.target.value)}
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[13px] font-bold text-[#1D1D1F] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[13px] font-bold text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
 
@@ -1636,7 +1644,7 @@ export function RentalModal({
                     required
                     value={dp}
                     onChange={(e) => setDp(e.target.value)}
-                    className="w-full rounded-xl bg-white px-3 py-2 text-[13px] font-bold text-[#0071E3] border border-[#D2D2D7]/70"
+                    className="w-full rounded-xl bg-white px-3 py-2 text-[13px] font-bold text-[#0071E3] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                 </div>
 
@@ -1672,7 +1680,7 @@ export function RentalModal({
                       key={st.id}
                       type="button"
                       onClick={() => setStatusSewa(st.id)}
-                      className={`rounded-xl py-2 text-[12px] font-semibold transition-all ${
+                      className={`rounded-xl py-2 text-[12px] font-semibold transition-all cursor-pointer ${
                         statusSewa === st.id
                           ? "bg-[#0071E3] text-white shadow-xs"
                           : "bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF]"
@@ -1694,34 +1702,37 @@ export function RentalModal({
                 value={catatan}
                 onChange={(e) => setCatatan(e.target.value)}
                 placeholder="Kondisi mulus 100%, battery health 100%, include pouch original & kabel type C."
-                className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[12.5px] text-[#1D1D1F]"
+                className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-2.5 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
               />
             </div>
           </div>
+        </div>
 
-          {/* Footer */}
-          <div className="pt-4 border-t border-[#F5F5F7] flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F]"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25"
-            >
+        {/* FIXED FOOTER */}
+        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-end gap-3 z-10">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F] transition-colors cursor-pointer"
+          >
+            Batal
+          </button>
+          <button
+            type="submit"
+            disabled={saving}
+            className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
+          >
+            <CheckIcon className="h-3.5 w-3.5" />
+            <span>
               {saving
                 ? "Menyimpan..."
                 : initialRental
                 ? "Perbarui Transaksi"
                 : "Simpan Transaksi"}
-            </button>
-          </div>
-        </form>
-      </div>
+            </span>
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
@@ -1738,10 +1749,13 @@ interface ExpenseModalProps {
 }
 
 const EXPENSE_CATEGORIES = [
-  { id: "Sparepart & Reparasi", icon: "🔧" },
-  { id: "Aksesoris & Packaging", icon: "📦" },
-  { id: "Utilitas & Internet", icon: "🛜" },
-  { id: "Konsumsi & Rutin", icon: "☕" },
+  { id: "Sparepart & Reparasi", icon: <WrenchIcon className="h-4.5 w-4.5" /> },
+  {
+    id: "Aksesoris & Packaging",
+    icon: <PackageIcon className="h-4.5 w-4.5" />,
+  },
+  { id: "Utilitas & Internet", icon: <WifiIcon className="h-4.5 w-4.5" /> },
+  { id: "Konsumsi & Rutin", icon: <CoffeeIcon className="h-4.5 w-4.5" /> },
 ];
 
 export function ExpenseModal({
@@ -1835,16 +1849,19 @@ export function ExpenseModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="w-full max-w-xl rounded-[28px] bg-white p-6 sm:p-8 shadow-2xl border border-[#D2D2D7]/70 my-8">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4 pb-5 border-b border-[#F5F5F7]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-sm p-3 sm:p-5 overflow-hidden">
+      <form
+        onSubmit={handleSubmit}
+        className="relative w-full max-w-xl max-h-[88vh] flex flex-col rounded-[28px] bg-white shadow-[0_24px_64px_rgba(0,0,0,0.18)] border border-[#D2D2D7]/70 overflow-hidden"
+      >
+        {/* FIXED HEADER */}
+        <div className="shrink-0 px-6 sm:px-8 pt-5 sm:pt-6 pb-4 bg-white border-b border-[#F5F5F7] flex items-start justify-between gap-4 z-10">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3] text-xl">
-              🧾
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
+              <ReceiptIcon className="h-6 w-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
                   {initialExpense
                     ? "Edit Pengeluaran Operasional"
@@ -1864,19 +1881,22 @@ export function ExpenseModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3]"
+            aria-label="Tutup modal"
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors cursor-pointer"
           >
             ✕
           </button>
         </div>
 
-        {error && (
-          <div className="mt-4 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
-            ⚠️ {error}
-          </div>
-        )}
+        {/* SCROLLABLE BODY */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 sm:px-8 py-5 space-y-5">
+          {error && (
+            <div className="flex items-center gap-2 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700">
+              <AlertTriangleIcon className="h-4 w-4 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <div>
             <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B] mb-3">
               01 • DETAIL TRANSAKSI CABANG
@@ -1891,7 +1911,7 @@ export function ExpenseModal({
                   required
                   value={tanggal}
                   onChange={(e) => setTanggal(e.target.value)}
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] font-medium text-[#1D1D1F]"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] font-medium text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -1899,21 +1919,17 @@ export function ExpenseModal({
                 <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
                   Cabang / Outlet Beban
                 </label>
-                <select
+                <AdminDropdown
+                  variant="field"
                   value={branchId}
-                  onChange={(e) => setBranchId(e.target.value)}
-                  required
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] font-medium text-[#1D1D1F]"
-                >
-                  <option value="" disabled>
-                    Pilih Cabang...
-                  </option>
-                  {branches.map((b) => (
-                    <option key={b.id} value={b.id}>
-                      {b.nama_cabang} ({b.kota})
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setBranchId(val)}
+                  placeholder="Pilih Cabang..."
+                  icon={<StoreIcon className="h-4 w-4" />}
+                  options={branches.map((b) => ({
+                    value: b.id,
+                    label: `${b.nama_cabang} (${b.kota})`,
+                  }))}
+                />
               </div>
             </div>
           </div>
@@ -1931,7 +1947,7 @@ export function ExpenseModal({
                     key={cat.id}
                     type="button"
                     onClick={() => setKategori(cat.id)}
-                    className={`flex flex-col items-center justify-center gap-1 rounded-2xl p-3 text-center transition-all border ${
+                    className={`flex flex-col items-center justify-center gap-1 rounded-2xl p-3 text-center transition-all border cursor-pointer ${
                       active
                         ? "border-[#0071E3] bg-[#E8F2FF]/60 text-[#0071E3] font-bold shadow-2xs"
                         : "border-transparent bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF]/30"
@@ -1948,7 +1964,7 @@ export function ExpenseModal({
           {/* 02 Nominal & Deskripsi */}
           <div>
             <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B] mb-3">
-              02 • NOMINAL &amp; KETERANGANPENGELUARAN
+              02 • NOMINAL &amp; KETERANGAN PENGELUARAN
             </p>
 
             <div className="space-y-3.5">
@@ -1962,7 +1978,7 @@ export function ExpenseModal({
                   value={deskripsi}
                   onChange={(e) => setDeskripsi(e.target.value)}
                   placeholder="Contoh: Restock 50x Tempered Glass 9H & Box Pengiriman Unit"
-                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F]"
+                  className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                 />
               </div>
 
@@ -1986,38 +2002,39 @@ export function ExpenseModal({
                     value={nominal}
                     onChange={(e) => setNominal(e.target.value)}
                     placeholder="1250000"
-                    className="w-full rounded-2xl bg-[#F5F5F7] pl-14 pr-4 py-3.5 text-[17px] font-bold text-[#1D1D1F]"
+                    className="w-full rounded-2xl bg-[#F5F5F7] pl-14 pr-4 py-3.5 text-[17px] font-bold text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
                   />
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Footer */}
-          <div className="pt-4 border-t border-[#F5F5F7] flex items-center justify-between gap-3">
-            <span className="text-[11px] text-[#86868B]">
-              🛡️ Enkripsi Jurnal Terlindungi
-            </span>
-            <div className="flex items-center gap-2.5">
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F]"
-              >
-                Batal
-              </button>
-              <button
-                type="submit"
-                disabled={saving}
-                className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25"
-              >
-                <span>✓</span>
-                {saving ? "Menyimpan..." : "Simpan Pengeluaran"}
-              </button>
-            </div>
+        {/* FIXED FOOTER */}
+        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-between gap-3 z-10">
+          <span className="inline-flex items-center gap-1.5 text-[11px] text-[#86868B]">
+            <ShieldCheckIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+            <span>Enkripsi Jurnal Terlindungi</span>
+          </span>
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-full bg-[#F5F5F7] hover:bg-[#E5E5EA] px-5 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F] transition-colors cursor-pointer"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              disabled={saving}
+              className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
+            >
+              <CheckIcon className="h-3.5 w-3.5" />
+              <span>{saving ? "Menyimpan..." : "Simpan Pengeluaran"}</span>
+            </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }

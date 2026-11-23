@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { Footer } from "@/components/public/Footer";
+import { GoogleMapsIcon } from "@/components/ui/Icons";
 import {
   Branch,
   IphoneUnit,
@@ -663,9 +664,10 @@ export default function HomePage() {
                       href={branch.google_maps_url || "https://maps.google.com"}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[11px] font-medium text-[#6E6E73] hover:text-[#0071E3]"
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#6E6E73] hover:text-[#0071E3]"
                     >
-                      Peta ↗
+                      <GoogleMapsIcon className="h-3.5 w-3.5" />
+                      <span>Google Maps ↗</span>
                     </a>
                   </div>
                 </div>

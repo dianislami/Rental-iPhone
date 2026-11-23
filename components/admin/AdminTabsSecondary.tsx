@@ -3,6 +3,29 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
+import { AdminDropdown } from "@/components/ui/AdminDropdown";
+import {
+  BatteryIcon,
+  BuildingIcon,
+  CalendarIcon,
+  CameraIcon,
+  ClipboardListIcon,
+  DownloadIcon,
+  EditIcon,
+  EyeIcon,
+  FileSpreadsheetIcon,
+  LogOutIcon,
+  MailIcon,
+  MapPinIcon,
+  ReceiptIcon,
+  RefreshCwIcon,
+  SmartphoneIcon,
+  StarIcon,
+  StoreIcon,
+  TargetIcon,
+  UserIcon,
+  WalletIcon,
+} from "@/components/ui/Icons";
 import { formatRupiah, getColorHex } from "@/lib/public-data";
 import {
   AdminChatConversation,
@@ -81,8 +104,8 @@ export function AdminKatalogTab({
       {/* Top Preview Mode Notice Banner */}
       <div className="rounded-2xl bg-white border border-[#D2D2D7]/70 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-2xs">
         <div className="flex items-center gap-3 text-[12.5px]">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0071E3] text-white text-xs">
-            👁️
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0071E3] text-white">
+            <EyeIcon className="h-3.5 w-3.5" />
           </span>
           <div>
             <span className="font-bold text-[#1D1D1F]">
@@ -107,7 +130,7 @@ export function AdminKatalogTab({
             title="Sinkronkan ulang"
             className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
           >
-            ↻
+            <RefreshCwIcon className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>
@@ -246,10 +269,11 @@ export function AdminKatalogTab({
                         : "bg-[#F5F5F7] text-[#6E6E73]"
                     }`}
                   >
-                    {unit.highlight_badge || "☆ GRADE-A RESMI"}
+                    {unit.highlight_badge}
                   </span>
-                  <span className="rounded-full bg-[#F5F5F7] px-2.5 py-0.5 text-[10.5px] font-semibold text-[#1D1D1F]">
-                    🔋 {unit.battery_health}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#F5F5F7] px-2.5 py-0.5 text-[10.5px] font-semibold text-[#1D1D1F]">
+                    <BatteryIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                    <span>{unit.battery_health}</span>
                   </span>
                 </div>
 
@@ -549,10 +573,6 @@ export function AdminKeuanganTab({
           <h1 className="text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
             Arus Kas &amp; Laporan Keuangan
           </h1>
-          <p className="text-[13px] text-[#6E6E73] mt-0.5">
-            Sinkronisasi otomatis pendapatan rental perangkat Apple dan
-            pencatatan manual operasional {branches.length || 4} cabang.
-          </p>
         </div>
 
         <button
@@ -571,11 +591,8 @@ export function AdminKeuanganTab({
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B]">
+                <p className="text-[16px] font-bold uppercase tracking-widest text-[#86868B]">
                   TOTAL PEMASUKAN
-                </p>
-                <p className="text-[11.5px] font-semibold text-[#1D1D1F] mt-0.5">
-                  ✓ Otomatisasi Sistem Sewa
                 </p>
               </div>
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3] font-bold">
@@ -583,11 +600,8 @@ export function AdminKeuanganTab({
               </span>
             </div>
 
-            <p className="mt-4 text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
+            <p className="mt-2 text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
               +{formatRupiah(totalIncome)}
-            </p>
-            <p className="mt-1 text-[11px] text-[#6E6E73]">
-              Otomatis terakumulasi dari {rentals.filter((r) => r.status_sewa !== "dibatalkan").length} transaksi sewa &amp; DP
             </p>
           </div>
 
@@ -601,11 +615,8 @@ export function AdminKeuanganTab({
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B]">
+                <p className="text-[16px] font-bold uppercase tracking-widest text-[#86868B]">
                   TOTAL PENGELUARAN
-                </p>
-                <p className="text-[11.5px] font-semibold text-[#1D1D1F] mt-0.5">
-                  🧾 Input Manual Kasir / Spv
                 </p>
               </div>
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-bold">
@@ -613,12 +624,8 @@ export function AdminKeuanganTab({
               </span>
             </div>
 
-            <p className="mt-4 text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
+            <p className="mt-2 text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
               -{formatRupiah(totalExpense)}
-            </p>
-            <p className="mt-1 text-[11px] text-[#6E6E73]">
-              Manual Logistik, Operasional, Penggantian Suku Cadang &amp;
-              Reparasi
             </p>
           </div>
 
@@ -637,19 +644,16 @@ export function AdminKeuanganTab({
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[10.5px] font-bold uppercase tracking-widest text-sky-300">
+                <p className="text-[16px] font-bold uppercase tracking-widest text-sky-300">
                   SALDO BERSIH (NET CASHFLOW)
-                </p>
-                <p className="text-[11.5px] font-semibold text-white/90 mt-0.5">
-                  🏦 Total Likuiditas Aktif
                 </p>
               </div>
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white">
-                💳
+                <WalletIcon className="h-4.5 w-4.5" />
               </span>
             </div>
 
-            <p className="mt-4 text-2xl sm:text-3xl font-bold text-white">
+            <p className="mt-2 text-2xl sm:text-3xl font-bold text-white">
               {formatRupiah(netCashflow)}
             </p>
             <p className="mt-1 text-[11px] text-white/75">
@@ -668,37 +672,39 @@ export function AdminKeuanganTab({
       <div className="apple-card rounded-3xl bg-white p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2.5">
-            <select
+            <AdminDropdown
+              variant="pill"
               value={selectedBranchId}
-              onChange={(e) => {
-                setSelectedBranchId(e.target.value);
+              icon={<StoreIcon className="h-3.5 w-3.5" />}
+              onChange={(val) => {
+                setSelectedBranchId(val);
                 setPage(1);
               }}
-              className="rounded-full bg-[#F5F5F7] px-4 py-2 text-[12px] font-semibold text-[#1D1D1F] border border-[#D2D2D7]/60 focus:border-[#0071E3] focus:outline-none"
-            >
-              <option value="all">🏪 Semua Cabang (Konsolidasi)</option>
-              {branches.map((b) => (
-                <option key={b.id} value={b.id}>
-                  🏪 {b.nama_cabang} ({b.kota})
-                </option>
-              ))}
-            </select>
+              options={[
+                { value: "all", label: "Semua Cabang" },
+                ...branches.map((b) => ({
+                  value: b.id,
+                  label: b.nama_cabang,
+                })),
+              ]}
+            />
 
-            <select
+            <AdminDropdown
+              variant="pill"
               value={selectedMonth}
-              onChange={(e) => {
-                setSelectedMonth(e.target.value);
+              icon={<CalendarIcon className="h-3.5 w-3.5" />}
+              onChange={(val) => {
+                setSelectedMonth(val);
                 setPage(1);
               }}
-              className="rounded-full bg-[#F5F5F7] px-4 py-2 text-[12px] font-semibold text-[#1D1D1F] border border-[#D2D2D7]/60 focus:border-[#0071E3] focus:outline-none"
-            >
-              <option value="all">📅 Semua Periode</option>
-              {availableMonths.map((m) => (
-                <option key={m} value={m}>
-                  📅 Periode {m}
-                </option>
-              ))}
-            </select>
+              options={[
+                { value: "all", label: "Semua Periode" },
+                ...availableMonths.map((m) => ({
+                  value: m,
+                  label: `Periode ${m}`,
+                })),
+              ]}
+            />
           </div>
 
           {/* Type Sub-Tabs */}
@@ -736,14 +742,16 @@ export function AdminKeuanganTab({
             onClick={() => handleExportCsv(true)}
             className="inline-flex items-center gap-2 rounded-2xl bg-[#F5F5F7] hover:bg-[#E8F2FF] px-4 py-2.5 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
           >
-            <span>📊</span> Export Excel by Branch
+            <FileSpreadsheetIcon className="h-4 w-4 text-[#0071E3]" />
+            <span>Export Excel by Branch</span>
           </button>
           <button
             type="button"
             onClick={() => handleExportCsv(false)}
             className="inline-flex items-center gap-2 rounded-2xl bg-[#F5F5F7] hover:bg-[#E8F2FF] px-4 py-2.5 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
           >
-            <span>⬇️</span> Export All Excel
+            <DownloadIcon className="h-4 w-4 text-[#0071E3]" />
+            <span>Export All Excel</span>
           </button>
         </div>
       </div>
@@ -901,15 +909,13 @@ export function AdminKeuanganTab({
 // TAB 6: LIVE CHAT & SURVEI PENGUNJUNG (Database Chat & Surveys)
 // ======================================================
 interface AdminLiveChatTabProps {
-  onCreateRentalFromChat: (conversationId: string) => void;
+  onCreateRentalFromChat?: (conversationId: string) => void;
 }
 
 const CATALOG_TAG_REGEX =
   /^\[KATALOG_PRODUK\]([\s\S]*?)\[\/KATALOG_PRODUK\]\n?([\s\S]*)$/;
 
-export function AdminLiveChatTab({
-  onCreateRentalFromChat,
-}: AdminLiveChatTabProps) {
+export function AdminLiveChatTab(_props: AdminLiveChatTabProps) {
   const [conversations, setConversations] = useState<AdminChatConversation[]>(
     []
   );
@@ -1073,10 +1079,6 @@ export function AdminLiveChatTab({
           <h1 className="text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
             Live Chat Concierge &amp; Survei Pengunjung
           </h1>
-          <p className="text-[13px] text-[#6E6E73] mt-0.5">
-            Balas pesan pengunjung anonim secara real-time, tinjau hasil survei,
-            dan konversi langsung menjadi transaksi sewa.
-          </p>
         </div>
 
         <button
@@ -1113,7 +1115,7 @@ export function AdminLiveChatTab({
             </div>
           </div>
 
-          <div className="space-y-2 max-h-[540px] overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-[540px] overflow-y-auto custom-scrollbar pr-1">
             {filteredConversations.length === 0 ? (
               <p className="py-10 text-center text-[12.5px] text-[#86868B]">
                 Belum ada percakapan masuk.
@@ -1149,7 +1151,7 @@ export function AdminLiveChatTab({
                     </div>
                     <p className="mt-1 text-[11px] text-[#6E6E73] truncate">
                       {sv
-                        ? `🎯 ${sv.tujuan_penyewaan} • Usia ${sv.rentang_usia}`
+                        ? `${sv.tujuan_penyewaan} • Usia ${sv.rentang_usia}`
                         : "Belum mengisi survei"}
                     </p>
                     <p className="mt-1 text-[10px] text-[#86868B]">
@@ -1166,8 +1168,7 @@ export function AdminLiveChatTab({
         <div className="lg:col-span-8 space-y-4">
           {!selectedConv ? (
             <div className="apple-card rounded-3xl bg-white p-12 text-center text-[13px] text-[#86868B]">
-              Pilih salah satu percakapan di sebelah kiri untuk membuka pesan
-              dan hasil survei pengunjung.
+              Pilih salah satu percakapan di sebelah kiri untuk membuka pesan dan hasil survei pengunjung.
             </div>
           ) : (
             <>
@@ -1176,8 +1177,9 @@ export function AdminLiveChatTab({
                 <div className="apple-card rounded-3xl bg-white p-5 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="rounded-full bg-[#E8F2FF] px-3 py-1 text-[10.5px] font-bold text-[#0071E3]">
-                        📋 DATA SURVEI PENGUNJUNG
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F2FF] px-3 py-1 text-[10.5px] font-bold text-[#0071E3]">
+                        <ClipboardListIcon className="h-3.5 w-3.5" />
+                        <span>DATA SURVEI PENGUNJUNG</span>
                       </span>
                       <span className="text-[12px] font-semibold text-[#1D1D1F]">
                         {selectedSurvey.jenis_kelamin} •{" "}
@@ -1189,18 +1191,9 @@ export function AdminLiveChatTab({
                       <button
                         type="button"
                         onClick={() =>
-                          onCreateRentalFromChat(selectedConv.id)
-                        }
-                        className="rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-3.5 py-1.5 text-[11.5px] font-semibold text-white shadow-2xs"
-                      >
-                        + Buat Transaksi dari Chat Ini
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
                           handleToggleConversationStatus(selectedConv)
                         }
-                        className="rounded-full bg-[#F5F5F7] hover:bg-red-50 px-3 py-1.5 text-[11px] font-semibold text-[#6E6E73] hover:text-red-600"
+                        className="rounded-full bg-[#F5F5F7] hover:bg-red-50 px-3.5 py-1.5 text-[11px] font-semibold text-[#6E6E73] hover:text-red-600 transition-colors cursor-pointer"
                       >
                         {selectedConv.status === "open"
                           ? "Tutup Sesi"
@@ -1214,32 +1207,36 @@ export function AdminLiveChatTab({
                       <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
                         DOMISILI
                       </p>
-                      <p className="font-bold text-[#1D1D1F] mt-0.5">
-                        📍 {selectedSurvey.domisili}
+                      <p className="inline-flex items-center gap-1.5 font-bold text-[#1D1D1F] mt-0.5">
+                        <MapPinIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                        <span>{selectedSurvey.domisili}</span>
                       </p>
                     </div>
                     <div className="rounded-xl bg-[#F5F5F7] p-2.5">
                       <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
                         PEKERJAAN
                       </p>
-                      <p className="font-bold text-[#1D1D1F] mt-0.5">
-                        👤 {selectedSurvey.pekerjaan}
+                      <p className="inline-flex items-center gap-1.5 font-bold text-[#1D1D1F] mt-0.5">
+                        <UserIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                        <span>{selectedSurvey.pekerjaan}</span>
                       </p>
                     </div>
                     <div className="rounded-xl bg-[#F5F5F7] p-2.5">
                       <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
                         PENGALAMAN
                       </p>
-                      <p className="font-bold text-[#1D1D1F] mt-0.5">
-                        ⭐ {selectedSurvey.pengalaman_sewa}
+                      <p className="inline-flex items-center gap-1.5 font-bold text-[#1D1D1F] mt-0.5">
+                        <StarIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                        <span>{selectedSurvey.pengalaman_sewa}</span>
                       </p>
                     </div>
                     <div className="rounded-xl bg-[#F5F5F7] p-2.5">
                       <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
                         TUJUAN SEWA
                       </p>
-                      <p className="font-bold text-[#0071E3] mt-0.5">
-                        🎯 {selectedSurvey.tujuan_penyewaan}
+                      <p className="inline-flex items-center gap-1.5 font-bold text-[#0071E3] mt-0.5">
+                        <TargetIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                        <span>{selectedSurvey.tujuan_penyewaan}</span>
                       </p>
                     </div>
                   </div>
@@ -1255,7 +1252,7 @@ export function AdminLiveChatTab({
 
               {/* Chat Thread Box */}
               <div className="apple-card flex flex-col rounded-3xl bg-white overflow-hidden h-[460px]">
-                <div className="flex-1 overflow-y-auto p-5 space-y-3.5">
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-3.5">
                   {messages.length === 0 ? (
                     <p className="py-16 text-center text-[12.5px] text-[#86868B]">
                       Belum ada pesan pada percakapan ini.
@@ -1291,8 +1288,9 @@ export function AdminLiveChatTab({
                           >
                             {catalog && (
                               <div className="mb-2 rounded-xl bg-white p-3 text-[#1D1D1F] border border-[#D2D2D7]/60">
-                                <p className="text-[9.5px] font-bold uppercase text-[#0071E3] mb-1">
-                                  📱 KATALOG PRODUK DARI PENGUNJUNG
+                                <p className="inline-flex items-center gap-1.5 text-[9.5px] font-bold uppercase text-[#0071E3] mb-1">
+                                  <SmartphoneIcon className="h-3.5 w-3.5" />
+                                  <span>KATALOG PRODUK DARI PENGUNJUNG</span>
                                 </p>
                                 <p className="text-[13px] font-bold">
                                   {catalog.unit}
@@ -1302,8 +1300,16 @@ export function AdminLiveChatTab({
                                   {catalog.durasi} ({catalog.harga})
                                 </p>
                                 {(catalog.cabang || catalog.jadwal) && (
-                                  <p className="text-[10.5px] text-[#0071E3] mt-1 font-medium">
-                                    📍 {catalog.cabang} • 🗓️ {catalog.jadwal}
+                                  <p className="inline-flex flex-wrap items-center gap-2 text-[10.5px] text-[#0071E3] mt-1 font-medium">
+                                    <span className="inline-flex items-center gap-1">
+                                      <MapPinIcon className="h-3 w-3" />
+                                      {catalog.cabang}
+                                    </span>
+                                    <span>•</span>
+                                    <span className="inline-flex items-center gap-1">
+                                      <CalendarIcon className="h-3 w-3" />
+                                      {catalog.jadwal}
+                                    </span>
                                   </p>
                                 )}
                               </div>
@@ -1335,7 +1341,7 @@ export function AdminLiveChatTab({
                     type="text"
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
-                    placeholder="Ketik balasan Admin Concierge..."
+                    placeholder="Ketik balasan Admin..."
                     className="flex-1 rounded-full bg-white px-4 py-2.5 text-[13px] text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
                   />
                   <button
@@ -1440,7 +1446,7 @@ export function AdminProfilTab({
   }
 
   return (
-    <div className="mx-auto max-w-2xl py-6 space-y-6">
+    <div className="mx-auto max-w-6xl py-6 space-y-6">
       {feedback && (
         <div className="rounded-2xl bg-[#E8F2FF] border border-[#0071E3]/30 px-4 py-3 text-center text-[12.5px] font-semibold text-[#0071E3]">
           {feedback}
@@ -1448,11 +1454,11 @@ export function AdminProfilTab({
       )}
 
       {/* Top Profile Identity Card */}
-      <div className="apple-card rounded-[32px] bg-white p-8 sm:p-10 text-center space-y-4">
+      <div className="apple-card rounded-[32px] bg-white p-8 sm:p-8 text-center space-y-4">
         <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#0071E3] to-[#00346B] text-2xl font-bold text-white shadow-lg">
           {getInitials(admin.full_name || admin.email)}
-          <span className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#1D1D1F] shadow-md border border-[#D2D2D7]/60 text-xs">
-            📷
+          <span className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#1D1D1F] shadow-md border border-[#D2D2D7]/60">
+            <CameraIcon className="h-3.5 w-3.5" />
           </span>
         </div>
 
@@ -1460,10 +1466,6 @@ export function AdminProfilTab({
           <h1 className="text-2xl font-bold text-[#1D1D1F]">
             {admin.full_name || "Administrator iRent"}
           </h1>
-          <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-[#F5F5F7] px-3.5 py-1 text-[11.5px] font-semibold text-[#1D1D1F]">
-            <span className="text-[#0071E3]">✓</span> Superadmin Pusat (Wilayah
-            Aceh)
-          </div>
         </div>
 
         <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
@@ -1475,7 +1477,8 @@ export function AdminProfilTab({
             }}
             className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all"
           >
-            <span>✎</span> Edit Profile
+            <EditIcon className="h-3.5 w-3.5" />
+            <span>Edit Profile</span>
           </button>
 
           <button
@@ -1486,7 +1489,8 @@ export function AdminProfilTab({
             }}
             className="inline-flex items-center gap-2 rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] px-6 py-2.5 text-[12.5px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
           >
-            <span>⟳</span> Ubah Sandi
+            <RefreshCwIcon className="h-3.5 w-3.5" />
+            <span>Ubah Sandi</span>
           </button>
         </div>
 
@@ -1585,14 +1589,13 @@ export function AdminProfilTab({
       <div className="apple-card rounded-[32px] bg-white p-6 sm:p-8 space-y-4">
         <div className="flex items-center justify-between text-[10.5px] font-bold uppercase tracking-widest text-[#86868B] pb-2 border-b border-[#F5F5F7]">
           <span>INFORMASI KONTAK &amp; AKUN</span>
-          <span>UID: {admin.id.slice(0, 8).toUpperCase()}</span>
         </div>
 
         <div className="divide-y divide-[#F5F5F7]">
           <div className="py-3.5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
-                ✉️
+                <MailIcon className="h-4.5 w-4.5" />
               </span>
               <div>
                 <p className="text-[11px] text-[#86868B]">Alamat Email Resmi</p>
@@ -1609,7 +1612,7 @@ export function AdminProfilTab({
           <div className="py-3.5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
-                📱
+                <SmartphoneIcon className="h-4.5 w-4.5" />
               </span>
               <div>
                 <p className="text-[11px] text-[#86868B]">
@@ -1620,38 +1623,19 @@ export function AdminProfilTab({
                 </p>
               </div>
             </div>
-            <span className="rounded-full bg-[#F5F5F7] px-3 py-1 text-[10.5px] font-semibold text-[#6E6E73]">
-              2FA Aktif
-            </span>
-          </div>
-
-          <div className="py-3.5 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
-                🏢
-              </span>
-              <div>
-                <p className="text-[11px] text-[#86868B]">
-                  Pusat Otoritas &amp; Wilayah
-                </p>
-                <p className="text-[13.5px] font-bold text-[#1D1D1F]">
-                  {branchesCount} Cabang Aktif • Kantor Regional Aceh
-                </p>
-              </div>
-            </div>
-            <span className="text-[#86868B]">›</span>
           </div>
         </div>
       </div>
 
       {/* Bottom Logout Button */}
-      <div className="text-center pt-2">
+      <div className="text-center">
         <button
           type="button"
           onClick={onLogout}
           className="inline-flex items-center gap-2 rounded-full bg-white hover:bg-red-50 border border-[#D2D2D7]/70 hover:border-red-200 px-6 py-2.5 text-[13px] font-semibold text-[#1D1D1F] hover:text-red-600 transition-colors shadow-2xs"
         >
-          <span>↪</span> Keluar Sesi (Logout)
+          <LogOutIcon className="h-4 w-4" />
+          <span>Keluar Sesi (Logout)</span>
         </button>
       </div>
     </div>

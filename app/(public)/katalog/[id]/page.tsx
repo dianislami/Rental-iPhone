@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { BackButton } from "@/components/public/BackButton";
+import { GoogleMapsIcon, WhatsAppIcon } from "@/components/ui/Icons";
 import {
   Branch,
   IphoneUnit,
@@ -603,7 +604,8 @@ function DetailUnitContent() {
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] py-2.5 px-5 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
                 >
-                  Pesan via WhatsApp ↗
+                  <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+                  <span>Pesan via WhatsApp ↗</span>
                 </a>
               </div>
             </div>
@@ -637,9 +639,10 @@ function DetailUnitContent() {
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative z-10 inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1.5 text-[11.5px] font-semibold text-[#0071E3] hover:bg-[#E8F2FF] transition-colors shadow-xs"
+                  className="relative z-10 inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[11.5px] font-semibold text-[#0071E3] hover:bg-[#E8F2FF] transition-colors shadow-xs"
                 >
-                  Buka di Google Maps ↗
+                  <GoogleMapsIcon className="h-3.5 w-3.5" />
+                  <span>Buka di Google Maps ↗</span>
                 </a>
               </div>
             </div>

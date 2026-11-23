@@ -12,6 +12,13 @@ import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { BackButton } from "@/components/public/BackButton";
+import {
+  AlertTriangleIcon,
+  LockIcon,
+  MapPinIcon,
+  SmartphoneIcon,
+  WhatsAppIcon,
+} from "@/components/ui/Icons";
 import { getColorHex } from "@/lib/public-data";
 
 interface ChatConversation {
@@ -633,7 +640,10 @@ function LiveChatContent() {
         {/* ERROR / ALERT BANNER */}
         {errorMsg && (
           <div className="mb-6 rounded-2xl bg-red-50 border border-red-200 px-5 py-3.5 text-[13px] text-red-700 flex items-center justify-between gap-4">
-            <span>⚠️ {errorMsg}</span>
+            <span className="inline-flex items-center gap-2">
+              <AlertTriangleIcon className="h-4 w-4 shrink-0" />
+              {errorMsg}
+            </span>
             <button
               type="button"
               onClick={() => setErrorMsg(null)}
@@ -666,7 +676,7 @@ function LiveChatContent() {
           /* ADMIN SESSION CONFLICT NOTICE */
           <div className="apple-card rounded-[32px] bg-white p-10 text-center max-w-lg mx-auto space-y-4">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
-              🔐
+              <LockIcon className="h-5 w-5" />
             </div>
             <h2 className="text-lg font-bold text-[#1D1D1F]">
               Sesi Akun Admin Terdeteksi
@@ -698,8 +708,9 @@ function LiveChatContent() {
               href="https://wa.me/6281168908888"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-[#0071E3] px-6 py-3 text-[13px] font-semibold text-white"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0071E3] px-6 py-3 text-[13px] font-semibold text-white"
             >
+              <WhatsAppIcon className="h-4 w-4 shrink-0" />
               Hubungi via WhatsApp
             </a>
           </div>
@@ -712,8 +723,8 @@ function LiveChatContent() {
             {unitParam && (
               <div className="mb-8 rounded-2xl bg-[#E8F2FF] border border-[#0071E3]/25 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0071E3] text-white text-sm">
-                    📱
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0071E3] text-white">
+                    <SmartphoneIcon className="h-4.5 w-4.5" />
                   </span>
                   <div>
                     <p className="text-[11px] font-bold uppercase tracking-wider text-[#0071E3]">
@@ -726,8 +737,9 @@ function LiveChatContent() {
                   </div>
                 </div>
                 {cabangParam && (
-                  <span className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold text-[#0071E3]">
-                    📍 {cabangParam}
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-semibold text-[#0071E3]">
+                    <MapPinIcon className="h-3.5 w-3.5" />
+                    {cabangParam}
                   </span>
                 )}
               </div>

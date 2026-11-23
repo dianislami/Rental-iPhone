@@ -8,6 +8,32 @@ import React, {
   useState,
 } from "react";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
+import { AdminDropdown } from "@/components/ui/AdminDropdown";
+import {
+  AlertTriangleIcon,
+  BatteryIcon,
+  BuildingIcon,
+  CalendarIcon,
+  ChatBubbleIcon,
+  CheckCircleIcon,
+  ClipboardListIcon,
+  ClockIcon,
+  EditIcon,
+  FilterIcon,
+  KeyIcon,
+  LockIcon,
+  MapPinIcon,
+  PlusIcon,
+  RadioIcon,
+  ReceiptIcon,
+  RefreshCwIcon,
+  SmartphoneIcon,
+  StoreIcon,
+  TrashIcon,
+  TrendingUpIcon,
+  WalletIcon,
+  WhatsAppIcon,
+} from "@/components/ui/Icons";
 import {
   enrichBranchWithUnits,
   enrichIphoneUnit,
@@ -536,7 +562,7 @@ function AdminConsoleContent() {
             />
           </div>
           <p className="text-[14px] font-bold text-[#1D1D1F]">
-            Memverifikasi Otoritas Admin Console...
+            Memverifikasi Otoritas Admin...
           </p>
         </div>
       </div>
@@ -557,20 +583,20 @@ function AdminConsoleContent() {
               />
             </div>
             <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3] pt-1">
-              IRENT ADMIN CONSOLE
+              IRENT ADMIN PORTAL
             </p>
             <h1 className="text-2xl font-bold text-[#1D1D1F]">
-              Masuk ke Portal Admin
+              Selamat Datang Admin
             </h1>
             <p className="text-[12.5px] text-[#6E6E73]">
-              Akses khusus manajemen operasional cabang, armada iPhone,
-              transaksi sewa, dan arus kas iRent Aceh.
+              Akses khusus manajemen operasional iRent Aceh.
             </p>
           </div>
 
           {loginError && (
-            <div className="rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700 text-center">
-              ⚠️ {loginError}
+            <div className="flex items-center justify-center gap-2 rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-[12.5px] text-red-700 text-center">
+              <AlertTriangleIcon className="h-4 w-4 shrink-0" />
+              <span>{loginError}</span>
             </div>
           )}
 
@@ -608,13 +634,9 @@ function AdminConsoleContent() {
               disabled={loggingIn}
               className="w-full rounded-full bg-[#0071E3] hover:bg-[#0077ED] disabled:opacity-50 py-3.5 text-[13.5px] font-semibold text-white shadow-md shadow-[#0071E3]/25 transition-all"
             >
-              {loggingIn ? "Memverifikasi Sesi..." : "Masuk ke Admin Console →"}
+              {loggingIn ? "Memverifikasi Sesi..." : "Masuk ke Admin Portal →"}
             </button>
           </form>
-
-          <p className="text-center text-[11px] text-[#86868B]">
-            🔒 Dilindungi oleh Supabase JWT &amp; Row Level Security
-          </p>
         </div>
       </div>
     );
@@ -746,10 +768,10 @@ function AdminConsoleContent() {
   return (
     <div className="flex min-h-screen bg-[#F5F5F7] text-[#1D1D1F]">
       {/* ======================================================
-          LEFT SIDEBAR NAVIGATION
+          LEFT SIDEBAR NAVIGATION (PERMANENTLY FIXED)
          ====================================================== */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#F5F5F7] border-r border-[#D2D2D7]/70 flex flex-col justify-between p-4 transition-transform duration-200 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 w-64 h-screen overflow-hidden bg-[#F5F5F7] border-r border-[#D2D2D7]/70 flex flex-col p-4 transition-transform duration-200 lg:translate-x-0 ${
           mobileSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
@@ -807,21 +829,12 @@ function AdminConsoleContent() {
             })}
           </nav>
         </div>
-
-        {/* Bottom Status Pill */}
-        <div className="rounded-2xl bg-white px-4 py-3 border border-[#D2D2D7]/60 flex items-center justify-between text-[11px] shadow-2xs">
-          <span className="inline-flex items-center gap-2 font-semibold text-[#6E6E73]">
-            <span className="h-2 w-2 rounded-full bg-[#0071E3]" />
-            Central Operations
-          </span>
-          <span className="text-[#86868B] font-medium">v2.4</span>
-        </div>
       </aside>
 
       {/* ======================================================
           RIGHT MAIN WORKSPACE
          ====================================================== */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
         {/* TOP HEADER BAR */}
         <header className="sticky top-0 z-30 h-16 bg-white/85 backdrop-blur-xl border-b border-[#D2D2D7]/60 px-4 sm:px-8 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -833,8 +846,9 @@ function AdminConsoleContent() {
               ☰
             </button>
             {loadingData && (
-              <span className="text-[11.5px] font-semibold text-[#0071E3] animate-pulse">
-                ↻ Menyinkronkan database...
+              <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-[#0071E3] animate-pulse">
+                <RefreshCwIcon className="h-3.5 w-3.5 animate-spin" />
+                <span>Menyinkronkan database...</span>
               </span>
             )}
           </div>
@@ -871,7 +885,7 @@ function AdminConsoleContent() {
               title="Buka Inbox Live Chat"
               className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] text-[#6E6E73] hover:text-[#0071E3] transition-colors"
             >
-              💬
+              <ChatBubbleIcon className="h-4 w-4" />
             </button>
 
             {/* Profile Avatar Button */}
@@ -909,24 +923,25 @@ function AdminConsoleContent() {
             <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
-                  Dashboard iRent
+                  Dashboard Admin iRent
                 </h1>
                 <button
                   type="button"
                   onClick={fetchAllAdminData}
-                  className="rounded-full bg-white border border-[#D2D2D7]/70 px-4 py-2 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] shadow-2xs"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#D2D2D7]/70 px-4 py-2 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] shadow-2xs"
                 >
-                  ↻ Refresh Data
+                  <RefreshCwIcon className="h-3.5 w-3.5" />
+                  <span>Refresh Data</span>
                 </button>
               </div>
 
               {/* ROW 1: 4 OPERATIONAL KPI CARDS */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[12px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
                     <span>Total Cabang</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
-                      🏪
+                      <StoreIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -935,17 +950,13 @@ function AdminConsoleContent() {
                     </span>
                     <span className="text-[13px] text-[#86868B]">Cabang</span>
                   </div>
-                  <p className="mt-2 text-[11px] text-[#6E6E73]">
-                    <strong className="text-[#1D1D1F]">100% Aktif</strong> •
-                    Wilayah Aceh
-                  </p>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[12px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
                     <span>Total Unit iPhone</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
-                      📱
+                      <SmartphoneIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -954,16 +965,13 @@ function AdminConsoleContent() {
                     </span>
                     <span className="text-[13px] text-[#86868B]">Unit</span>
                   </div>
-                  <p className="mt-2 text-[11px] text-[#6E6E73]">
-                    Armada Terdaftar di Database
-                  </p>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[12px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
                     <span>Unit Sedang Disewa</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
-                      🔑
+                      <KeyIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -972,29 +980,13 @@ function AdminConsoleContent() {
                     </span>
                     <span className="text-[13px] text-[#86868B]">Unit</span>
                   </div>
-                  <div className="mt-2.5 flex items-center gap-2">
-                    <div className="h-1.5 flex-1 rounded-full bg-[#F5F5F7] overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-[#0071E3]"
-                        style={{
-                          width: `${Math.min(
-                            100,
-                            Number(dashboardMetrics.utilizationPct)
-                          )}%`,
-                        }}
-                      />
-                    </div>
-                    <span className="text-[10.5px] font-semibold text-[#6E6E73]">
-                      {dashboardMetrics.utilizationPct}% Utilitas
-                    </span>
-                  </div>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[12px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
                     <span>Unit Tersedia</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
-                      ✓
+                      <CheckCircleIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -1003,10 +995,6 @@ function AdminConsoleContent() {
                     </span>
                     <span className="text-[13px] text-[#86868B]">Unit</span>
                   </div>
-                  <p className="mt-2 text-[11px] text-[#6E6E73]">
-                    <strong className="text-emerald-600">Siap Sewa</strong> •
-                    Terinspeksi
-                  </p>
                 </div>
               </div>
 
@@ -1023,7 +1011,7 @@ function AdminConsoleContent() {
                       </span>
                     </div>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
-                      📈
+                      <TrendingUpIcon className="h-4 w-4" />
                     </span>
                   </div>
 
@@ -1044,8 +1032,8 @@ function AdminConsoleContent() {
                 <div className="lg:col-span-3 apple-card rounded-3xl bg-white p-6 flex flex-col justify-between">
                   <div className="flex items-center justify-between text-[12.5px] text-[#6E6E73]">
                     <span>Total Pengeluaran</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7]">
-                      💸
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                      <WalletIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <p className="my-3 text-2xl font-bold text-[#1D1D1F]">
@@ -1059,8 +1047,8 @@ function AdminConsoleContent() {
                 <div className="lg:col-span-3 apple-card rounded-3xl bg-white p-6 flex flex-col justify-between">
                   <div className="flex items-center justify-between text-[12.5px] text-[#6E6E73]">
                     <span>Total Transaksi</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7]">
-                      🧾
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                      <ReceiptIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="my-3 flex items-baseline gap-1.5">
@@ -1190,7 +1178,7 @@ function AdminConsoleContent() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
-                        🧾
+                        <ReceiptIcon className="h-4 w-4" />
                       </span>
                       <div>
                         <h3 className="text-[14.5px] font-bold text-[#1D1D1F]">
@@ -1250,7 +1238,7 @@ function AdminConsoleContent() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
-                        ⏱️
+                        <ClockIcon className="h-4 w-4" />
                       </span>
                       <div>
                         <h3 className="text-[14.5px] font-bold text-[#1D1D1F]">
@@ -1324,7 +1312,7 @@ function AdminConsoleContent() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
-                        🏦
+                        <BuildingIcon className="h-4 w-4" />
                       </span>
                       <div>
                         <h3 className="text-[14.5px] font-bold text-[#1D1D1F]">
@@ -1390,19 +1378,21 @@ function AdminConsoleContent() {
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <select
+                  <AdminDropdown
+                    variant="pill"
                     value={unitStatusFilter}
-                    onChange={(e) => {
-                      setUnitStatusFilter(e.target.value);
+                    icon={<FilterIcon className="h-3.5 w-3.5" />}
+                    onChange={(val) => {
+                      setUnitStatusFilter(val);
                       setUnitPage(1);
                     }}
-                    className="rounded-full bg-white border border-[#D2D2D7]/70 px-4 py-2.5 text-[12px] font-semibold text-[#1D1D1F] shadow-2xs focus:border-[#0071E3] focus:outline-none"
-                  >
-                    <option value="all">⚙️ Filter Status: Semua</option>
-                    <option value="aktif">● Status: Aktif</option>
-                    <option value="perawatan">● Status: Perawatan</option>
-                    <option value="nonaktif">● Status: Nonaktif</option>
-                  </select>
+                    options={[
+                      { value: "all", label: "Filter Status: Semua" },
+                      { value: "aktif", label: "Status: Aktif" },
+                      { value: "perawatan", label: "Status: Perawatan" },
+                      { value: "nonaktif", label: "Status: Nonaktif" },
+                    ]}
+                  />
 
                   <button
                     type="button"
@@ -1412,7 +1402,8 @@ function AdminConsoleContent() {
                     }}
                     className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-5 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all"
                   >
-                    <span>+</span> Tambah Cabang
+                    <PlusIcon className="h-3.5 w-3.5" />
+                    <span>Tambah Cabang</span>
                   </button>
                 </div>
               </div>
@@ -1421,23 +1412,14 @@ function AdminConsoleContent() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-[14px] font-bold text-[#1D1D1F]">
-                      🏪 Daftar Hub Cabang Aktif
+                    <span className="inline-flex items-center gap-2 text-[14px] font-bold text-[#1D1D1F]">
+                      <StoreIcon className="h-4 w-4 text-[#0071E3]" />
+                      <span>Daftar Cabang Aktif</span>
                     </span>
                     <span className="rounded-full bg-[#E8F2FF] px-2.5 py-0.5 text-[10.5px] font-bold text-[#0071E3]">
                       {branches.length} Cabang
                     </span>
                   </div>
-
-                  {selectedHubBranchId !== "all" && (
-                    <button
-                      type="button"
-                      onClick={() => setSelectedHubBranchId("all")}
-                      className="text-[12px] font-semibold text-[#0071E3] hover:underline"
-                    >
-                      Tampilkan Semua Cabang
-                    </button>
-                  )}
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -1468,21 +1450,16 @@ function AdminConsoleContent() {
                         }`}
                       >
                         <div>
-                          <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3 mb-3">
                             <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
-                              🏢
+                              <BuildingIcon className="h-4.5 w-4.5" />
                             </span>
-                            <span className="rounded-full bg-[#F5F5F7] px-2.5 py-0.5 text-[10px] font-bold uppercase text-[#1D1D1F]">
-                              ● BUKA
+                            <span>
+                              <h3 className="text-[15.5px] font-bold text-[#1D1D1F]">
+                                {b.nama_cabang}
+                              </h3>
                             </span>
                           </div>
-
-                          <h3 className="text-[15.5px] font-bold text-[#1D1D1F]">
-                            {b.nama_cabang}
-                          </h3>
-                          <p className="text-[11.5px] text-[#86868B] line-clamp-1 mt-0.5">
-                            {b.alamat || b.kota}
-                          </p>
 
                           <div className="mt-4 grid grid-cols-3 rounded-2xl bg-[#F5F5F7] p-2.5 text-center">
                             <div>
@@ -1518,7 +1495,6 @@ function AdminConsoleContent() {
                               isSelected ? "text-[#0071E3]" : "text-[#86868B]"
                             }`}
                           >
-                            {isSelected ? "Cabang Terpilih ✓" : "Pilih Cabang"}
                           </span>
 
                           <div
@@ -1555,7 +1531,7 @@ function AdminConsoleContent() {
                 <div className="apple-card rounded-3xl bg-white p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                   <div className="space-y-3 flex-1">
                     <span className="inline-flex items-center rounded-full bg-[#E8F2FF] px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0071E3]">
-                      CABANG AKTIF • {selectedHubBranch.kota.toUpperCase()}
+                      • {selectedHubBranch.kota.toUpperCase()}
                     </span>
                     <h2 className="text-2xl font-bold text-[#1D1D1F]">
                       {selectedHubBranch.nama_cabang}
@@ -1563,8 +1539,9 @@ function AdminConsoleContent() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1 text-[12px]">
                       <div>
-                        <p className="text-[10px] font-bold uppercase text-[#86868B]">
-                          📍 ALAMAT LENGKAP
+                        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase text-[#86868B]">
+                          <MapPinIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                          <span>ALAMAT LENGKAP</span>
                         </p>
                         <p className="font-medium text-[#1D1D1F] mt-0.5">
                           {selectedHubBranch.alamat ||
@@ -1572,19 +1549,21 @@ function AdminConsoleContent() {
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold uppercase text-[#86868B]">
-                          💬 WHATSAPP ARMADA
+                        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase text-[#86868B]">
+                          <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
+                          <span>WHATSAPP ARMADA</span>
                         </p>
                         <p className="font-medium text-[#1D1D1F] mt-0.5">
                           +62 811-6890-8888
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold uppercase text-[#86868B]">
-                          🕒 JAM OPERASIONAL
+                        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase text-[#86868B]">
+                          <ClockIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                          <span>JAM OPERASIONAL</span>
                         </p>
                         <p className="font-medium text-[#1D1D1F] mt-0.5">
-                          Setiap Hari (09:00 – 22:00 WIB)
+                          Setiap Hari (09:00 - 22:00 WIB)
                         </p>
                       </div>
                     </div>
@@ -1598,7 +1577,8 @@ function AdminConsoleContent() {
                     }}
                     className="self-start lg:self-center inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-6 py-3 text-[13px] font-semibold text-white shadow-md shadow-[#0071E3]/25 transition-all"
                   >
-                    <span>⊕</span> + Tambah Unit
+                    <PlusIcon className="h-4 w-4" />
+                    <span>Tambah Unit</span>
                   </button>
                 </div>
               )}
@@ -1706,8 +1686,9 @@ function AdminConsoleContent() {
                               </td>
 
                               <td className="py-3.5 px-4">
-                                <span className="font-bold text-[#1D1D1F]">
-                                  🔋 {u.battery_health}
+                                <span className="inline-flex items-center gap-1.5 font-bold text-[#1D1D1F]">
+                                  <BatteryIcon className="h-4 w-4 text-[#0071E3]" />
+                                  <span>{u.battery_health}</span>
                                 </span>
                               </td>
 
@@ -1764,17 +1745,18 @@ function AdminConsoleContent() {
                                       setUnitModalOpen(true);
                                     }}
                                     title="Edit Unit & Varian Harga"
-                                    className="rounded-lg bg-[#F5F5F7] hover:bg-[#E8F2FF] px-2.5 py-1.5 text-[11.5px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
+                                    className="inline-flex items-center gap-1 rounded-lg bg-[#F5F5F7] hover:bg-[#E8F2FF] px-2.5 py-1.5 text-[11.5px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
                                   >
-                                    ✎ Edit
+                                    <EditIcon className="h-3.5 w-3.5" />
+                                    <span>Edit</span>
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => handleDeleteUnit(u)}
                                     title="Hapus Unit"
-                                    className="rounded-lg bg-red-50 hover:bg-red-100 px-2.5 py-1.5 text-[11.5px] font-semibold text-red-600 transition-colors"
+                                    className="inline-flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-100 p-1.5 text-red-600 transition-colors"
                                   >
-                                    🗑️
+                                    <TrashIcon className="h-3.5 w-3.5" />
                                   </button>
                                 </div>
                               </td>
@@ -1883,10 +1865,10 @@ function AdminConsoleContent() {
               {/* 4 KPI Cards for Transaksi */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[10.5px] font-bold uppercase text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>UNIT SEDANG DISEWA</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
-                      📡
+                      <RadioIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -1901,16 +1883,13 @@ function AdminConsoleContent() {
                       Unit Aktif
                     </span>
                   </div>
-                  <div className="mt-3 h-1.5 w-full rounded-full bg-[#F5F5F7] overflow-hidden">
-                    <div className="h-full w-3/4 rounded-full bg-[#0071E3]" />
-                  </div>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[10.5px] font-bold uppercase text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>PENDAPATAN CABANG</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7]">
-                      💵
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                      <WalletIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <p className="mt-3 text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
@@ -1920,16 +1899,13 @@ function AdminConsoleContent() {
                         .reduce((s, r) => s + (Number(r.total_bayar) || 0), 0)
                     )}
                   </p>
-                  <p className="mt-2 text-[11px] font-semibold text-emerald-600">
-                    ↑ Akumulasi Transaksi Aktif
-                  </p>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[10.5px] font-bold uppercase text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>JUMLAH TRANSAKSI</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7]">
-                      🧾
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                      <ReceiptIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -1940,16 +1916,13 @@ function AdminConsoleContent() {
                       Siklus Sewa
                     </span>
                   </div>
-                  <p className="mt-2 text-[11px] text-[#6E6E73]">
-                    Terverifikasi KTP / Identitas
-                  </p>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[10.5px] font-bold uppercase text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>UNIT TERSEDIA</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
-                      ✓
+                      <CheckCircleIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -1968,9 +1941,6 @@ function AdminConsoleContent() {
                       Siap Disewa
                     </span>
                   </div>
-                  <p className="mt-2 text-[11px] text-[#6E6E73]">
-                    ● Siap Serah Terima Instan
-                  </p>
                 </div>
               </div>
 
@@ -2025,8 +1995,9 @@ function AdminConsoleContent() {
               {/* Table: Daftar Sewa Berjalan & Riwayat Transaksi */}
               <div className="apple-card rounded-3xl bg-white overflow-hidden">
                 <div className="p-5 border-b border-[#F5F5F7] flex items-center justify-between">
-                  <h3 className="text-[15px] font-bold text-[#1D1D1F]">
-                    ☑️ Daftar Sewa Berjalan &amp; Riwayat Transaksi
+                  <h3 className="inline-flex items-center gap-2 text-[15px] font-bold text-[#1D1D1F]">
+                    <ClipboardListIcon className="h-4.5 w-4.5 text-[#0071E3]" />
+                    <span>Daftar Sewa Berjalan &amp; Riwayat Transaksi</span>
                   </h3>
                   <span className="text-[11.5px] text-[#86868B]">
                     Menampilkan {filteredRentals.length} transaksi
@@ -2038,10 +2009,10 @@ function AdminConsoleContent() {
                     <thead>
                       <tr className="border-b border-[#F5F5F7] text-[10px] font-bold uppercase tracking-wider text-[#86868B]">
                         <th className="py-3.5 px-5">CUSTOMER</th>
-                        <th className="py-3.5 px-4">UNIT HARDWARE</th>
+                        <th className="py-3.5 px-4">UNIT PERANGKAT</th>
                         <th className="py-3.5 px-4">DURASI &amp; TAGIHAN</th>
-                        <th className="py-3.5 px-4">PICKUP SCHEDULE</th>
-                        <th className="py-3.5 px-4">RETURN DUE</th>
+                        <th className="py-3.5 px-4">JADWAL PENGAMBILAN</th>
+                        <th className="py-3.5 px-4">JADWAL PENGEMBALIAN</th>
                         <th className="py-3.5 px-4">STATUS</th>
                         <th className="py-3.5 px-4">SISA WAKTU</th>
                         <th className="py-3.5 px-5 text-right">AKSI</th>
@@ -2200,7 +2171,7 @@ function AdminConsoleContent() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
-                      📅
+                      <CalendarIcon className="h-5 w-5" />
                     </span>
                     <div>
                       <h3 className="text-[15.5px] font-bold text-[#1D1D1F]">

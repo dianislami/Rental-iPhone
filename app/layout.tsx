@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "iRent Aceh — Rental iPhone Resmi & Bergaransi #1 di Aceh",
+  title: "iRent Aceh",
   description:
     "Sewa iPhone seri terbaru untuk konten, liburan, atau event. Baterai 90%+, perlindungan AppleCare+ Shield, dan serah terima instan di 4 cabang resmi Aceh.",
   icons: {

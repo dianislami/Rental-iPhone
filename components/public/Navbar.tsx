@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { WhatsAppIcon } from "@/components/ui/Icons";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -66,8 +67,8 @@ export function Navbar() {
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] border border-[#D2D2D7]/70 hover:border-[#0071E3]/30 px-3.5 py-1.5 text-[12px] font-medium text-[#1D1D1F] hover:text-[#0071E3] transition-all duration-200"
           >
-            <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
-            Hubungi WhatsApp
+            <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
+            <span>Hubungi WhatsApp</span>
           </a>
 
 
@@ -133,8 +134,8 @@ export function Navbar() {
               rel="noopener noreferrer"
               className="flex w-full items-center justify-center gap-2 rounded-full bg-[#0071E3] py-2.5 text-[13px] font-medium text-white"
             >
-              <span className="h-2 w-2 rounded-full bg-emerald-300"></span>
-              Hubungi WhatsApp Concierge
+              <WhatsAppIcon className="h-4 w-4 text-white" />
+              <span>Hubungi WhatsApp Concierge</span>
             </a>
           </div>
         </div>
