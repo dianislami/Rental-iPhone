@@ -56,6 +56,7 @@ import {
 import {
   BranchModal,
   ExpenseModal,
+  IphoneCatalogDetailModal,
   IphoneUnitModal,
   RentalModal,
 } from "@/components/admin/AdminModals";
@@ -117,6 +118,8 @@ function AdminConsoleContent() {
 
   const [unitModalOpen, setUnitModalOpen] = useState(false);
   const [editingUnit, setEditingUnit] = useState<IphoneUnit | null>(null);
+  const [viewingCatalogUnit, setViewingCatalogUnit] =
+    useState<IphoneUnit | null>(null);
 
   const [rentalModalOpen, setRentalModalOpen] = useState(false);
   const [editingRental, setEditingRental] = useState<RentalTransaction | null>(
@@ -883,7 +886,7 @@ function AdminConsoleContent() {
               type="button"
               onClick={() => setActiveTab("live-chat")}
               title="Buka Inbox Live Chat"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] text-[#6E6E73] hover:text-[#0071E3] transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] hover:bg-[#0071E3] text-[#0071E3] hover:text-white transition-colors cursor-pointer"
             >
               <ChatBubbleIcon className="h-4 w-4" />
             </button>
@@ -938,9 +941,9 @@ function AdminConsoleContent() {
               {/* ROW 1: 4 OPERATIONAL KPI CARDS */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>Total Cabang</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <StoreIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -948,14 +951,14 @@ function AdminConsoleContent() {
                     <span className="text-3xl font-bold text-[#1D1D1F]">
                       {dashboardMetrics.totalBranches}
                     </span>
-                    <span className="text-[13px] text-[#86868B]">Cabang</span>
+                    <span className="text-[14px] text-[#86868B]">Cabang</span>
                   </div>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>Total Unit iPhone</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <SmartphoneIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -963,12 +966,12 @@ function AdminConsoleContent() {
                     <span className="text-3xl font-bold text-[#1D1D1F]">
                       {dashboardMetrics.totalUnits}
                     </span>
-                    <span className="text-[13px] text-[#86868B]">Unit</span>
+                    <span className="text-[14px] text-[#86868B]">Unit</span>
                   </div>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>Unit Sedang Disewa</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <KeyIcon className="h-4 w-4" />
@@ -978,14 +981,14 @@ function AdminConsoleContent() {
                     <span className="text-3xl font-bold text-[#0071E3]">
                       {dashboardMetrics.rentedCount}
                     </span>
-                    <span className="text-[13px] text-[#86868B]">Unit</span>
+                    <span className="text-[14px] text-[#86868B]">Unit</span>
                   </div>
                 </div>
 
                 <div className="apple-card rounded-3xl bg-white p-5">
-                  <div className="flex items-center justify-between text-[16px] text-[#86868B]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>Unit Tersedia</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <CheckCircleIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -993,7 +996,7 @@ function AdminConsoleContent() {
                     <span className="text-3xl font-bold text-[#1D1D1F]">
                       {dashboardMetrics.availableCount}
                     </span>
-                    <span className="text-[13px] text-[#86868B]">Unit</span>
+                    <span className="text-[14px] text-[#86868B]">Unit</span>
                   </div>
                 </div>
               </div>
@@ -1003,7 +1006,7 @@ function AdminConsoleContent() {
                 <div className="lg:col-span-6 apple-card rounded-3xl bg-white p-6 flex flex-col justify-between">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-[12.5px] text-[#6E6E73]">
+                      <span className="text-[14px] font-bold uppercase text-[#0071E3]">
                         Total Pendapatan
                       </span>
                       <span className="rounded bg-[#E8F2FF] px-2 py-0.5 text-[9.5px] font-bold uppercase text-[#0071E3]">
@@ -1019,35 +1022,32 @@ function AdminConsoleContent() {
                     <span className="text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
                       {formatRupiah(dashboardMetrics.grossIncome)}
                     </span>
-                    <span className="rounded-full bg-[#E8F2FF] px-3 py-1 text-[11px] font-bold text-[#0071E3]">
-                      ↑ Live Database
-                    </span>
                   </div>
 
-                  <p className="text-[11.5px] text-[#86868B]">
-                    Konsolidasi {dashboardMetrics.totalBranches} cabang aktif
+                  <p className="text-[14px] text-[#86868B]">
+                    Total dari {dashboardMetrics.totalBranches} cabang aktif
                   </p>
                 </div>
 
                 <div className="lg:col-span-3 apple-card rounded-3xl bg-white p-6 flex flex-col justify-between">
-                  <div className="flex items-center justify-between text-[12.5px] text-[#6E6E73]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>Total Pengeluaran</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <WalletIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <p className="my-3 text-2xl font-bold text-[#1D1D1F]">
                     {formatRupiah(dashboardMetrics.totalExpense)}
                   </p>
-                  <p className="text-[11.5px] text-[#86868B]">
+                  <p className="text-[14px] text-[#86868B]">
                     Margin Bersih {dashboardMetrics.netMarginPct}%
                   </p>
                 </div>
 
                 <div className="lg:col-span-3 apple-card rounded-3xl bg-white p-6 flex flex-col justify-between">
-                  <div className="flex items-center justify-between text-[12.5px] text-[#6E6E73]">
+                  <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>Total Transaksi</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <ReceiptIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -1055,9 +1055,9 @@ function AdminConsoleContent() {
                     <span className="text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
                       {dashboardMetrics.totalTransactions}
                     </span>
-                    <span className="text-[13px] text-[#86868B]">Sewa</span>
+                    <span className="text-[14px] text-[#86868B]">Sewa</span>
                   </div>
-                  <p className="text-[11.5px] font-semibold text-[#1D1D1F]">
+                  <p className="text-[14px] font-semibold text-[#1D1D1F]">
                     Avg {formatRupiah(dashboardMetrics.avgTransaction)}
                   </p>
                 </div>
@@ -1065,7 +1065,7 @@ function AdminConsoleContent() {
 
               {/* ROW 3: RINGKASAN PER CABANG */}
               <div className="space-y-4">
-                <h2 className="text-[17px] font-bold text-[#1D1D1F]">
+                <h2 className="text-[20px] font-bold text-[#1D1D1F]">
                   Ringkasan Per Cabang
                 </h2>
 
@@ -1123,35 +1123,30 @@ function AdminConsoleContent() {
                               {b.nama_cabang}
                             </p>
 
-                            <div className="mt-4 rounded-2xl bg-[#F5F5F7] p-3 space-y-2">
-                              <div className="flex items-center justify-between text-[11.5px]">
-                                <span className="text-[#6E6E73]">
-                                  Total Alokasi
-                                </span>
-                                <span className="font-bold text-[#1D1D1F]">
-                                  {branchUnits.length} Unit
-                                </span>
+                            <div className="mt-4 grid grid-cols-3 rounded-2xl bg-[#F5F5F7] p-3 text-center">
+                              <div>
+                                <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
+                                  TOTAL UNIT
+                                </p>
+                                <p className="mt-0.5 text-[15px] font-bold text-[#1D1D1F]">
+                                  {branchUnits.length}
+                                </p>
                               </div>
-                              <div className="h-1.5 w-full rounded-full bg-white overflow-hidden">
-                                <div
-                                  className="h-full rounded-full bg-[#0071E3]"
-                                  style={{
-                                    width: `${
-                                      branchUnits.length > 0
-                                        ? Math.min(
-                                            100,
-                                            (branchRented /
-                                              branchUnits.length) *
-                                              100
-                                          )
-                                        : 0
-                                    }%`,
-                                  }}
-                                />
+                              <div className="border-x border-[#D2D2D7]/60">
+                                <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
+                                  TERSEDIA
+                                </p>
+                                <p className="mt-0.5 text-[15px] font-bold text-[#0071E3]">
+                                  {branchAvail}
+                                </p>
                               </div>
-                              <div className="flex items-center justify-between text-[10.5px] text-[#6E6E73]">
-                                <span>● Disewa: {branchRented}</span>
-                                <span>● Tersedia: {branchAvail}</span>
+                              <div>
+                                <p className="text-[9.5px] font-bold uppercase text-[#86868B]">
+                                  DISEWA
+                                </p>
+                                <p className="mt-0.5 text-[15px] font-bold text-[#1D1D1F]">
+                                  {branchRented}
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -1184,9 +1179,6 @@ function AdminConsoleContent() {
                         <h3 className="text-[14.5px] font-bold text-[#1D1D1F]">
                           Transaksi Terkini
                         </h3>
-                        <p className="text-[11px] text-[#86868B]">
-                          Aktivitas booking masuk
-                        </p>
                       </div>
                     </div>
                     <button
@@ -1244,9 +1236,6 @@ function AdminConsoleContent() {
                         <h3 className="text-[14.5px] font-bold text-[#1D1D1F]">
                           Sewa Berjalan
                         </h3>
-                        <p className="text-[11px] text-[#86868B]">
-                          Status unit aktif di tangan user
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -1312,15 +1301,12 @@ function AdminConsoleContent() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
-                        <BuildingIcon className="h-4 w-4" />
+                        <WalletIcon className="h-4 w-4" />
                       </span>
                       <div>
                         <h3 className="text-[14.5px] font-bold text-[#1D1D1F]">
                           Pengeluaran Terkini
                         </h3>
-                        <p className="text-[11px] text-[#86868B]">
-                          Beban logistik &amp; pemeliharaan
-                        </p>
                       </div>
                     </div>
                     <button
@@ -1451,8 +1437,8 @@ function AdminConsoleContent() {
                       >
                         <div>
                           <div className="flex items-center gap-3 mb-3">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
-                              <BuildingIcon className="h-4.5 w-4.5" />
+                            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
+                              <StoreIcon className="h-4.5 w-4.5" />
                             </span>
                             <span>
                               <h3 className="text-[15.5px] font-bold text-[#1D1D1F]">
@@ -1507,16 +1493,18 @@ function AdminConsoleContent() {
                                 setEditingBranch(b);
                                 setBranchModalOpen(true);
                               }}
-                              className="text-[#6E6E73] hover:text-[#0071E3] font-semibold"
+                              className="inline-flex items-center gap-1 rounded-lg bg-[#E8F2FF] hover:bg-[#0071E3] px-2.5 py-1 text-[11px] font-semibold text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                             >
-                              Edit
+                              <EditIcon className="h-3 w-3" />
+                              <span>Edit</span>
                             </button>
                             <button
                               type="button"
                               onClick={() => handleDeleteBranch(b)}
-                              className="text-[#6E6E73] hover:text-red-600 font-semibold"
+                              className="inline-flex items-center gap-1 rounded-lg bg-[#E8F2FF] hover:bg-red-500 px-2.5 py-1 text-[11px] font-semibold text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                             >
-                              Hapus
+                              <TrashIcon className="h-3 w-3" />
+                              <span>Hapus</span>
                             </button>
                           </div>
                         </div>
@@ -1539,30 +1527,30 @@ function AdminConsoleContent() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1 text-[12px]">
                       <div>
-                        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase text-[#86868B]">
+                        <p className="inline-flex items-center gap-1.5 text-[12px] font-bold uppercase text-[#86868B]">
                           <MapPinIcon className="h-3.5 w-3.5 text-[#0071E3]" />
                           <span>ALAMAT LENGKAP</span>
                         </p>
-                        <p className="font-medium text-[#1D1D1F] mt-0.5">
+                        <p className="font-medium text-[#1D1D1F] text-[14px] mt-0.5">
                           {selectedHubBranch.alamat ||
                             `Hub Resmi iRent ${selectedHubBranch.kota}`}
                         </p>
                       </div>
                       <div>
-                        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase text-[#86868B]">
-                          <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
-                          <span>WHATSAPP ARMADA</span>
+                        <p className="inline-flex items-center gap-1.5 text-[12px] font-bold uppercase text-[#86868B]">
+                          <WhatsAppIcon className="h-3.5 w-3.5" />
+                          <span>WHATSAPP ADMIN</span>
                         </p>
-                        <p className="font-medium text-[#1D1D1F] mt-0.5">
+                        <p className="font-medium text-[#1D1D1F] text-[14px] mt-0.5">
                           +62 811-6890-8888
                         </p>
                       </div>
                       <div>
-                        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase text-[#86868B]">
+                        <p className="inline-flex items-center gap-1.5 text-[12px] font-bold uppercase text-[#86868B]">
                           <ClockIcon className="h-3.5 w-3.5 text-[#0071E3]" />
                           <span>JAM OPERASIONAL</span>
                         </p>
-                        <p className="font-medium text-[#1D1D1F] mt-0.5">
+                        <p className="font-medium text-[#1D1D1F] text-[14px] mt-0.5">
                           Setiap Hari (09:00 - 22:00 WIB)
                         </p>
                       </div>
@@ -1737,7 +1725,7 @@ function AdminConsoleContent() {
                               </td>
 
                               <td className="py-3.5 px-5 text-right whitespace-nowrap">
-                                <div className="inline-flex items-center gap-2">
+                                <div className="inline-flex items-center gap-1.5">
                                   <button
                                     type="button"
                                     onClick={() => {
@@ -1745,16 +1733,15 @@ function AdminConsoleContent() {
                                       setUnitModalOpen(true);
                                     }}
                                     title="Edit Unit & Varian Harga"
-                                    className="inline-flex items-center gap-1 rounded-lg bg-[#F5F5F7] hover:bg-[#E8F2FF] px-2.5 py-1.5 text-[11.5px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
+                                    className="inline-flex items-center justify-center rounded-lg bg-[#E8F2FF] hover:bg-[#0071E3] p-1.5 text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                                   >
                                     <EditIcon className="h-3.5 w-3.5" />
-                                    <span>Edit</span>
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => handleDeleteUnit(u)}
                                     title="Hapus Unit"
-                                    className="inline-flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-100 p-1.5 text-red-600 transition-colors"
+                                    className="inline-flex items-center justify-center rounded-lg bg-[#E8F2FF] hover:bg-red-500 p-1.5 text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                                   >
                                     <TrashIcon className="h-3.5 w-3.5" />
                                   </button>
@@ -1811,8 +1798,7 @@ function AdminConsoleContent() {
               iphones={iphones}
               onRefresh={fetchAllAdminData}
               onSelectUnit={(unit) => {
-                setEditingUnit(unit);
-                setUnitModalOpen(true);
+                setViewingCatalogUnit(unit);
               }}
             />
           )}
@@ -1866,9 +1852,9 @@ function AdminConsoleContent() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="apple-card rounded-3xl bg-white p-5">
                   <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
-                    <span>UNIT SEDANG DISEWA</span>
+                    <span>Unit Sedang Disewa</span>
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
-                      <RadioIcon className="h-4 w-4" />
+                      <KeyIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <div className="mt-3 flex items-baseline gap-1.5">
@@ -1888,8 +1874,8 @@ function AdminConsoleContent() {
                 <div className="apple-card rounded-3xl bg-white p-5">
                   <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>PENDAPATAN CABANG</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
-                      <WalletIcon className="h-4 w-4" />
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
+                      <TrendingUpIcon className="h-4 w-4" />
                     </span>
                   </div>
                   <p className="mt-3 text-2xl sm:text-3xl font-bold text-[#1D1D1F]">
@@ -1904,7 +1890,7 @@ function AdminConsoleContent() {
                 <div className="apple-card rounded-3xl bg-white p-5">
                   <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>JUMLAH TRANSAKSI</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <ReceiptIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -1921,7 +1907,7 @@ function AdminConsoleContent() {
                 <div className="apple-card rounded-3xl bg-white p-5">
                   <div className="flex items-center justify-between text-[14px] font-bold uppercase text-[#0071E3]">
                     <span>UNIT TERSEDIA</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                       <CheckCircleIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -1986,9 +1972,10 @@ function AdminConsoleContent() {
                     setRentalChatConvId(null);
                     setRentalModalOpen(true);
                   }}
-                  className="self-start md:self-auto inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-5 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all"
+                  className="self-start md:self-auto inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-5 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
                 >
-                  <span>+</span> Tambah Transaksi
+                  <PlusIcon className="h-3.5 w-3.5" />
+                  <span>Tambah Transaksi</span>
                 </button>
               </div>
 
@@ -2142,17 +2129,19 @@ function AdminConsoleContent() {
                                       setEditingRental(r);
                                       setRentalModalOpen(true);
                                     }}
-                                    className="rounded-xl bg-[#F5F5F7] hover:bg-[#0071E3] px-3 py-1.5 text-[11.5px] font-semibold text-[#1D1D1F] hover:text-white transition-colors"
+                                    title="Detail & Update Transaksi"
+                                    className="inline-flex items-center justify-center rounded-lg bg-[#E8F2FF] hover:bg-[#0071E3] p-1.5 text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                                   >
-                                    Detail
+                                    <EditIcon className="h-3.5 w-3.5" />
                                   </button>
                                   {r.status_sewa === "terjadwal" && (
                                     <button
                                       type="button"
                                       onClick={() => handleCancelRental(r)}
-                                      className="rounded-xl bg-red-50 hover:bg-red-100 px-2.5 py-1.5 text-[11px] font-semibold text-red-600"
+                                      title="Batalkan Reservasi"
+                                      className="inline-flex items-center justify-center rounded-lg bg-[#E8F2FF] hover:bg-red-500 p-1.5 text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                                     >
-                                      Batal
+                                      <TrashIcon className="h-3.5 w-3.5" />
                                     </button>
                                   )}
                                 </div>
@@ -2421,6 +2410,13 @@ function AdminConsoleContent() {
           showToast("✓ Catatan pengeluaran berhasil disimpan.");
           fetchAllAdminData();
         }}
+      />
+
+      <IphoneCatalogDetailModal
+        open={Boolean(viewingCatalogUnit)}
+        unit={viewingCatalogUnit}
+        variants={priceVariants}
+        onClose={() => setViewingCatalogUnit(null)}
       />
     </div>
   );

@@ -12,7 +12,7 @@
   --apple-secondary: #6e6e73;
   --apple-muted: #86868b;
   --apple-border: #d2d2d7;
-  --font-sf: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+  --font-sf: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont,
     "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -66,8 +66,12 @@ li,
 a,
 button,
 input,
+textarea,
 select,
-label {
+label,
+th,
+td {
+  font-family: var(--font-sf);
   letter-spacing: 0.03em;
 }
 

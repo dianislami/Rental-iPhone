@@ -4,6 +4,14 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/public/Footer";
 import {
+  ClipboardListIcon,
+  ShieldCheckIcon,
+  SmartphoneIcon,
+  SparklesIcon,
+  StarIcon,
+  StoreIcon,
+} from "@/components/ui/Icons";
+import {
   Branch,
   IphoneUnit,
   enrichBranchWithUnits,
@@ -99,22 +107,26 @@ export default function TentangKamiPage() {
       value: totalUnits > 0 ? `${totalUnits} Unit` : "100%",
       title: totalUnits > 0 ? "Unit Aktif Siap Sewa" : "Armada Terkalibrasi",
       desc: "Unit iPhone resmi siap serah terima di seluruh cabang",
+      icon: <SmartphoneIcon className="h-4.5 w-4.5" />,
     },
     {
       value: "100%",
       title: "Unit Original Resmi",
       desc: "Garansi uang kembali jika unit rekondisi",
+      icon: <ShieldCheckIcon className="h-4.5 w-4.5" />,
     },
     {
       value: `${branches.length || 4} Cabang`,
       title: "Pusat Layanan Aktif",
       desc: branchCitiesLabel,
+      icon: <StoreIcon className="h-4.5 w-4.5" />,
     },
     {
       value: "4.9",
       suffix: "/ 5.0",
       title: "Kepuasan Pelanggan",
       desc: "Berdasarkan ulasan pelanggan terverifikasi",
+      icon: <StarIcon className="h-4.5 w-4.5" />,
     },
   ];
 
@@ -123,52 +135,19 @@ export default function TentangKamiPage() {
       code: "PILAR 01",
       title: "Unit yang Terawat",
       desc: "Setiap iPhone diperiksa sebelum disewakan, mulai dari fungsi perangkat hingga kondisi fisiknya. Kami juga memperhatikan kondisi baterai agar pelanggan dapat memilih unit dengan informasi yang jelas.",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <rect x="4" y="4" width="16" height="16" rx="2" />
-          <rect x="9" y="9" width="6" height="6" />
-          <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
-        </svg>
-      ),
+      icon: <ShieldCheckIcon className="h-5 w-5" />,
     },
     {
       code: "PILAR 02",
       title: "Beragam Pilihan iPhone",
       desc: "Kami menyediakan berbagai tipe iPhone dengan pilihan kapasitas penyimpanan yang beragam. Kamu bisa melihat spesifikasi setiap unit dan memilih sesuai kebutuhan, baik untuk aktivitas sehari-hari, membuat konten, maupun keperluan lainnya.",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          <path d="m9 12 2 2 4-4" />
-        </svg>
-      ),
+      icon: <SmartphoneIcon className="h-5 w-5" />,
     },
     {
       code: "PILAR 03",
       title: "Proses Penyewaan yang Mudah",
       desc: "Kami berusaha membuat proses penyewaan lebih mudah dengan informasi harga, durasi, dan ketentuan yang jelas sejak awal. Jika masih ada yang ingin ditanyakan, kamu bisa menghubungi tim kami sebelum melakukan pemesanan.",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-        </svg>
-      ),
+      icon: <ClipboardListIcon className="h-5 w-5" />,
     },
   ];
 
@@ -179,7 +158,8 @@ export default function TentangKamiPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center space-y-4">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#D2D2D7]/80 px-4 py-1 text-[10.5px] font-bold uppercase tracking-widest text-[#0071E3] shadow-2xs">
-              <span>✦</span> TENTANG IRENT • SEJAK 2021
+              <SparklesIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+              <span>TENTANG IRENT • SEJAK 2021</span>
             </span>
 
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#1D1D1F] leading-[1.12]">
@@ -201,15 +181,20 @@ export default function TentangKamiPage() {
                 key={s.title}
                 className="apple-card rounded-3xl bg-white p-6"
               >
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl sm:text-[34px] font-bold tracking-tight text-[#0071E3]">
-                    {s.value}
-                  </span>
-                  {s.suffix && (
-                    <span className="text-sm font-semibold text-[#86868B]">
-                      {s.suffix}
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl sm:text-[34px] font-bold tracking-tight text-[#0071E3]">
+                      {s.value}
                     </span>
-                  )}
+                    {s.suffix && (
+                      <span className="text-sm font-semibold text-[#86868B]">
+                        {s.suffix}
+                      </span>
+                    )}
+                  </div>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
+                    {s.icon}
+                  </span>
                 </div>
                 <p className="mt-2 text-[14px] font-bold text-[#1D1D1F]">
                   {s.title}
@@ -410,13 +395,23 @@ export default function TentangKamiPage() {
                       {item.q}
                     </span>
                     <span
-                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs transition-transform duration-200 ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ${
                         isOpen
                           ? "rotate-180 bg-[#0071E3] text-white"
-                          : "bg-[#F5F5F7] text-[#6E6E73]"
+                          : "bg-[#E8F2FF] text-[#0071E3]"
                       }`}
                     >
-                      ▼
+                      <svg
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
                     </span>
                   </button>
 

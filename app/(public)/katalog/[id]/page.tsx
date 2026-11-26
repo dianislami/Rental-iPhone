@@ -602,9 +602,9 @@ function DetailUnitContent() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] py-2.5 px-5 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F2FF] hover:bg-[#0071E3] py-2.5 px-5 text-[12px] font-semibold text-[#0071E3] hover:text-white transition-colors"
                 >
-                  <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+                  <WhatsAppIcon className="h-4 w-4" />
                   <span>Pesan via WhatsApp ↗</span>
                 </a>
               </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { Footer } from "@/components/public/Footer";
+import { CameraIcon } from "@/components/ui/Icons";
 import {
   Branch,
   IphoneUnit,
@@ -569,16 +570,8 @@ function CatalogContent() {
           {/* BUSINESS & PRODUCTION LEASE CARD */}
           <div className="mt-12 rounded-[28px] apple-deep-blue-banner p-7 sm:p-9 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-start gap-4 max-w-2xl">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-md text-white border border-white/20">
-                <svg
-                  className="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3] shadow-sm">
+                <CameraIcon className="h-6 w-6" />
               </div>
               <div>
                 <p className="text-[10.5px] font-bold uppercase tracking-widest text-sky-300">

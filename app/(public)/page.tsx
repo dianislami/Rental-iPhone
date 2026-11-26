@@ -4,7 +4,16 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { Footer } from "@/components/public/Footer";
-import { GoogleMapsIcon } from "@/components/ui/Icons";
+import {
+  BatteryIcon,
+  CheckCircleIcon,
+  ClipboardListIcon,
+  GoogleMapsIcon,
+  MapPinIcon,
+  ShieldCheckIcon,
+  SmartphoneIcon,
+  WalletIcon,
+} from "@/components/ui/Icons";
 import {
   Branch,
   IphoneUnit,
@@ -69,68 +78,25 @@ export default function HomePage() {
       title: "Unit iPhone Original",
       desc: "Kami menyediakan berbagai pilihan iPhone original dengan kondisi dan fungsi yang baik.",
       linkText: "Lihat katalog iPhone →",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          <path d="m9 12 2 2 4-4" />
-        </svg>
-      ),
+      icon: <ShieldCheckIcon className="h-5 w-5" />,
     },
     {
       title: "Battery Health Terjaga",
       desc: "Setiap unit memiliki informasi Battery Health sehingga kamu bisa memilih iPhone sesuai kebutuhan.",
       linkText: "Lihat informasi unit →",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-        </svg>
-      ),
+      icon: <BatteryIcon className="h-5 w-5" />,
     },
     {
       title: "Proses Sewa Mudah",
       desc: "Proses penyewaan dibuat sederhana dengan informasi harga dan ketentuan yang jelas sejak awal.",
       linkText: "Lihat cara penyewaan →",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
-      ),
+      icon: <ClipboardListIcon className="h-5 w-5" />,
     },
     {
       title: "Tersedia di 4 Cabang",
       desc: "Pilih lokasi penyewaan di sekitarmu, tersedia di Banda Aceh, Bireuen, Lhokseumawe, dan Meulaboh.",
       linkText: "Lihat lokasi cabang →",
-      icon: (
-        <svg
-          className="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
-        </svg>
-      ),
+      icon: <MapPinIcon className="h-5 w-5" />,
     },
   ];
 
@@ -139,87 +105,31 @@ export default function HomePage() {
       num: "01",
       title: "Pilih Cabang",
       desc: "Tentukan lokasi cabang pengambilan unit terdekat sesuai kota domisili Anda.",
-      icon: (
-        <svg
-          className="h-4 w-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-      ),
+      icon: <MapPinIcon className="h-4 w-4" />,
     },
     {
       num: "02",
       title: "Pilih Unit & Durasi",
       desc: "Pilih seri iPhone dan varian paket durasi sewa sesuai kebutuhan Anda.",
-      icon: (
-        <svg
-          className="h-4 w-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-          <line x1="12" y1="18" x2="12.01" y2="18" />
-        </svg>
-      ),
+      icon: <SmartphoneIcon className="h-4 w-4" />,
     },
     {
       num: "03",
       title: "Verifikasi Data",
       desc: "Konfirmasi ketersediaan via Live Chat atau WhatsApp admin.",
-      icon: (
-        <svg
-          className="h-4 w-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-          <circle cx="8.5" cy="7" r="4" />
-          <polyline points="17 11 19 13 23 9" />
-        </svg>
-      ),
+      icon: <ClipboardListIcon className="h-4 w-4" />,
     },
     {
       num: "04",
       title: "Pembayaran Aman",
       desc: "Selesaikan pembayaran via QRIS, transfer, atau bayar langsung saat serah terima.",
-      icon: (
-        <svg
-          className="h-4 w-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-          <line x1="1" y1="10" x2="23" y2="10" />
-        </svg>
-      ),
+      icon: <WalletIcon className="h-4 w-4" />,
     },
     {
       num: "05",
       title: "Ambil & Gunakan",
       desc: "Cek fisik unit bersama staf kami dan iPhone siap mengabadikan momen Anda.",
-      icon: (
-        <svg
-          className="h-4 w-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-          <polyline points="22 4 12 14.01 9 11.01" />
-        </svg>
-      ),
+      icon: <CheckCircleIcon className="h-4 w-4" />,
     },
   ];
 
@@ -293,40 +203,21 @@ export default function HomePage() {
               {/* Micro Trust Badges */}
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-3 text-[12px] font-medium text-[#6E6E73]">
                 <span className="inline-flex items-center gap-1.5">
-                  <svg
-                    className="h-4 w-4 text-[#0071E3]"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#E8F2FF] text-[#0071E3]">
+                    <ShieldCheckIcon className="h-3.5 w-3.5" />
+                  </span>
                   Garansi Unit Original
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <svg
-                    className="h-4 w-4 text-[#0071E3]"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                  </svg>
-                  Verifikasi Mudah & Cepat
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#E8F2FF] text-[#0071E3]">
+                    <CheckCircleIcon className="h-3.5 w-3.5" />
+                  </span>
+                  Verifikasi Mudah &amp; Cepat
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <svg
-                    className="h-4 w-4 text-[#0071E3]"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#E8F2FF] text-[#0071E3]">
+                    <MapPinIcon className="h-3.5 w-3.5" />
+                  </span>
                   {branches.length > 0
                     ? `${branches.length} Cabang Resmi`
                     : "Cabang Resmi Terintegrasi"}
@@ -583,8 +474,10 @@ export default function HomePage() {
                     {step.desc}
                   </p>
                 </div>
-                <div className="mt-5 flex items-center justify-between pt-3 border-t border-[#F5F5F7] text-[#0071E3]">
-                  {step.icon}
+                <div className="mt-5 flex items-center justify-between pt-3 border-t border-[#F5F5F7]">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
+                    {step.icon}
+                  </span>
                   <span className="text-[11px] font-medium text-[#86868B]">
                     Langkah {step.num}
                   </span>
@@ -640,7 +533,7 @@ export default function HomePage() {
                 >
                   <div>
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-[#E8F2FF] px-2.5 py-0.5 text-[10px] font-semibold text-[#0071E3] mb-3">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#0071E3]"></span>
                       {branch.kota.toUpperCase()}
                     </span>
                     <h3 className="text-[16px] font-bold text-[#1D1D1F]">
@@ -664,7 +557,7 @@ export default function HomePage() {
                       href={branch.google_maps_url || "https://maps.google.com"}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#6E6E73] hover:text-[#0071E3]"
+                      className="inline-flex items-center gap-1 rounded-full bg-[#E8F2FF] px-2.5 py-1 text-[11px] font-semibold text-[#0071E3] hover:bg-[#0071E3] hover:text-white transition-colors"
                     >
                       <GoogleMapsIcon className="h-3.5 w-3.5" />
                       <span>Google Maps ↗</span>

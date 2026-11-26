@@ -21,6 +21,10 @@ export function IphoneVisual({
 }: IphoneVisualProps) {
   const [imgError, setImgError] = useState(false);
 
+  React.useEffect(() => {
+    setImgError(false);
+  }, [imageUrl]);
+
   if (imageUrl && !imgError) {
     return (
       <div

@@ -65,9 +65,9 @@ export function Navbar() {
             href="https://wa.me/6281168908888?text=Halo%20iRent%20Concierge%20Aceh%2C%20saya%20ingin%20bertanya%20ketersediaan%20unit%20iPhone."
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] border border-[#D2D2D7]/70 hover:border-[#0071E3]/30 px-3.5 py-1.5 text-[12px] font-medium text-[#1D1D1F] hover:text-[#0071E3] transition-all duration-200"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#E8F2FF] hover:bg-[#0071E3] border border-[#0071E3]/25 px-3.5 py-1.5 text-[12px] font-semibold text-[#0071E3] hover:text-white transition-all duration-200"
           >
-            <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
+            <WhatsAppIcon className="h-3.5 w-3.5" />
             <span>Hubungi WhatsApp</span>
           </a>
 

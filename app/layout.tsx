@@ -23,6 +23,10 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.cdnfonts.com/css/sf-pro-display"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/sf-pro-text"
+        />
       </head>
       <body className="min-h-full flex flex-col bg-white text-[#1D1D1F] selection:bg-[#0071E3]/15 selection:text-[#0071E3]">
         {children}

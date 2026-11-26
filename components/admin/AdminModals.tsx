@@ -1,18 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { AdminDropdown } from "@/components/ui/AdminDropdown";
 import {
   AlertTriangleIcon,
+  BatteryIcon,
   BuildingIcon,
+  CameraIcon,
   CheckIcon,
+  ClipboardListIcon,
   CoffeeIcon,
+  EyeIcon,
+  MapPinIcon,
   PackageIcon,
+  PlusIcon,
   ReceiptIcon,
   ShieldCheckIcon,
   SmartphoneIcon,
   StoreIcon,
+  TrashIcon,
   UserIcon,
   WifiIcon,
   WrenchIcon,
@@ -118,14 +125,7 @@ export function BranchModal({
                 <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
                   {initialBranch ? "Edit Data Cabang" : "Tambah Cabang Baru"}
                 </h2>
-                <span className="rounded-full bg-[#E8F2FF] px-2.5 py-0.5 text-[10px] font-bold text-[#0071E3]">
-                  Aceh Expansion
-                </span>
               </div>
-              <p className="text-[12px] text-[#6E6E73] mt-0.5">
-                Registrasikan outlet atau distribution hub untuk armada rental
-                iRent.
-              </p>
             </div>
           </div>
 
@@ -157,7 +157,7 @@ export function BranchModal({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               <div className="sm:col-span-2">
                 <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
-                  Nama Cabang / Distribution Hub{" "}
+                  Nama Cabang{" "}
                   <span className="text-[#0071E3]">*</span>
                 </label>
                 <input
@@ -299,6 +299,9 @@ export function IphoneUnitModal({
   );
   const [displayOrder, setDisplayOrder] = useState<number>(0);
   const [imageUrl, setImageUrl] = useState("");
+  const [uploadedFileName, setUploadedFileName] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [deskripsi, setDeskripsi] = useState("");
 
   // Price variants state
@@ -328,6 +331,9 @@ export function IphoneUnitModal({
       setStatus(initialUnit.status);
       setDisplayOrder(initialUnit.display_order || 0);
       setImageUrl(initialUnit.image_url || "");
+      setUploadedFileName(
+        initialUnit.image_url ? "foto-unit-tersimpan.png" : ""
+      );
       setDeskripsi(initialUnit.deskripsi || "");
 
       const filtered = existingVariants
@@ -355,6 +361,7 @@ export function IphoneUnitModal({
       setStatus("aktif");
       setDisplayOrder(0);
       setImageUrl("");
+      setUploadedFileName("");
       setDeskripsi(
         "Unit resmi Grade-A terkalibrasi, kamera jernih 4K, dan bebas akun iCloud."
       );
@@ -383,6 +390,81 @@ export function IphoneUnitModal({
     if (!initialUnit) {
       setNamaUnit(`${nextTipe} ${nextStorage} ${nextWarna}`.trim());
     }
+  }
+
+  function handleImageFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setError("Format file harus berupa gambar (JPG, JPEG, PNG, atau WEBP).");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError("Ukuran gambar maksimal 10MB.");
+      return;
+    }
+
+    setUploadingImage(true);
+    setError(null);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === "string" ? reader.result : "";
+      if (!result) {
+        setUploadingImage(false);
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        const maxDim = 900;
+        let w = img.width;
+        let h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, w, h);
+          const mime =
+            file.type === "image/png" || file.type === "image/webp"
+              ? file.type
+              : "image/jpeg";
+          const compressedDataUrl = canvas.toDataURL(
+            mime,
+            mime === "image/png" ? undefined : 0.86
+          );
+          setImageUrl(compressedDataUrl);
+        } else {
+          setImageUrl(result);
+        }
+        setUploadedFileName(file.name);
+        setUploadingImage(false);
+      };
+      img.onerror = () => {
+        setImageUrl(result);
+        setUploadedFileName(file.name);
+        setUploadingImage(false);
+      };
+      img.src = result;
+    };
+    reader.onerror = () => {
+      setError("Gagal membaca file foto yang dipilih.");
+      setUploadingImage(false);
+    };
+    reader.readAsDataURL(file);
   }
 
   async function handleAddVariantDraft() {
@@ -600,14 +682,7 @@ export function IphoneUnitModal({
                 <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
                   {initialUnit ? "Edit Unit iPhone" : "Tambah Unit iPhone Baru"}
                 </h2>
-                <span className="rounded-full bg-[#E8F2FF] px-2.5 py-0.5 text-[10px] font-bold text-[#0071E3]">
-                  Katalog Database
-                </span>
               </div>
-              <p className="text-[12px] text-[#6E6E73] mt-0.5">
-                Input spesifikasi perangkat, alokasi cabang, varian harga sewa
-                dinamis, dan konfigurasi promo.
-              </p>
             </div>
           </div>
 
@@ -638,18 +713,15 @@ export function IphoneUnitModal({
                   01
                 </span>
                 <h3 className="text-[14px] font-bold text-[#1D1D1F]">
-                  Informasi Dasar Unit &amp; Hardware
+                  Informasi Unit 
                 </h3>
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#86868B]">
-                SPESIFIKASI FISIK
-              </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
-                  Alokasi Cabang Showroom{" "}
+                  Alokasi Cabang{" "}
                   <span className="text-[#0071E3]">*</span>
                 </label>
                 <AdminDropdown
@@ -667,7 +739,7 @@ export function IphoneUnitModal({
 
               <div>
                 <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
-                  Nama Unit (Public Label){" "}
+                  Nama Unit{" "}
                   <span className="text-[#0071E3]">*</span>
                 </label>
                 <input
@@ -681,42 +753,21 @@ export function IphoneUnitModal({
               </div>
             </div>
 
-            {/* Model iPhone Selector */}
+            {/* Model / Tipe iPhone (Input Manual) */}
             <div>
-              <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-2">
+              <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
                 Model / Tipe iPhone <span className="text-[#0071E3]">*</span>
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
-                {POPULAR_MODELS.slice(0, 6).map((m) => {
-                  const active = tipe.toLowerCase() === m.toLowerCase();
-                  return (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => {
-                        setTipe(m);
-                        handleAutoLabel(m, storage, warna);
-                      }}
-                      className={`rounded-xl py-2.5 px-3 text-[12px] font-semibold transition-all cursor-pointer ${
-                        active
-                          ? "bg-[#0071E3] text-white shadow-xs"
-                          : "bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3]"
-                      }`}
-                    >
-                      {m}
-                    </button>
-                  );
-                })}
-              </div>
               <input
                 type="text"
+                required
                 value={tipe}
                 onChange={(e) => {
                   setTipe(e.target.value);
                   handleAutoLabel(e.target.value, storage, warna);
                 }}
-                placeholder="Atau ketik model iPhone lainnya (contoh: iPhone 13 Pro)..."
-                className="w-full rounded-xl bg-[#F5F5F7] px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
+                placeholder="Ketik model / tipe iPhone (contoh: iPhone 16 Pro / iPhone 15 Pro Max)..."
+                className="w-full rounded-2xl bg-[#F5F5F7] px-4 py-3 text-[13px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
               />
             </div>
 
@@ -727,9 +778,6 @@ export function IphoneUnitModal({
                   Storage / Kapasitas NVMe{" "}
                   <span className="text-[#0071E3]">*</span>
                 </label>
-                <span className="text-[10.5px] text-[#86868B]">
-                  Standar Penyimpanan Apple
-                </span>
               </div>
               <div className="grid grid-cols-4 gap-2.5">
                 {STORAGE_OPTIONS.map((st) => {
@@ -760,7 +808,7 @@ export function IphoneUnitModal({
             {/* Pilihan Warna Resmi Apple */}
             <div>
               <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-2">
-                Pilihan Warna Resmi Apple{" "}
+                Warna Unit{" "}
                 <span className="text-[#0071E3]">*</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
@@ -808,9 +856,6 @@ export function IphoneUnitModal({
                   <label className="text-[12px] font-semibold text-[#1D1D1F]">
                     Battery Health
                   </label>
-                  <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[9.5px] font-bold text-emerald-700">
-                    ● Terkalibrasi
-                  </span>
                 </div>
                 <input
                   type="text"
@@ -856,36 +901,90 @@ export function IphoneUnitModal({
               </div>
             </div>
 
-            {/* Foto Unit Studio & Deskripsi */}
-            <div className="rounded-2xl bg-[#F5F5F7] p-4 flex flex-col sm:flex-row items-center gap-4">
-              <div className="h-20 w-20 shrink-0 rounded-2xl bg-white p-2 flex items-center justify-center border border-[#D2D2D7]/60">
-                <IphoneVisual
-                  model={tipe || namaUnit}
-                  colorName={warna}
-                  colorHex={getColorHex(warna)}
-                  imageUrl={imageUrl || null}
-                  variant="card"
-                  className="h-full w-full"
-                />
-              </div>
-              <div className="flex-1 w-full space-y-2">
-                <label className="block text-[12px] font-semibold text-[#1D1D1F]">
-                  URL Foto Unit Studio (Opsional — Otomatis Render 3D jika
-                  dikosongkan)
-                </label>
-                <input
-                  type="text"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="https://... (URL gambar PNG/JPG/WebP)"
-                  className="w-full rounded-xl bg-white px-3.5 py-2 text-[12.5px] text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:ring-3 focus:ring-[#0071E3]/10 focus:outline-none transition-all"
-                />
+            {/* Foto Unit Studio (Upload File Gambar / Otomatis Gambar Default) */}
+            <div>
+              <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
+                Foto Unit (Opsional)
+              </label>
+              <div className="rounded-2xl bg-[#F5F5F7] p-4 flex flex-col sm:flex-row items-center gap-4 border border-[#D2D2D7]/50">
+                <div className="h-24 w-24 shrink-0 rounded-2xl bg-white p-2.5 flex items-center justify-center border border-[#D2D2D7]/60 shadow-2xs">
+                  <IphoneVisual
+                    model={tipe || namaUnit}
+                    colorName={warna}
+                    colorHex={getColorHex(warna)}
+                    imageUrl={imageUrl || null}
+                    variant="card"
+                    className="h-full w-full"
+                  />
+                </div>
+
+                <div className="flex-1 w-full space-y-2.5 text-center sm:text-left">
+                  <div>
+                    <p className="text-[13px] font-bold text-[#1D1D1F] truncate">
+                      {imageUrl
+                        ? uploadedFileName || "Foto Unit Kustom Terpasang"
+                        : "Gambar Default Otomatis"}
+                    </p>
+                    <p className="text-[11.5px] text-[#6E6E73] mt-0.5">
+                      {imageUrl
+                        ? "Foto kustom akan ditampilkan di katalog. Hapus foto jika ingin kembali ke gambar default."
+                        : "Jika tidak mengupload foto, unit otomatis menggunakan gambar iPhone default sesuai tipe & warna."}
+                    </p>
+                  </div>
+
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp,image/*"
+                    onChange={handleImageFileUpload}
+                    className="hidden"
+                  />
+
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploadingImage}
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-[#E8F2FF] border border-[#D2D2D7]/80 hover:border-[#0071E3]/40 px-3.5 py-2 text-[12px] font-semibold text-[#0071E3] shadow-2xs transition-all cursor-pointer"
+                    >
+                      <CameraIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                      <span>
+                        {uploadingImage
+                          ? "Memproses Foto..."
+                          : imageUrl
+                          ? "Ganti Foto"
+                          : "Upload Foto"}
+                      </span>
+                    </button>
+
+                    {imageUrl && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setImageUrl("");
+                          setUploadedFileName("");
+                          if (fileInputRef.current) {
+                            fileInputRef.current.value = "";
+                          }
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-red-50 border border-[#D2D2D7]/80 hover:border-red-200 px-3.5 py-2 text-[12px] font-semibold text-red-600 transition-all cursor-pointer"
+                      >
+                        <TrashIcon className="h-3.5 w-3.5" />
+                        <span>Hapus</span>
+                      </button>
+                    )}
+
+                    <span className="text-[11px] text-[#86868B]">
+                      Format: JPG, JPEG, PNG, WEBP (Maks. 10MB)
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div>
               <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
-                Deskripsi Spesifikasi Unit
+                Deskripsi Unit
               </label>
               <textarea
                 rows={2}
@@ -905,12 +1004,9 @@ export function IphoneUnitModal({
                   02
                 </span>
                 <h3 className="text-[14px] font-bold text-[#1D1D1F]">
-                  Struktur Varian Harga Sewa Multi-Tier
+                  Harga Sewa
                 </h3>
               </div>
-              <span className="text-[10.5px] font-semibold text-[#0071E3]">
-                Sinkronisasi Real-Time Katalog
-              </span>
             </div>
 
             {unitVariants.length > 0 && (
@@ -942,9 +1038,10 @@ export function IphoneUnitModal({
                     <button
                       type="button"
                       onClick={() => handleRemoveVariant(idx)}
-                      className="text-[11.5px] font-semibold text-red-600 hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-1 rounded-lg bg-white hover:bg-red-50 px-2.5 py-1 text-[11.5px] font-semibold text-red-600 border border-[#D2D2D7]/60 hover:border-red-200 transition-colors cursor-pointer"
                     >
-                      Hapus
+                      <TrashIcon className="h-3.5 w-3.5" />
+                      <span>Hapus</span>
                     </button>
                   </div>
                 ))}
@@ -1043,9 +1140,10 @@ export function IphoneUnitModal({
                 <button
                   type="button"
                   onClick={handleAddVariantDraft}
-                  className="shrink-0 rounded-xl bg-[#E8F2FF] hover:bg-[#0071E3] text-[#0071E3] hover:text-white px-4 py-2 text-[12px] font-semibold transition-colors cursor-pointer"
+                  className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-[#E8F2FF] hover:bg-[#0071E3] text-[#0071E3] hover:text-white px-4 py-2 text-[12px] font-semibold transition-colors cursor-pointer"
                 >
-                  + Tambahkan Varian
+                  <PlusIcon className="h-3.5 w-3.5" />
+                  <span>Tambahkan Varian</span>
                 </button>
               </div>
             </div>
@@ -1357,9 +1455,9 @@ export function RentalModal({
       >
         {/* FIXED HEADER */}
         <div className="shrink-0 px-6 sm:px-8 pt-5 sm:pt-6 pb-4 bg-white border-b border-[#F5F5F7] flex items-center justify-between gap-4 z-10">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#0071E3] text-white">
-              <CheckIcon className="h-5 w-5" />
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
+              <ClipboardListIcon className="h-6 w-6" />
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
@@ -1398,7 +1496,7 @@ export function RentalModal({
           <div>
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
               <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B]">
-                1. IDENTITAS &amp; CUSTOMER INFORMATION
+                1. IDENTITAS CUSTOMER
               </p>
               {!initialRental && customers.length > 0 && (
                 <AdminDropdown
@@ -1605,12 +1703,12 @@ export function RentalModal({
           {/* 3. RINCIAN FINANSIAL & PEMBAYARAN */}
           <div>
             <p className="text-[10.5px] font-bold uppercase tracking-widest text-[#86868B] mb-2.5">
-              3. RINCIAN FINANSIAL &amp; PEMBAYARAN
+              3. DETAIL PEMBAYARAN
             </p>
 
             <div className="rounded-2xl bg-[#F5F5F7] p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-medium text-[#6E6E73]">
+                <span className="text-[13px] font-medium text-[#0071E3]">
                   Total Harga Sewa
                 </span>
                 <span className="text-[16px] font-bold text-[#0071E3]">
@@ -1695,7 +1793,7 @@ export function RentalModal({
 
             <div>
               <label className="block text-[10.5px] font-bold uppercase tracking-widest text-[#86868B] mb-1.5">
-                4. CATATAN &amp; INSPEKSI FISIK AWAL
+                4. CATATAN
               </label>
               <textarea
                 rows={2}
@@ -1867,14 +1965,7 @@ export function ExpenseModal({
                     ? "Edit Pengeluaran Operasional"
                     : "Input Pengeluaran Baru"}
                 </h2>
-                <span className="rounded-full bg-red-50 px-2.5 py-0.5 text-[10px] font-bold text-red-600">
-                  Debit Kas (-Rp)
-                </span>
               </div>
-              <p className="text-[12px] text-[#6E6E73] mt-0.5">
-                Pencatatan manual beban operasional cabang yang akan langsung
-                mengurangi saldo kas konsolidasi.
-              </p>
             </div>
           </div>
 
@@ -1917,7 +2008,7 @@ export function ExpenseModal({
 
               <div>
                 <label className="block text-[12px] font-semibold text-[#1D1D1F] mb-1.5">
-                  Cabang / Outlet Beban
+                  Cabang
                 </label>
                 <AdminDropdown
                   variant="field"
@@ -1947,13 +2038,15 @@ export function ExpenseModal({
                     key={cat.id}
                     type="button"
                     onClick={() => setKategori(cat.id)}
-                    className={`flex flex-col items-center justify-center gap-1 rounded-2xl p-3 text-center transition-all border cursor-pointer ${
+                    className={`flex flex-col items-center justify-center gap-1.5 rounded-2xl p-3 text-center transition-all border cursor-pointer ${
                       active
-                        ? "border-[#0071E3] bg-[#E8F2FF]/60 text-[#0071E3] font-bold shadow-2xs"
-                        : "border-transparent bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF]/30"
+                        ? "border-[#0071E3] bg-[#E8F2FF] text-[#0071E3] font-bold shadow-2xs"
+                        : "border-transparent bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8F2FF]/50"
                     }`}
                   >
-                    <span className="text-base">{cat.icon}</span>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#E8F2FF] text-[#0071E3]">
+                      {cat.icon}
+                    </span>
                     <span className="text-[11px] leading-tight">{cat.id}</span>
                   </button>
                 );
@@ -2011,11 +2104,7 @@ export function ExpenseModal({
         </div>
 
         {/* FIXED FOOTER */}
-        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-between gap-3 z-10">
-          <span className="inline-flex items-center gap-1.5 text-[11px] text-[#86868B]">
-            <ShieldCheckIcon className="h-3.5 w-3.5 text-[#0071E3]" />
-            <span>Enkripsi Jurnal Terlindungi</span>
-          </span>
+        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-end gap-3 z-10">
           <div className="flex items-center gap-2.5">
             <button
               type="button"
@@ -2035,6 +2124,239 @@ export function ExpenseModal({
           </div>
         </div>
       </form>
+    </div>
+  );
+}
+
+// ======================================================
+// 5. MODAL DETAIL KATALOG PERANGKAT (READ-ONLY / VIEW ONLY)
+// ======================================================
+interface IphoneCatalogDetailModalProps {
+  open: boolean;
+  unit: IphoneUnit | null;
+  variants: PriceVariant[];
+  onClose: () => void;
+}
+
+export function IphoneCatalogDetailModal({
+  open,
+  unit,
+  variants,
+  onClose,
+}: IphoneCatalogDetailModalProps) {
+  if (!open || !unit) return null;
+
+  const unitVariants = variants.filter(
+    (v) => v.iphone_id === unit.id && v.is_active
+  );
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-sm p-3 sm:p-5 overflow-hidden">
+      <div className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-[28px] bg-white shadow-[0_24px_64px_rgba(0,0,0,0.18)] border border-[#D2D2D7]/70 overflow-hidden">
+        {/* FIXED HEADER */}
+        <div className="shrink-0 px-6 sm:px-8 pt-5 sm:pt-6 pb-4 bg-white border-b border-[#F5F5F7] flex items-start justify-between gap-4 z-10">
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
+              <EyeIcon className="h-6 w-6" />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-[#1D1D1F]">
+                  Detail Unit Katalog
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Tutup modal"
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8F2FF] hover:text-[#0071E3] transition-colors cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* SCROLLABLE BODY (PURE READ-ONLY) */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 sm:px-8 py-5 space-y-6">
+          {/* Top Product Hero Preview */}
+          <div className="rounded-3xl bg-[#F5F5F7] p-5 flex flex-col sm:flex-row items-center gap-6 border border-[#D2D2D7]/50">
+            <div className="h-44 w-44 shrink-0 rounded-2xl bg-white p-4 flex items-center justify-center border border-[#D2D2D7]/60 shadow-2xs">
+              <IphoneVisual
+                model={unit.tipe || unit.nama_unit}
+                colorName={unit.warna}
+                colorHex={unit.color_hex || getColorHex(unit.warna)}
+                imageUrl={unit.image_url}
+                variant="detail"
+                className="h-full w-full"
+              />
+            </div>
+
+            <div className="flex-1 space-y-3 text-center sm:text-left">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-bold text-[#0071E3] shadow-2xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0071E3]" />
+                  {unit.status === "aktif"
+                    ? "Tersedia Hari Ini"
+                    : unit.status === "perawatan"
+                    ? "Sedang Perawatan"
+                    : "Nonaktif"}
+                </span>
+                {unit.highlight_badge && (
+                  <span className="rounded-full bg-[#0071E3] px-3 py-1 text-[10.5px] font-bold text-white">
+                    {unit.highlight_badge}
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#1D1D1F]">
+                  {unit.nama_unit}
+                </h3>
+                <p className="inline-flex items-center gap-1.5 text-[12.5px] text-[#6E6E73] mt-1">
+                  <MapPinIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                  <span>
+                    {unit.branches?.nama_cabang || "Cabang Resmi"} (
+                    {unit.branches?.kota || "Aceh"})
+                  </span>
+                </p>
+              </div>
+
+              {unit.deskripsi && (
+                <p className="text-[12.5px] leading-relaxed text-[#6E6E73]">
+                  {unit.deskripsi}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Technical Specifications Grid */}
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[#0071E3] mb-3">
+              SPESIFIKASI PERANGKAT
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="rounded-2xl bg-[#F5F5F7] p-3.5">
+                <p className="text-[10px] font-bold uppercase text-[#86868B]">
+                  MODEL / TIPE
+                </p>
+                <p className="mt-1 text-[13.5px] font-bold text-[#1D1D1F]">
+                  {unit.tipe}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-[#F5F5F7] p-3.5">
+                <p className="text-[10px] font-bold uppercase text-[#86868B]">
+                  KAPASITAS
+                </p>
+                <p className="mt-1 text-[13.5px] font-bold text-[#1D1D1F]">
+                  {unit.storage}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-[#F5F5F7] p-3.5">
+                <p className="text-[10px] font-bold uppercase text-[#86868B]">
+                  WARNA UNIT
+                </p>
+                <div className="mt-1 flex items-center gap-1.5">
+                  <span
+                    className="h-3 w-3 shrink-0 rounded-full border border-black/15"
+                    style={{
+                      backgroundColor:
+                        unit.color_hex || getColorHex(unit.warna),
+                    }}
+                  />
+                  <p className="text-[13.5px] font-bold text-[#1D1D1F] truncate">
+                    {unit.warna}
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-[#F5F5F7] p-3.5">
+                <p className="text-[10px] font-bold uppercase text-[#86868B]">
+                  BATTERY HEALTH
+                </p>
+                <p className="mt-1 inline-flex items-center gap-1.5 text-[13.5px] font-bold text-[#1D1D1F]">
+                  <BatteryIcon className="h-4 w-4 text-[#0071E3]" />
+                  <span>{unit.battery_health}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Price Variants Read-Only List */}
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-[#0071E3] mb-3">
+              PAKET DURASI &amp; HARGA SEWA ({unitVariants.length} PAKET)
+            </p>
+            {unitVariants.length === 0 ? (
+              <div className="rounded-2xl bg-[#F5F5F7] p-4 text-center text-[12.5px] text-[#86868B]">
+                Belum ada paket varian harga yang diatur untuk unit ini.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {unitVariants.map((v) => {
+                  const hasPromo =
+                    v.harga_promo !== null &&
+                    v.harga_promo > 0 &&
+                    v.harga_promo < v.harga;
+                  return (
+                    <div
+                      key={v.id}
+                      className="rounded-2xl bg-[#F5F5F7] p-4 border border-[#D2D2D7]/50 flex items-center justify-between gap-3"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[14px] font-bold text-[#1D1D1F]">
+                            {v.nama_varian}
+                          </span>
+                          {v.badge && (
+                            <span className="rounded-full bg-[#0071E3] px-2.5 py-0.5 text-[9.5px] font-bold text-white">
+                              {v.badge}
+                            </span>
+                          )}
+                        </div>
+                        {v.promo_description && (
+                          <p className="text-[11px] text-[#6E6E73] mt-0.5">
+                            {v.promo_description}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="text-right">
+                        {hasPromo && (
+                          <p className="text-[11px] line-through text-[#86868B]">
+                            {formatRupiah(v.harga)}
+                          </p>
+                        )}
+                        <p className="text-[15px] font-bold text-[#0071E3]">
+                          {formatRupiah(hasPromo ? v.harga_promo! : v.harga)}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* FIXED FOOTER */}
+        <div className="shrink-0 px-6 sm:px-8 py-4 bg-white border-t border-[#F5F5F7] flex items-center justify-between gap-3 z-10">
+          <span className="text-[11.5px] text-[#86868B]">
+            Untuk mengubah spesifikasi atau harga, gunakan menu{" "}
+            <strong className="text-[#1D1D1F]">Cabang &amp; Unit</strong>.
+          </span>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-6 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

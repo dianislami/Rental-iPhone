@@ -6,6 +6,7 @@ import { IphoneVisual } from "@/components/public/IphoneVisual";
 import { AdminDropdown } from "@/components/ui/AdminDropdown";
 import {
   BatteryIcon,
+  BriefcaseIcon,
   BuildingIcon,
   CalendarIcon,
   CameraIcon,
@@ -17,12 +18,15 @@ import {
   LogOutIcon,
   MailIcon,
   MapPinIcon,
+  PlusIcon,
   ReceiptIcon,
   RefreshCwIcon,
   SmartphoneIcon,
   StarIcon,
   StoreIcon,
   TargetIcon,
+  TrashIcon,
+  TrendingUpIcon,
   UserIcon,
   WalletIcon,
 } from "@/components/ui/Icons";
@@ -57,24 +61,10 @@ export function AdminKatalogTab({
   onSelectUnit,
 }: AdminKatalogTabProps) {
   const [selectedBranchId, setSelectedBranchId] = useState<string>("all");
-  const [selectedSeries, setSelectedSeries] = useState<string>("Semua Model");
+  const [selectedFilter, setSelectedFilter] = useState<string>("Semua Model");
   const [search, setSearch] = useState<string>("");
 
-  const seriesTabs = useMemo(() => {
-    const s = new Set<string>();
-    iphones.forEach((u) => {
-      const m = (u.tipe || u.nama_unit).match(/iPhone\s+\d+/i);
-      if (m) s.add(`${m[0]} Series`);
-      else if (u.tipe) s.add(u.tipe);
-    });
-    return [
-      "Semua Model",
-      ...(s.size > 0
-        ? Array.from(s)
-        : ["iPhone 16 Series", "iPhone 15 Series", "iPhone 14 Series"]),
-      "Siap Hari Ini",
-    ];
-  }, [iphones]);
+  const filterTabs = ["Tersedia Hari Ini", "Promo Diskon"];
 
   const filteredUnits = useMemo(() => {
     return iphones.filter((u) => {
@@ -82,13 +72,15 @@ export function AdminKatalogTab({
       if (selectedBranchId !== "all" && u.branch_id !== selectedBranchId) {
         return false;
       }
-      if (selectedSeries === "Siap Hari Ini") {
+      if (selectedFilter === "Tersedia Hari Ini") {
         if (u.status !== "aktif") return false;
-      } else if (selectedSeries !== "Semua Model") {
-        const key = selectedSeries.replace(/\s*Series$/i, "").toLowerCase();
-        if (!`${u.tipe} ${u.nama_unit}`.toLowerCase().includes(key)) {
-          return false;
-        }
+      } else if (selectedFilter === "Promo Diskon") {
+        const hasPromo =
+          (u.discount_percent && u.discount_percent > 0) ||
+          (u.highlight_badge &&
+            (u.highlight_badge.toLowerCase().includes("diskon") ||
+              u.highlight_badge.toLowerCase().includes("promo")));
+        if (!hasPromo) return false;
       }
       if (search.trim()) {
         const q = search.toLowerCase();
@@ -97,14 +89,14 @@ export function AdminKatalogTab({
       }
       return true;
     });
-  }, [iphones, selectedBranchId, selectedSeries, search]);
+  }, [iphones, selectedBranchId, selectedFilter, search]);
 
   return (
     <div className="space-y-6">
       {/* Top Preview Mode Notice Banner */}
       <div className="rounded-2xl bg-white border border-[#D2D2D7]/70 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-2xs">
         <div className="flex items-center gap-3 text-[12.5px]">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0071E3] text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
             <EyeIcon className="h-3.5 w-3.5" />
           </span>
           <div>
@@ -120,15 +112,11 @@ export function AdminKatalogTab({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F5F5F7] px-3 py-1 text-[11px] font-semibold text-[#1D1D1F]">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            Sinkronisasi Live
-          </span>
           <button
             type="button"
             onClick={onRefresh}
             title="Sinkronkan ulang"
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F7] hover:bg-[#E8F2FF] text-[#1D1D1F] hover:text-[#0071E3] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F2FF] hover:bg-[#0071E3] text-[#0071E3] hover:text-white transition-colors cursor-pointer"
           >
             <RefreshCwIcon className="h-3.5 w-3.5" />
           </button>
@@ -141,31 +129,21 @@ export function AdminKatalogTab({
           Katalog Perangkat
         </h1>
 
-        <div className="inline-flex flex-wrap items-center gap-1.5 rounded-2xl bg-white p-1.5 border border-[#D2D2D7]/60">
+        <div className="inline-flex flex-wrap items-center gap-1.5 rounded-full bg-white p-1.5 border border-[#D2D2D7]/60">
           <button
             type="button"
             onClick={() => setSelectedBranchId("all")}
-            className={`rounded-xl px-3.5 py-1.5 text-center transition-all ${
+            className={`rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all cursor-pointer ${
               selectedBranchId === "all"
                 ? "bg-[#0071E3] text-white shadow-2xs"
                 : "text-[#6E6E73] hover:text-[#1D1D1F]"
             }`}
           >
-            <p className="text-[11.5px] font-bold leading-tight">Semua Cabang</p>
-            <p
-              className={`text-[9.5px] ${
-                selectedBranchId === "all" ? "text-white/80" : "text-[#86868B]"
-              }`}
-            >
-              {iphones.filter((u) => u.status !== "nonaktif").length} Unit
-            </p>
+            Semua Cabang
           </button>
 
           {branches.map((b) => {
             const active = selectedBranchId === b.id;
-            const count = iphones.filter(
-              (u) => u.branch_id === b.id && u.status !== "nonaktif"
-            ).length;
             return (
               <button
                 key={b.id}
@@ -173,31 +151,22 @@ export function AdminKatalogTab({
                 onClick={() =>
                   setSelectedBranchId(active ? "all" : b.id)
                 }
-                className={`rounded-xl px-3.5 py-1.5 text-center transition-all ${
+                className={`rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all cursor-pointer ${
                   active
                     ? "bg-[#0071E3] text-white shadow-2xs"
                     : "text-[#6E6E73] hover:text-[#1D1D1F]"
                 }`}
               >
-                <p className="text-[11.5px] font-bold leading-tight">
-                  {b.kota || b.nama_cabang}
-                </p>
-                <p
-                  className={`text-[9.5px] ${
-                    active ? "text-white/80" : "text-[#86868B]"
-                  }`}
-                >
-                  {count} Unit
-                </p>
+                {b.kota || b.nama_cabang}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Search & Category Pills */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
-        <div className="relative md:w-80">
+      {/* Search & Filter Container (Matches Public Catalog: Tersedia Hari Ini & Promo Diskon) */}
+      <div className="rounded-3xl bg-white p-4 border border-[#D2D2D7]/60 space-y-3 shadow-2xs">
+        <div className="relative">
           <svg
             className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#86868B]"
             viewBox="0 0 24 24"
@@ -213,31 +182,26 @@ export function AdminKatalogTab({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Cari model iPhone, kapasitas, warna..."
-            className="w-full rounded-full bg-white pl-10 pr-4 py-2.5 text-[12.5px] text-[#1D1D1F] border border-[#D2D2D7]/70 focus:border-[#0071E3] focus:outline-none"
+            className="w-full rounded-2xl bg-[#F5F5F7] pl-10 pr-4 py-2.5 text-[12.5px] text-[#1D1D1F] border border-transparent focus:border-[#0071E3] focus:bg-white focus:outline-none transition-all"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          {seriesTabs.map((tab) => {
-            const active = selectedSeries === tab;
+          {filterTabs.map((tab) => {
+            const active = selectedFilter === tab;
             return (
               <button
                 key={tab}
                 type="button"
-                onClick={() => setSelectedSeries(tab)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-semibold transition-all ${
+                onClick={() =>
+                  setSelectedFilter(active ? "Semua Model" : tab)
+                }
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[12px] font-semibold transition-all cursor-pointer ${
                   active
                     ? "bg-[#0071E3] text-white shadow-xs"
-                    : "bg-white text-[#6E6E73] hover:text-[#0071E3] border border-[#D2D2D7]/60"
+                    : "bg-[#F5F5F7] text-[#1D1D1F] hover:bg-[#E8F2FF] hover:text-[#0071E3]"
                 }`}
               >
-                {tab === "Siap Hari Ini" && (
-                  <span
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      active ? "bg-white" : "bg-emerald-500"
-                    }`}
-                  />
-                )}
                 {tab}
               </button>
             );
@@ -578,9 +542,10 @@ export function AdminKeuanganTab({
         <button
           type="button"
           onClick={onAddExpense}
-          className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-5 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all"
+          className="inline-flex items-center gap-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] px-5 py-2.5 text-[12.5px] font-semibold text-white shadow-sm shadow-[#0071E3]/25 transition-all cursor-pointer"
         >
-          <span>+</span> Input Pengeluaran
+          <PlusIcon className="h-3.5 w-3.5" />
+          <span>Input Pengeluaran</span>
         </button>
       </div>
 
@@ -591,12 +556,12 @@ export function AdminKeuanganTab({
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[16px] font-bold uppercase tracking-widest text-[#86868B]">
+                <p className="text-[16px] font-bold uppercase tracking-widest text-[#0071E3]">
                   TOTAL PEMASUKAN
                 </p>
               </div>
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3] font-bold">
-                ↙
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
+                <TrendingUpIcon className="h-4.5 w-4.5" />
               </span>
             </div>
 
@@ -615,12 +580,12 @@ export function AdminKeuanganTab({
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[16px] font-bold uppercase tracking-widest text-[#86868B]">
+                <p className="text-[16px] font-bold uppercase tracking-widest text-[#0071E3]">
                   TOTAL PENGELUARAN
                 </p>
               </div>
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-bold">
-                ↗
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
+                <ReceiptIcon className="h-4.5 w-4.5" />
               </span>
             </div>
 
@@ -631,7 +596,7 @@ export function AdminKeuanganTab({
 
           <div className="mt-4 h-1.5 w-full rounded-full bg-[#F5F5F7] overflow-hidden">
             <div
-              className="h-full rounded-full bg-amber-500"
+              className="h-full rounded-full bg-[#0071E3]"
               style={{
                 width: `${Math.min(100, Number(expenseRatio) || 15)}%`,
               }}
@@ -648,7 +613,7 @@ export function AdminKeuanganTab({
                   SALDO BERSIH (NET CASHFLOW)
                 </p>
               </div>
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3]">
                 <WalletIcon className="h-4.5 w-4.5" />
               </span>
             </div>
@@ -843,16 +808,18 @@ export function AdminKeuanganTab({
                           <button
                             type="button"
                             onClick={() => onEditExpense(item.rawExpense!)}
-                            className="rounded-lg bg-[#F5F5F7] hover:bg-[#E8F2FF] px-2.5 py-1 text-[11px] font-semibold text-[#1D1D1F] hover:text-[#0071E3]"
+                            title="Edit Pengeluaran"
+                            className="inline-flex items-center justify-center rounded-lg bg-[#E8F2FF] hover:bg-[#0071E3] p-1.5 text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                           >
-                            Edit
+                            <EditIcon className="h-3.5 w-3.5" />
                           </button>
                           <button
                             type="button"
                             onClick={() => onDeleteExpense(item.rawExpense!.id)}
-                            className="rounded-lg bg-red-50 hover:bg-red-100 px-2.5 py-1 text-[11px] font-semibold text-red-600"
+                            title="Hapus Pengeluaran"
+                            className="inline-flex items-center justify-center rounded-lg bg-[#E8F2FF] hover:bg-red-500 p-1.5 text-[#0071E3] hover:text-white transition-colors cursor-pointer"
                           >
-                            Hapus
+                            <TrashIcon className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       ) : (
@@ -1084,9 +1051,10 @@ export function AdminLiveChatTab(_props: AdminLiveChatTabProps) {
         <button
           type="button"
           onClick={loadConversationsAndSurveys}
-          className="self-start rounded-full bg-white border border-[#D2D2D7]/70 px-4 py-2 text-[12px] font-semibold text-[#1D1D1F] hover:text-[#0071E3]"
+          className="self-start inline-flex items-center gap-2 rounded-full bg-[#E8F2FF] hover:bg-[#0071E3] px-4 py-2 text-[12px] font-semibold text-[#0071E3] hover:text-white transition-colors cursor-pointer"
         >
-          ↻ Muat Ulang Inbox
+          <RefreshCwIcon className="h-3.5 w-3.5" />
+          <span>Muat Ulang Inbox</span>
         </button>
       </div>
 
@@ -1217,7 +1185,7 @@ export function AdminLiveChatTab(_props: AdminLiveChatTabProps) {
                         PEKERJAAN
                       </p>
                       <p className="inline-flex items-center gap-1.5 font-bold text-[#1D1D1F] mt-0.5">
-                        <UserIcon className="h-3.5 w-3.5 text-[#0071E3]" />
+                        <BriefcaseIcon className="h-3.5 w-3.5 text-[#0071E3]" />
                         <span>{selectedSurvey.pekerjaan}</span>
                       </p>
                     </div>
@@ -1457,7 +1425,7 @@ export function AdminProfilTab({
       <div className="apple-card rounded-[32px] bg-white p-8 sm:p-8 text-center space-y-4">
         <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#0071E3] to-[#00346B] text-2xl font-bold text-white shadow-lg">
           {getInitials(admin.full_name || admin.email)}
-          <span className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#1D1D1F] shadow-md border border-[#D2D2D7]/60">
+          <span className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F2FF] text-[#0071E3] shadow-md border border-white">
             <CameraIcon className="h-3.5 w-3.5" />
           </span>
         </div>
@@ -1594,7 +1562,7 @@ export function AdminProfilTab({
         <div className="divide-y divide-[#F5F5F7]">
           <div className="py-3.5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
                 <MailIcon className="h-4.5 w-4.5" />
               </span>
               <div>
@@ -1611,7 +1579,7 @@ export function AdminProfilTab({
 
           <div className="py-3.5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F5F5F7] text-[#1D1D1F]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8F2FF] text-[#0071E3]">
                 <SmartphoneIcon className="h-4.5 w-4.5" />
               </span>
               <div>
